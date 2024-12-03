@@ -1,0 +1,3 @@
+/packages/server         @Clairview/backend
+/packages/worker         @Clairview/backend
+/packages/backend-core   @Clairview/backend

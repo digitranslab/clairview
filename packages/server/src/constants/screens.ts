@@ -1,0 +1,55 @@
+import { roles } from "@clairview/backend-core"
+import { BASE_LAYOUT_PROP_IDS } from "./layouts"
+import { Screen } from "@clairview/types"
+
+export function createHomeScreen(
+  config: {
+    roleId: string
+    route: string
+  } = {
+    roleId: roles.BUILTIN_ROLE_IDS.BASIC,
+    route: "/",
+  }
+): Screen {
+  return {
+    layoutId: BASE_LAYOUT_PROP_IDS.PRIVATE,
+    props: {
+      _id: "d834fea2-1b3e-4320-ab34-f9009f5ecc59",
+      _component: "@clairview/standard-components/container",
+      _styles: {
+        normal: {},
+        hover: {},
+        active: {},
+        selected: {},
+      },
+      _transition: "fade",
+      _children: [
+        {
+          _id: "ef60083f-4a02-4df3-80f3-a0d3d16847e7",
+          _component: "@clairview/standard-components/heading",
+          _styles: {
+            hover: {},
+            active: {},
+            selected: {},
+          },
+          text: "Welcome to your Clairview App 👋",
+          size: "M",
+          align: "left",
+          _instanceName: "Heading",
+          _children: [],
+        },
+      ],
+      _instanceName: "Home",
+      direction: "column",
+      hAlign: "stretch",
+      vAlign: "top",
+      size: "grow",
+      gap: "M",
+    },
+    routing: {
+      route: config.route,
+      roleId: config.roleId,
+    },
+    name: "home-screen",
+  }
+}
