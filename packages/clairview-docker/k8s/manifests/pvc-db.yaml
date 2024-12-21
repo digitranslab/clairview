@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clairviewcrm-db-pvc
+  namespace: clairviewcrm
+spec:
+  storageClassName: default
+  volumeName: clairviewcrm-db-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

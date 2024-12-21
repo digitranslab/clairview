@@ -1,37 +1,56 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
+  "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
   "configurations": [
     {
-      "name": "Clairview Server",
+      "name": "clairview-server - start debug",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
-      "args": ["${workspaceFolder}/packages/server/src/index.ts"],
-      "cwd": "${workspaceFolder}/packages/server"
+      "runtimeExecutable": "yarn",
+      "runtimeVersion": "18",
+      "runtimeArgs": [
+        "nx",
+        "run",
+        "clairview-server:start",
+      ],
+      "outputCapture": "std",
+      "internalConsoleOptions": "openOnSessionStart",
+      "console": "internalConsole",
+      "cwd": "${workspaceFolder}/packages/clairview-server/"
     },
     {
-      "name": "Clairview Worker",
+      "name": "clairview-server - worker debug",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
-      "args": ["${workspaceFolder}/packages/worker/src/index.ts"],
-      "cwd": "${workspaceFolder}/packages/worker"
+      "runtimeExecutable": "yarn",
+      "runtimeVersion": "18",
+      "runtimeArgs": [
+        "nx",
+        "run",
+        "clairview-server:worker",
+      ],
+      "outputCapture": "std",
+      "internalConsoleOptions": "openOnSessionStart",
+      "console": "internalConsole",
+      "cwd": "${workspaceFolder}/packages/clairview-server/"
     },
     {
-      "type": "chrome",
+      "name": "clairview-server - command debug example",
+      "type": "node",
       "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:10000",
-      "webRoot": "${workspaceFolder}"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Start Clairview",
-      "configurations": ["Clairview Server", "Clairview Worker"]
+      "runtimeExecutable": "npx",
+      "runtimeVersion": "18",
+      "runtimeArgs": [
+        "nx",
+        "run",
+        "clairview-server:command",
+        "my-command",
+        "--my-parameter value",
+      ],
+      "outputCapture": "std",
+      "internalConsoleOptions": "openOnSessionStart",
+      "console": "internalConsole",
+      "cwd": "${workspaceFolder}/packages/clairview-server/"
     }
   ]
 }
