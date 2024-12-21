@@ -1,0 +1,9 @@
+{
+  "packages": [
+    "packages/nc-cli",
+    "packages/nc-gui",
+    "packages/clairview",
+    "packages/clairview-sdk"
+  ],
+  "version": "independent"
+}

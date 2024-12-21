@@ -1,0 +1,7 @@
+packages:
+  - "packages/clairview-sdk"
+  - "packages/nc-gui"
+  - "packages/nc-mail-templates"
+  - "packages/clairview"
+  - "tests/playwright"
+  - "packages/nc-secret-mgr"

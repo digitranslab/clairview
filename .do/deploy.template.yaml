@@ -1,0 +1,24 @@
+spec:
+  name: clairview
+  services:
+  - name: clairview
+    image:
+      registry_type: DOCKER_HUB
+      registry: clairview
+      repository: clairview
+      tag: latest
+    run_command: "./server/scripts/digitalocean-postbuild.sh"
+    instance_size_slug: "basic-s"
+    health_check:
+      initial_delay_seconds: 10
+      http_path: /api/health
+    envs:
+    - key: NODE_ENV
+      value: "production"
+    - key: DATABASE_URL
+      scope: RUN_TIME
+      value: ${postgres.DATABASE_URL}
+  databases:
+    - name: postgres
+      engine: PG
+      production: false
