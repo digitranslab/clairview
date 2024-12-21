@@ -1,0 +1,5 @@
+Contact: https://github.com/digitranslab/clairview/issues/new
+Contact: security@clairview.io
+Preferred-Languages: en
+Canonical: https://clairview.io/.well-known/security.txt
+Policy: https://github.com/digitranslab/clairview/security/policy
