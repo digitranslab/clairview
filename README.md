@@ -1,7 +1,7 @@
 <h1 align="center" style="border-bottom: none">
     Clairview
 
-    The Open Source Airtable Alternative <br>
+    The Open Source Airtable Alternative
 </h1>
 
 <p align="center">
