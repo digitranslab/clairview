@@ -312,8 +312,8 @@ export default class KnexMigratorv2 {
   //     if (exists) {
   //       await this._readProjectJson(projJsonFilePath);
   //       this.emit('Migrator for base initalised successfully');
-  //     } else if (NcConfigFactory.hasDbUrl()) {
-  //       this.base = NcConfigFactory.make();
+  //     } else if (CvConfigFactory.hasDbUrl()) {
+  //       this.base = CvConfigFactory.make();
   //     } else {
   //       args.type = args.type || 'sqlite';
   //
@@ -1018,8 +1018,8 @@ export default class KnexMigratorv2 {
       //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
       // }
 
-      // if (NcConfigFactory.hasDbUrl()) {
-      //   this.base = NcConfigFactory.make();
+      // if (CvConfigFactory.hasDbUrl()) {
+      //   this.base = CvConfigFactory.make();
       // }
 
       /* if no env - init all envs */
@@ -1055,8 +1055,8 @@ export default class KnexMigratorv2 {
   //     //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
   //     // }
   //
-  //     // if (NcConfigFactory.hasDbUrl()) {
-  //     //   this.base = NcConfigFactory.make();
+  //     // if (CvConfigFactory.hasDbUrl()) {
+  //     //   this.base = CvConfigFactory.make();
   //     // }
   //     if (!args.env) {
   //       await this._cleanDbAliasOnFilesystem(args);
@@ -1090,8 +1090,8 @@ export default class KnexMigratorv2 {
       // if (!this.base) {
       //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
       // }
-      // if (NcConfigFactory.hasDbUrl()) {
-      //   this.base = NcConfigFactory.make();
+      // if (CvConfigFactory.hasDbUrl()) {
+      //   this.base = CvConfigFactory.make();
       // }
 
       // create filenames
@@ -1156,8 +1156,8 @@ export default class KnexMigratorv2 {
       //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
       // }
       //
-      // if (NcConfigFactory.hasDbUrl()) {
-      //   this.base = NcConfigFactory.make();
+      // if (CvConfigFactory.hasDbUrl()) {
+      //   this.base = CvConfigFactory.make();
       // }
       /**
        *
@@ -1206,8 +1206,8 @@ export default class KnexMigratorv2 {
     // if (!this.base) {
     //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
     // }
-    // if (NcConfigFactory.hasDbUrl()) {
-    //   this.base = NcConfigFactory.make();
+    // if (CvConfigFactory.hasDbUrl()) {
+    //   this.base = CvConfigFactory.make();
     // }
     // console.log(this.base);
 
@@ -1273,8 +1273,8 @@ export default class KnexMigratorv2 {
     //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
     // }
     //
-    // if (NcConfigFactory.hasDbUrl()) {
-    //   this.base = NcConfigFactory.make();
+    // if (CvConfigFactory.hasDbUrl()) {
+    //   this.base = CvConfigFactory.make();
     // }
 
     await this._migrationsDown({
@@ -1339,8 +1339,8 @@ export default class KnexMigratorv2 {
       //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
       // }
       //
-      // if (NcConfigFactory.hasDbUrl()) {
-      //   this.base = NcConfigFactory.make();
+      // if (CvConfigFactory.hasDbUrl()) {
+      //   this.base = CvConfigFactory.make();
       // }
 
       let upStatement = '';
@@ -1452,8 +1452,8 @@ export default class KnexMigratorv2 {
       //   await this._readProjectJson(path.join(args.folder, "config.xc.json"));
       // }
       //
-      // if (NcConfigFactory.hasDbUrl()) {
-      //   this.base = NcConfigFactory.make();
+      // if (CvConfigFactory.hasDbUrl()) {
+      //   this.base = CvConfigFactory.make();
       // }
       if (this.metaDb) {
         const migration = await this.metaDb(NC_MIGRATION)
@@ -1553,8 +1553,8 @@ export default class KnexMigratorv2 {
   //   //   }
   //   // }
   //   //
-  //   // if (NcConfigFactory.hasDbUrl()) {
-  //   //   this.base = NcConfigFactory.make();
+  //   // if (CvConfigFactory.hasDbUrl()) {
+  //   //   this.base = CvConfigFactory.make();
   //   // }
   //
   // }

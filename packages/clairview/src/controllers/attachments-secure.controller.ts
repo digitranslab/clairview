@@ -28,7 +28,7 @@ import { DataTableService } from '~/services/data-table.service';
 import { DataApiLimiterGuard } from '~/guards/data-api-limiter.guard';
 import { TenantContext } from '~/decorators/tenant-context.decorator';
 import { Acl } from '~/middlewares/extract-ids/extract-ids.middleware';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { ATTACHMENT_ROOTS, localFileExists } from '~/helpers/attachmentHelpers';
 
 @Controller()
@@ -135,7 +135,7 @@ export class AttachmentsSecureController {
     });
 
     if (!column) {
-      NcError.fieldNotFound(columnId);
+      CvError.fieldNotFound(columnId);
     }
 
     const record = await this.dataTableService.dataRead(context, {
@@ -148,7 +148,7 @@ export class AttachmentsSecureController {
     });
 
     if (!record) {
-      NcError.recordNotFound(rowId);
+      CvError.recordNotFound(rowId);
     }
 
     return this.attachmentsService.getAttachmentFromRecord({

@@ -3,7 +3,7 @@ import debug from 'debug';
 import type { Job } from 'bull';
 import Noco from '~/Noco';
 import { MetaTable } from '~/utils/globals';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { getPathFromUrl } from '~/helpers/attachmentHelpers';
 
 const retentionDays = process.env.NC_ATTACHMENT_RETENTION_DAYS || 10;
@@ -21,7 +21,7 @@ export class AttachmentCleanUpProcessor {
 
     const ncMeta = Noco.ncMeta;
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
     const storageAdapterName = storageAdapter.name;
 

@@ -14,7 +14,7 @@ import Noco from '~/Noco';
 import NocoCache from '~/cache/NocoCache';
 import { extractProps } from '~/helpers/extractProps';
 import { parseMetaProp } from '~/utils/modelUtils';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { cleanCommandPaletteCacheForUser } from '~/helpers/commandPaletteHelpers';
 
 const logger = new Logger('BaseUser');
@@ -388,7 +388,7 @@ export default class BaseUser {
     userId: string,
     ncMeta = Noco.ncMeta,
   ): Promise<BaseUser[]> {
-    if (!userId) NcError.badRequest('User Id is required');
+    if (!userId) CvError.badRequest('User Id is required');
 
     return await ncMeta.knex(MetaTable.PROJECT_USERS).where({
       fk_user_id: userId,

@@ -8,7 +8,7 @@ import type {
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { GalleryView, Model, View } from '~/models';
 import NocoCache from '~/cache/NocoCache';
 import { CacheScope } from '~/utils/globals';
@@ -85,7 +85,7 @@ export class GalleriesService {
     const view = await View.get(context, param.galleryViewId);
 
     if (!view) {
-      NcError.viewNotFound(param.galleryViewId);
+      CvError.viewNotFound(param.galleryViewId);
     }
 
     const res = await GalleryView.update(

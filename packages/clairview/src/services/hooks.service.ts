@@ -5,7 +5,7 @@ import type { HookReqType, HookTestReqType, HookType } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import {
   populateSamplePayload,
   populateSamplePayloadV2,
@@ -34,7 +34,7 @@ export class HooksService {
     } catch {}
 
     if (notification.type !== 'URL' && process.env.NC_CLOUD === 'true') {
-      NcError.badRequest('Only URL notification is supported');
+      CvError.badRequest('Only URL notification is supported');
     }
   }
 
@@ -82,7 +82,7 @@ export class HooksService {
     const hook = await Hook.get(context, param.hookId);
 
     if (!hook) {
-      NcError.hookNotFound(param.hookId);
+      CvError.hookNotFound(param.hookId);
     }
 
     const buttonCols = await Hook.hookUsages(context, param.hookId);
@@ -117,7 +117,7 @@ export class HooksService {
     const hook = await Hook.get(context, param.hookId);
 
     if (!hook) {
-      NcError.hookNotFound(param.hookId);
+      CvError.hookNotFound(param.hookId);
     }
 
     this.validateHookPayload(param.hook.notification);
@@ -161,7 +161,7 @@ export class HooksService {
     const hook = await Hook.get(context, param.hookId);
 
     if (!hook && hook.event !== 'manual') {
-      NcError.badRequest('Hook not found');
+      CvError.badRequest('Hook not found');
     }
 
     const row = await this.dataService.dataRead(context, {
@@ -172,7 +172,7 @@ export class HooksService {
     });
 
     if (!row) {
-      NcError.badRequest('Row not found');
+      CvError.badRequest('Row not found');
     }
 
     const model = await Model.get(context, hook.fk_model_id);

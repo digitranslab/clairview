@@ -5,7 +5,7 @@ import type { NcContext } from '~/interface/config';
 import type { FormColumnType, HookType } from 'clairview-sdk';
 import type { ColumnType } from 'clairview-sdk';
 import type { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { _transformSubmittedFormDataForEmail } from '~/helpers/webhookHelpers';
 import { IEventEmitter } from '~/modules/event-emitter/event-emitter.interface';
 import formSubmissionEmailTemplate from '~/utils/common/formSubmissionEmailTemplate';
@@ -90,7 +90,7 @@ export class HookHandlerService implements OnModuleInit, OnModuleDestroy {
             formView,
             filteredColumns,
           );
-          (await NcPluginMgrv2.emailAdapter(false))?.mailSend({
+          (await CvPluginMgrv2.emailAdapter(false))?.mailSend({
             to: emails.join(','),
             subject: 'ClairView Form',
             html: ejs.render(formSubmissionEmailTemplate, {

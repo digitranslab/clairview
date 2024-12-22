@@ -4,7 +4,7 @@ import type { FilterReqType, UserType } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Filter, Hook, View } from '~/models';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class FiltersService {
     const hook = await Hook.get(context, param.hookId);
 
     if (!hook) {
-      NcError.badRequest('Hook not found');
+      CvError.badRequest('Hook not found');
     }
 
     const filter = await Filter.insert(context, {
@@ -52,7 +52,7 @@ export class FiltersService {
     const filter = await Filter.get(context, param.filterId);
 
     if (!filter) {
-      NcError.badRequest('Filter not found');
+      CvError.badRequest('Filter not found');
     }
 
     await Filter.delete(context, param.filterId);
@@ -106,7 +106,7 @@ export class FiltersService {
     const filter = await Filter.get(context, param.filterId);
 
     if (!filter) {
-      NcError.badRequest('Filter not found');
+      CvError.badRequest('Filter not found');
     }
     // todo: type correction
     const res = await Filter.update(

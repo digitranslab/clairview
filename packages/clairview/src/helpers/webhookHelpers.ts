@@ -8,7 +8,7 @@ import { isDateMonthFormat, UITypes } from 'clairview-sdk';
 import isBetween from 'dayjs/plugin/isBetween';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
-import NcPluginMgrv2 from './NcPluginMgrv2';
+import CvPluginMgrv2 from './CvPluginMgrv2';
 import type { HookLogType } from 'clairview-sdk';
 import type { Column, FormView, Hook, Model, View } from '~/models';
 import type { NcContext } from '~/interface/config';
@@ -612,7 +612,7 @@ export async function invokeWebhook(
       case 'Email':
         {
           const res = await (
-            await NcPluginMgrv2.emailAdapter(false)
+            await CvPluginMgrv2.emailAdapter(false)
           )?.mailSend({
             to: parseBody(notification?.payload?.to, newData),
             subject: parseBody(notification?.payload?.subject, newData),
@@ -668,7 +668,7 @@ export async function invokeWebhook(
       default:
         {
           const res = await (
-            await NcPluginMgrv2.webhookNotificationAdapters(notification.type)
+            await CvPluginMgrv2.webhookNotificationAdapters(notification.type)
           ).sendMessage(
             parseBody(notification?.payload?.body, newData),
             JSON.parse(JSON.stringify(notification?.payload), (_key, value) => {

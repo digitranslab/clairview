@@ -21,7 +21,7 @@ import {
   Source,
   View,
 } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 @Injectable()
 export class PublicMetasService {
@@ -35,10 +35,10 @@ export class PublicMetasService {
       client?: string;
     } = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (view.password && view.password !== param.password) {
-      NcError.invalidSharedViewPassword();
+      CvError.invalidSharedViewPassword();
     }
 
     await view.getFilters(context);
@@ -228,7 +228,7 @@ export class PublicMetasService {
     const base = await Base.getByUuid(context, param.sharedBaseUuid);
 
     if (!base) {
-      NcError.baseNotFound(param.sharedBaseUuid);
+      CvError.baseNotFound(param.sharedBaseUuid);
     }
 
     return { base_id: base.id };

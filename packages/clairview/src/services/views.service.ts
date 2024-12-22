@@ -8,7 +8,7 @@ import type {
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { BaseUser, Model, ModelRoleVisibility, View } from '~/models';
 
 // todo: move
@@ -84,7 +84,7 @@ export class ViewsService {
     const model = await Model.get(context, param.tableId);
 
     if (!model) {
-      NcError.tableNotFound(param.tableId);
+      CvError.tableNotFound(param.tableId);
     }
 
     const viewList = await xcVisibilityMetaGet(context, {
@@ -120,7 +120,7 @@ export class ViewsService {
     const view = await View.get(context, param.viewId);
 
     if (!view) {
-      NcError.viewNotFound(param.viewId);
+      CvError.viewNotFound(param.viewId);
     }
 
     this.appHooksService.emit(AppEvents.SHARED_VIEW_CREATE, {
@@ -148,7 +148,7 @@ export class ViewsService {
     const oldView = await View.get(context, param.viewId);
 
     if (!oldView) {
-      NcError.viewNotFound(param.viewId);
+      CvError.viewNotFound(param.viewId);
     }
 
     let ownedBy = oldView.owned_by;
@@ -164,7 +164,7 @@ export class ViewsService {
     ) {
       // if owned_by is not empty then check if the user is the owner of the project
       if (ownedBy && ownedBy !== param.user.id) {
-        NcError.unauthorized('Only owner/creator can change to personal view');
+        CvError.unauthorized('Only owner/creator can change to personal view');
       }
 
       // if empty then check if current user is the owner of the project then allow and update the owned_by
@@ -176,7 +176,7 @@ export class ViewsService {
         }
       } else if (!ownedBy) {
         // todo: move to catchError
-        NcError.unauthorized('Only owner can change to personal view');
+        CvError.unauthorized('Only owner can change to personal view');
       }
     }
 
@@ -188,7 +188,7 @@ export class ViewsService {
         !(param.user as any).base_roles?.[ProjectRoles.OWNER] &&
         !(param.user as any).base_roles?.[ProjectRoles.CREATOR]
       ) {
-        NcError.unauthorized('Only owner/creator can transfer view ownership');
+        CvError.unauthorized('Only owner/creator can transfer view ownership');
       }
 
       ownedBy = param.view.owned_by;
@@ -202,7 +202,7 @@ export class ViewsService {
       );
 
       if (!baseUser) {
-        NcError.badRequest('Invalid user');
+        CvError.badRequest('Invalid user');
       }
 
       includeCreatedByAndUpdateBy = true;
@@ -238,7 +238,7 @@ export class ViewsService {
     const view = await View.get(context, param.viewId);
 
     if (!view) {
-      NcError.viewNotFound(param.viewId);
+      CvError.viewNotFound(param.viewId);
     }
 
     await View.delete(context, param.viewId);
@@ -269,7 +269,7 @@ export class ViewsService {
     const view = await View.get(context, param.viewId);
 
     if (!view) {
-      NcError.viewNotFound(param.viewId);
+      CvError.viewNotFound(param.viewId);
     }
 
     const result = await View.update(context, param.viewId, param.sharedView);
@@ -294,7 +294,7 @@ export class ViewsService {
     const view = await View.get(context, param.viewId);
 
     if (!view) {
-      NcError.viewNotFound(param.viewId);
+      CvError.viewNotFound(param.viewId);
     }
     await View.sharedViewDelete(context, param.viewId);
 

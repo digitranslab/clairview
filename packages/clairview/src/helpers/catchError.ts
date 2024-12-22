@@ -1,4 +1,4 @@
-import { NcErrorType } from 'clairview-sdk';
+import { CvErrorType } from 'clairview-sdk';
 import { Logger } from '@nestjs/common';
 import { generateReadablePermissionErr } from 'src/utils/acl';
 import type { BaseType, SourceType } from 'clairview-sdk';
@@ -447,7 +447,7 @@ export function extractDBError(error): {
 
   if (message) {
     return {
-      error: NcErrorType.DATABASE_ERROR,
+      error: CvErrorType.DATABASE_ERROR,
       message,
       code: error.code,
     };
@@ -509,84 +509,84 @@ export class AjvError extends NcBaseError {
 }
 
 const errorHelpers: {
-  [key in NcErrorType]: {
+  [key in CvErrorType]: {
     message: string | ((...params: string[]) => string);
     code: number;
   };
 } = {
-  [NcErrorType.UNKNOWN_ERROR]: {
+  [CvErrorType.UNKNOWN_ERROR]: {
     message: 'Something went wrong',
     code: 500,
   },
-  [NcErrorType.INTERNAL_SERVER_ERROR]: {
+  [CvErrorType.INTERNAL_SERVER_ERROR]: {
     message: (message: string) => message || `Internal server error`,
     code: 500,
   },
-  [NcErrorType.DATABASE_ERROR]: {
+  [CvErrorType.DATABASE_ERROR]: {
     message: (message: string) =>
       message || `There was an error while running the query`,
     code: 500,
   },
-  [NcErrorType.AUTHENTICATION_REQUIRED]: {
+  [CvErrorType.AUTHENTICATION_REQUIRED]: {
     message: 'Authentication required to access this resource',
     code: 401,
   },
-  [NcErrorType.API_TOKEN_NOT_ALLOWED]: {
+  [CvErrorType.API_TOKEN_NOT_ALLOWED]: {
     message: 'This request is not allowed with API token',
     code: 401,
   },
-  [NcErrorType.WORKSPACE_NOT_FOUND]: {
+  [CvErrorType.WORKSPACE_NOT_FOUND]: {
     message: (id: string) => `Workspace '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.BASE_NOT_FOUND]: {
+  [CvErrorType.BASE_NOT_FOUND]: {
     message: (id: string) => `Base '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.SOURCE_NOT_FOUND]: {
+  [CvErrorType.SOURCE_NOT_FOUND]: {
     message: (id: string) => `Source '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.INTEGRATION_NOT_FOUND]: {
+  [CvErrorType.INTEGRATION_NOT_FOUND]: {
     message: (id: string) => `Connection '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.INTEGRATION_LINKED_WITH_BASES]: {
+  [CvErrorType.INTEGRATION_LINKED_WITH_BASES]: {
     message: (bases) => `Connection linked with following bases '${bases}'`,
     code: 404,
   },
-  [NcErrorType.TABLE_NOT_FOUND]: {
+  [CvErrorType.TABLE_NOT_FOUND]: {
     message: (id: string) => `Table '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.VIEW_NOT_FOUND]: {
+  [CvErrorType.VIEW_NOT_FOUND]: {
     message: (id: string) => `View '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.FIELD_NOT_FOUND]: {
+  [CvErrorType.FIELD_NOT_FOUND]: {
     message: (id: string) => `Field '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.HOOK_NOT_FOUND]: {
+  [CvErrorType.HOOK_NOT_FOUND]: {
     message: (id: string) => `Hook '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.RECORD_NOT_FOUND]: {
+  [CvErrorType.RECORD_NOT_FOUND]: {
     message: (...ids: string[]) => {
       const isMultiple = Array.isArray(ids) && ids.length > 1;
       return `Record${isMultiple ? 's' : ''} '${ids.join(', ')}' not found`;
     },
     code: 404,
   },
-  [NcErrorType.GENERIC_NOT_FOUND]: {
+  [CvErrorType.GENERIC_NOT_FOUND]: {
     message: (resource: string, id: string) => `${resource} '${id}' not found`,
     code: 404,
   },
-  [NcErrorType.REQUIRED_FIELD_MISSING]: {
+  [CvErrorType.REQUIRED_FIELD_MISSING]: {
     message: (field: string) => `Field '${field}' is required`,
     code: 422,
   },
-  [NcErrorType.ERROR_DUPLICATE_RECORD]: {
+  [CvErrorType.ERROR_DUPLICATE_RECORD]: {
     message: (...ids: string[]) => {
       const isMultiple = Array.isArray(ids) && ids.length > 1;
       return `Record${isMultiple ? 's' : ''} '${ids.join(
@@ -595,7 +595,7 @@ const errorHelpers: {
     },
     code: 422,
   },
-  [NcErrorType.USER_NOT_FOUND]: {
+  [CvErrorType.USER_NOT_FOUND]: {
     message: (idOrEmail: string) => {
       const isEmail = idOrEmail.includes('@');
       return `User ${
@@ -604,49 +604,49 @@ const errorHelpers: {
     },
     code: 404,
   },
-  [NcErrorType.INVALID_OFFSET_VALUE]: {
+  [CvErrorType.INVALID_OFFSET_VALUE]: {
     message: (offset: string) => `Offset value '${offset}' is invalid`,
     code: 422,
   },
-  [NcErrorType.INVALID_PK_VALUE]: {
+  [CvErrorType.INVALID_PK_VALUE]: {
     message: (value: any, pkColumn: string) =>
       `Primary key value '${value}' is invalid for column '${pkColumn}'`,
     code: 422,
   },
-  [NcErrorType.INVALID_LIMIT_VALUE]: {
+  [CvErrorType.INVALID_LIMIT_VALUE]: {
     message: `Limit value should be between ${defaultLimitConfig.limitMin} and ${defaultLimitConfig.limitMax}`,
     code: 422,
   },
-  [NcErrorType.INVALID_FILTER]: {
+  [CvErrorType.INVALID_FILTER]: {
     message: (filter: string) => `Filter '${filter}' is invalid`,
     code: 422,
   },
-  [NcErrorType.INVALID_SHARED_VIEW_PASSWORD]: {
+  [CvErrorType.INVALID_SHARED_VIEW_PASSWORD]: {
     message: 'Invalid shared view password',
     code: 403,
   },
-  [NcErrorType.INVALID_ATTACHMENT_JSON]: {
+  [CvErrorType.INVALID_ATTACHMENT_JSON]: {
     message: (payload: string) =>
       `Invalid JSON for attachment field: ${payload}`,
     code: 400,
   },
-  [NcErrorType.NOT_IMPLEMENTED]: {
+  [CvErrorType.NOT_IMPLEMENTED]: {
     message: (feature: string) => `${feature} is not implemented`,
     code: 501,
   },
-  [NcErrorType.BAD_JSON]: {
+  [CvErrorType.BAD_JSON]: {
     message: 'Invalid JSON in request body',
     code: 400,
   },
-  [NcErrorType.COLUMN_ASSOCIATED_WITH_LINK]: {
+  [CvErrorType.COLUMN_ASSOCIATED_WITH_LINK]: {
     message: 'Column is associated with a link, please remove the link first',
     code: 400,
   },
-  [NcErrorType.TABLE_ASSOCIATED_WITH_LINK]: {
+  [CvErrorType.TABLE_ASSOCIATED_WITH_LINK]: {
     message: 'Table is associated with a link, please remove the link first',
     code: 400,
   },
-  [NcErrorType.FORMULA_ERROR]: {
+  [CvErrorType.FORMULA_ERROR]: {
     message: (message: string) => {
       // try to extract db error - Experimental
       if (message.includes(' - ')) {
@@ -657,19 +657,19 @@ const errorHelpers: {
     },
     code: 400,
   },
-  [NcErrorType.PERMISSION_DENIED]: {
+  [CvErrorType.PERMISSION_DENIED]: {
     message: 'Permission denied',
     code: 403,
   },
-  [NcErrorType.INVALID_ATTACHMENT_UPLOAD_SCOPE]: {
+  [CvErrorType.INVALID_ATTACHMENT_UPLOAD_SCOPE]: {
     message: 'Invalid attachment upload scope',
     code: 400,
   },
 };
 
 function generateError(
-  type: NcErrorType,
-  args?: NcErrorArgs,
+  type: CvErrorType,
+  args?: CvErrorArgs,
 ): {
   message: string;
   code: number;
@@ -702,18 +702,18 @@ function generateError(
   };
 }
 
-type NcErrorArgs = {
+type CvErrorArgs = {
   params?: string | string[];
   customMessage?: string | ((...args: string[]) => string);
   details?: any;
 };
 
 export class NcBaseErrorv2 extends NcBaseError {
-  error: NcErrorType;
+  error: CvErrorType;
   code: number;
   details?: any;
 
-  constructor(error: NcErrorType, args?: NcErrorArgs) {
+  constructor(error: CvErrorType, args?: CvErrorArgs) {
     const errorHelper = generateError(error, args);
     super(errorHelper.message);
     this.error = error;
@@ -722,13 +722,13 @@ export class NcBaseErrorv2 extends NcBaseError {
   }
 }
 
-export class NcError {
+export class CvError {
   static permissionDenied(
     permissionName: string,
     roles: Record<string, boolean>,
     extendedScopeRoles: any,
   ) {
-    throw new NcBaseErrorv2(NcErrorType.PERMISSION_DENIED, {
+    throw new NcBaseErrorv2(CvErrorType.PERMISSION_DENIED, {
       customMessage: generateReadablePermissionErr(
         permissionName,
         roles,
@@ -742,66 +742,66 @@ export class NcError {
     });
   }
 
-  static authenticationRequired(args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.AUTHENTICATION_REQUIRED, args);
+  static authenticationRequired(args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.AUTHENTICATION_REQUIRED, args);
   }
 
-  static apiTokenNotAllowed(args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.API_TOKEN_NOT_ALLOWED, args);
+  static apiTokenNotAllowed(args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.API_TOKEN_NOT_ALLOWED, args);
   }
 
-  static workspaceNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.WORKSPACE_NOT_FOUND, {
+  static workspaceNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.WORKSPACE_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static columnAssociatedWithLink(_id: string, args: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.COLUMN_ASSOCIATED_WITH_LINK, args);
+  static columnAssociatedWithLink(_id: string, args: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.COLUMN_ASSOCIATED_WITH_LINK, args);
   }
 
-  static tableAssociatedWithLink(_id: string, args: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.TABLE_ASSOCIATED_WITH_LINK, args);
+  static tableAssociatedWithLink(_id: string, args: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.TABLE_ASSOCIATED_WITH_LINK, args);
   }
 
-  static baseNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.BASE_NOT_FOUND, {
+  static baseNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.BASE_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static sourceNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.SOURCE_NOT_FOUND, {
+  static sourceNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.SOURCE_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static tableNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.TABLE_NOT_FOUND, {
+  static tableNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.TABLE_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static userNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.USER_NOT_FOUND, {
+  static userNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.USER_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static viewNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.VIEW_NOT_FOUND, {
+  static viewNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.VIEW_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static hookNotFound(id: string, args?: NcErrorArgs): never {
-    throw new NcBaseErrorv2(NcErrorType.HOOK_NOT_FOUND, {
+  static hookNotFound(id: string, args?: CvErrorArgs): never {
+    throw new NcBaseErrorv2(CvErrorType.HOOK_NOT_FOUND, {
       params: id,
       ...args,
     });
@@ -809,7 +809,7 @@ export class NcError {
 
   static recordNotFound(
     id: string | string[] | Record<string, string> | Record<string, string>[],
-    args?: NcErrorArgs,
+    args?: CvErrorArgs,
   ) {
     let formatedId: string | string[] = '';
     if (!id) {
@@ -846,96 +846,96 @@ export class NcError {
       }
     }
 
-    throw new NcBaseErrorv2(NcErrorType.RECORD_NOT_FOUND, {
+    throw new NcBaseErrorv2(CvErrorType.RECORD_NOT_FOUND, {
       params: formatedId,
       ...args,
     });
   }
 
-  static genericNotFound(resource: string, id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.GENERIC_NOT_FOUND, {
+  static genericNotFound(resource: string, id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.GENERIC_NOT_FOUND, {
       params: [resource, id],
       ...args,
     });
   }
 
-  static requiredFieldMissing(field: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.REQUIRED_FIELD_MISSING, {
+  static requiredFieldMissing(field: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.REQUIRED_FIELD_MISSING, {
       params: field,
       ...args,
     });
   }
 
-  static duplicateRecord(id: string | string[], args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.ERROR_DUPLICATE_RECORD, {
+  static duplicateRecord(id: string | string[], args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.ERROR_DUPLICATE_RECORD, {
       params: id,
       ...args,
     });
   }
 
-  static fieldNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.FIELD_NOT_FOUND, {
+  static fieldNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.FIELD_NOT_FOUND, {
       params: id,
       ...args,
     });
   }
 
-  static invalidOffsetValue(offset: string | number, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_OFFSET_VALUE, {
+  static invalidOffsetValue(offset: string | number, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_OFFSET_VALUE, {
       params: `${offset}`,
       ...args,
     });
   }
 
-  static invalidPrimaryKey(value: any, pkColumn: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_PK_VALUE, {
+  static invalidPrimaryKey(value: any, pkColumn: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_PK_VALUE, {
       params: [value, pkColumn],
       ...args,
     });
   }
 
-  static invalidLimitValue(args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_LIMIT_VALUE, {
+  static invalidLimitValue(args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_LIMIT_VALUE, {
       ...args,
     });
   }
 
-  static invalidFilter(filter: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_FILTER, {
+  static invalidFilter(filter: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_FILTER, {
       params: filter,
       ...args,
     });
   }
 
-  static invalidSharedViewPassword(args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_SHARED_VIEW_PASSWORD, {
+  static invalidSharedViewPassword(args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_SHARED_VIEW_PASSWORD, {
       ...args,
     });
   }
 
-  static invalidAttachmentJson(payload: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_ATTACHMENT_JSON, {
+  static invalidAttachmentJson(payload: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_ATTACHMENT_JSON, {
       params: payload,
       ...args,
     });
   }
 
-  static notImplemented(feature: string = 'Feature', args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.NOT_IMPLEMENTED, {
+  static notImplemented(feature: string = 'Feature', args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.NOT_IMPLEMENTED, {
       params: feature,
       ...args,
     });
   }
 
-  static internalServerError(message: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INTERNAL_SERVER_ERROR, {
+  static internalServerError(message: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INTERNAL_SERVER_ERROR, {
       params: message,
       ...args,
     });
   }
 
-  static formulaError(message: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.FORMULA_ERROR, {
+  static formulaError(message: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.FORMULA_ERROR, {
       params: message,
       ...args,
     });
@@ -984,15 +984,15 @@ export class NcError {
   }
 
   static sourceDataReadOnly(name: string) {
-    NcError.forbidden(`Source '${name}' is read-only`);
+    CvError.forbidden(`Source '${name}' is read-only`);
   }
 
   static sourceMetaReadOnly(name: string) {
-    NcError.forbidden(`Source '${name}' schema is read-only`);
+    CvError.forbidden(`Source '${name}' schema is read-only`);
   }
 
-  static integrationNotFound(id: string, args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INTEGRATION_NOT_FOUND, {
+  static integrationNotFound(id: string, args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INTEGRATION_NOT_FOUND, {
       params: id,
       ...(args || {}),
     });
@@ -1001,9 +1001,9 @@ export class NcError {
   static integrationLinkedWithMultiple(
     bases: BaseType[],
     sources: SourceType[],
-    args?: NcErrorArgs,
+    args?: CvErrorArgs,
   ) {
-    throw new NcBaseErrorv2(NcErrorType.INTEGRATION_LINKED_WITH_BASES, {
+    throw new NcBaseErrorv2(CvErrorType.INTEGRATION_LINKED_WITH_BASES, {
       params: bases.map((s) => s.title).join(', '),
       details: {
         bases: bases.map((b) => {
@@ -1024,7 +1024,7 @@ export class NcError {
     });
   }
 
-  static invalidAttachmentUploadScope(args?: NcErrorArgs) {
-    throw new NcBaseErrorv2(NcErrorType.INVALID_ATTACHMENT_UPLOAD_SCOPE, args);
+  static invalidAttachmentUploadScope(args?: CvErrorArgs) {
+    throw new NcBaseErrorv2(CvErrorType.INVALID_ATTACHMENT_UPLOAD_SCOPE, args);
   }
 }

@@ -13,7 +13,7 @@ import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { BaseUsersService } from '~/services/base-users/base-users.service';
 import { NC_APP_SETTINGS } from '~/constants';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { extractProps } from '~/helpers/extractProps';
 import { randomTokenString } from '~/helpers/stringHelpers';
 import { BaseUser, Store, SyncSource, User } from '~/models';
@@ -47,7 +47,7 @@ export class OrgUsersService {
     const user = await User.get(param.userId);
 
     if (extractRolesObj(user.roles)[OrgUserRoles.SUPER_ADMIN]) {
-      NcError.badRequest('Cannot update super admin roles');
+      CvError.badRequest('Cannot update super admin roles');
     }
 
     return await User.update(param.userId, {
@@ -61,7 +61,7 @@ export class OrgUsersService {
       const user = await User.get(param.userId, ncMeta);
 
       if (extractRolesObj(user.roles)[OrgUserRoles.SUPER_ADMIN]) {
-        NcError.badRequest('Cannot delete super admin');
+        CvError.badRequest('Cannot delete super admin');
       }
 
       // delete base user entry and assign to super admin
@@ -110,7 +110,7 @@ export class OrgUsersService {
         param.user.roles as OrgUserRoles,
       )
     ) {
-      NcError.badRequest('Invalid role');
+      CvError.badRequest('Invalid role');
     }
 
     // extract emails from request body
@@ -123,10 +123,10 @@ export class OrgUsersService {
     const invalidEmails = emails.filter((v) => !validator.isEmail(v));
 
     if (!emails.length) {
-      return NcError.badRequest('Invalid email address');
+      return CvError.badRequest('Invalid email address');
     }
     if (invalidEmails.length) {
-      NcError.badRequest('Invalid email address : ' + invalidEmails.join(', '));
+      CvError.badRequest('Invalid email address : ' + invalidEmails.join(', '));
     }
 
     const invite_token = uuidv4();
@@ -137,7 +137,7 @@ export class OrgUsersService {
       let user = await User.getByEmail(email);
 
       if (user) {
-        NcError.badRequest('User already exist');
+        CvError.badRequest('User already exist');
       } else {
         try {
           // create new user with invite token
@@ -202,7 +202,7 @@ export class OrgUsersService {
   }
 
   async userSettings(_param): Promise<any> {
-    NcError.notImplemented();
+    CvError.notImplemented();
   }
 
   async userInviteResend(param: {
@@ -212,7 +212,7 @@ export class OrgUsersService {
     const user = await User.get(param.userId);
 
     if (!user) {
-      NcError.userNotFound(param.userId);
+      CvError.userNotFound(param.userId);
     }
 
     const invite_token = uuidv4();
@@ -233,7 +233,7 @@ export class OrgUsersService {
     );
 
     if (!pluginData) {
-      NcError.badRequest(
+      CvError.badRequest(
         `No Email Plugin is found. Please go to App Store to configure first or copy the invitation URL to users instead.`,
       );
     }
@@ -260,7 +260,7 @@ export class OrgUsersService {
     const user = await User.get(param.userId);
 
     if (!user) {
-      NcError.userNotFound(param.userId);
+      CvError.userNotFound(param.userId);
     }
     const token = uuidv4();
     await User.update(user.id, {

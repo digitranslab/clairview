@@ -5,7 +5,7 @@ import { UITypes } from 'clairview-sdk';
 import { Injectable } from '@nestjs/common';
 import mime from 'mime/lite';
 import { FileReference, Source } from '~/models';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import Noco from '~/Noco';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
@@ -68,7 +68,7 @@ export class AttachmentMigration {
       }
 
       // get all file references
-      const storageAdapter = await NcPluginMgrv2.storageAdapter(ncMeta);
+      const storageAdapter = await CvPluginMgrv2.storageAdapter(ncMeta);
 
       const storageAdapterType = storageAdapter.name;
 

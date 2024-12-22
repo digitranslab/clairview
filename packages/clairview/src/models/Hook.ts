@@ -12,7 +12,7 @@ import {
 import Noco from '~/Noco';
 import NocoCache from '~/cache/NocoCache';
 import { extractProps } from '~/helpers/extractProps';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 export default class Hook implements HookType {
   id?: string;
@@ -214,7 +214,7 @@ export default class Hook implements HookType {
       updateObj.version === 'v1' &&
       ['bulkInsert', 'bulkUpdate', 'bulkDelete'].includes(updateObj.operation)
     ) {
-      NcError.badRequest(`${updateObj.operation} not supported in v1 hook`);
+      CvError.badRequest(`${updateObj.operation} not supported in v1 hook`);
     }
 
     if (updateObj.notification && typeof updateObj.notification === 'object') {

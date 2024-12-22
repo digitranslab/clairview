@@ -11,7 +11,7 @@ import {
 import { BaseReqType } from 'clairview-sdk';
 import { GlobalGuard } from '~/guards/global/global.guard';
 import { Acl } from '~/middlewares/extract-ids/extract-ids.middleware';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { JobTypes } from '~/interface/Jobs';
 import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 import { IJobsService } from '~/modules/jobs/jobs-service.interface';
@@ -43,7 +43,7 @@ export class SourceCreateController {
     );
 
     if (fnd) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Another source creation is in progress for this base.',
       );
     }

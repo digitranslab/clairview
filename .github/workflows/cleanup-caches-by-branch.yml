@@ -31,4 +31,4 @@ jobs:
               gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
           done
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}

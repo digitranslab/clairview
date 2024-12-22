@@ -14,7 +14,7 @@ import type {
   Model,
 } from '~/models';
 import type { NcContext } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import {
   CalendarRange,
   GalleryView,
@@ -134,7 +134,7 @@ const getAst = async (
         (f) => !colAliasMap[f] && !aliasColMap[f],
       );
       if (invalidFields.length) {
-        NcError.fieldNotFound(invalidFields.join(', '));
+        CvError.fieldNotFound(invalidFields.join(', '));
       }
     }
   } else {

@@ -4,7 +4,7 @@ import type { GridUpdateReqType, ViewCreateReqType } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { GridView, Model, View } from '~/models';
 import NocoCache from '~/cache/NocoCache';
 import { CacheScope } from '~/utils/globals';
@@ -77,7 +77,7 @@ export class GridsService {
     const view = await View.get(context, param.viewId);
 
     if (!view) {
-      NcError.viewNotFound(param.viewId);
+      CvError.viewNotFound(param.viewId);
     }
 
     const res = await GridView.update(context, param.viewId, param.grid);

@@ -8,7 +8,7 @@ const {
   prepareEnv,
 } = require('../clairview/cli');
 
-export class NcConfig {
+export class CvConfig {
   meta: {
     db: any;
   } = {
@@ -35,10 +35,10 @@ export class NcConfig {
       databaseUrl?: string;
     };
     secret?: string;
-  }): Promise<NcConfig> {
+  }): Promise<CvConfig> {
     const { meta } = param;
 
-    const ncConfig = new NcConfig();
+    const ncConfig = new CvConfig();
 
     if (ncConfig.meta?.db?.connection?.filename) {
       ncConfig.meta.db.connection.filename = path.join(
@@ -64,8 +64,8 @@ export class NcConfig {
     return ncConfig;
   }
 
-  public static async createByEnv(): Promise<NcConfig> {
-    return NcConfig.create({
+  public static async createByEnv(): Promise<CvConfig> {
+    return CvConfig.create({
       meta: {
         metaUrl: process.env.NC_DB,
         metaJson: process.env.NC_DB_JSON,
@@ -97,8 +97,8 @@ export const getNocoConfig = async (
       process.env.DATABASE_URL_FILE,
   });
 
-  // create NocoConfig using utility method which works similar to Clairview NcConfig with only meta db config
-  return NcConfig.create({
+  // create NocoConfig using utility method which works similar to Clairview CvConfig with only meta db config
+  return CvConfig.create({
     meta: {
       metaUrl: process.env.NC_DB || options.ncDb,
       metaJson: process.env.NC_DB_JSON || options.ncDbJson,

@@ -24,7 +24,7 @@ import { convertDateFormatForConcat } from '~/helpers/formulaFnHelper';
 import FormulaColumn from '~/models/FormulaColumn';
 import { BaseUser, ButtonColumn } from '~/models';
 import { getRefColumnIfAlias } from '~/helpers';
-import { ExternalTimeout, NcError } from '~/helpers/catchError';
+import { ExternalTimeout, CvError } from '~/helpers/catchError';
 
 const logger = new Logger('FormulaQueryBuilderv2');
 
@@ -1428,7 +1428,7 @@ export default async function formulaQueryBuilderv2(
         });
       }
     }
-    NcError.formulaError(e.message);
+    CvError.formulaError(e.message);
   }
   return qb;
 }

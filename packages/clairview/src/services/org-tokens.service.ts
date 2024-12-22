@@ -5,7 +5,7 @@ import type { ApiTokenReqType } from 'clairview-sdk';
 import type { NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import { ApiToken } from '~/models';
 
@@ -68,7 +68,7 @@ export class OrgTokensService {
       !extractRolesObj(param.user.roles)[OrgUserRoles.SUPER_ADMIN] &&
       apiToken.fk_user_id !== fk_user_id
     ) {
-      NcError.notFound('Token not found');
+      CvError.notFound('Token not found');
     }
     const res = await ApiToken.delete(param.tokenId);
 

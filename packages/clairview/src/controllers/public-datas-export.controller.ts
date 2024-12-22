@@ -10,7 +10,7 @@ import { isSystemColumn, ViewTypes } from 'clairview-sdk';
 import * as XLSX from 'xlsx';
 import papaparse from 'papaparse';
 import { nocoExecute } from '~/utils';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getAst from '~/helpers/getAst';
 import { serializeCellValue } from '~/helpers/dataHelpers';
 import { PublicDatasExportService } from '~/services/public-datas-export.service';
@@ -38,7 +38,7 @@ export class PublicDatasExportController {
     @Param('publicDataUuid') publicDataUuid: string,
   ) {
     const view = await View.getByUUID(context, publicDataUuid);
-    if (!view) NcError.viewNotFound(publicDataUuid);
+    if (!view) CvError.viewNotFound(publicDataUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
@@ -46,15 +46,15 @@ export class PublicDatasExportController {
       view.type !== ViewTypes.CALENDAR &&
       view.type !== ViewTypes.MAP
     )
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
 
     if (view.password && view.password !== req.headers?.['xc-password']) {
-      NcError.invalidSharedViewPassword();
+      CvError.invalidSharedViewPassword();
     }
 
     // check if download is allowed, in general it's called as CSV download
     if (!view.meta?.allowCSVDownload) {
-      NcError.forbidden('Download is not allowed for this view');
+      CvError.forbidden('Download is not allowed for this view');
     }
 
     const model = await view.getModelWithInfo(context);
@@ -106,7 +106,7 @@ export class PublicDatasExportController {
     const view = await View.getByUUID(context, req.params.publicDataUuid);
     const fields = req.query.fields;
 
-    if (!view) NcError.viewNotFound(req.params.publicDataUuid);
+    if (!view) CvError.viewNotFound(req.params.publicDataUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
@@ -114,15 +114,15 @@ export class PublicDatasExportController {
       view.type !== ViewTypes.CALENDAR &&
       view.type !== ViewTypes.MAP
     )
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
 
     if (view.password && view.password !== req.headers?.['xc-password']) {
-      NcError.invalidSharedViewPassword();
+      CvError.invalidSharedViewPassword();
     }
 
     // check if download is allowed
     if (!view.meta?.allowCSVDownload) {
-      NcError.forbidden('Download is not allowed for this view');
+      CvError.forbidden('Download is not allowed for this view');
     }
 
     const model = await view.getModelWithInfo(context);
@@ -181,7 +181,7 @@ export class PublicDatasExportController {
       )
       .filter((column) => !isSystemColumn(column) || view.show_system_fields);
 
-    if (!model) NcError.notFound('Table not found');
+    if (!model) CvError.notFound('Table not found');
 
     const listArgs: any = { ...req.query };
     try {

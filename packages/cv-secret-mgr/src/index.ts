@@ -2,7 +2,7 @@ import figlet from "figlet";
 import { Command } from 'commander';
 import { getNocoConfig } from "./core";
 import { SecretManager } from "./core";
-import { NcError } from "./core";
+import { CvError } from "./core";
 import { logger } from "./core";
 
 console.log(figlet.textSync("ClairView Secret CLI"));
@@ -46,7 +46,7 @@ program
 
       }
     } catch (e) {
-      if (e instanceof NcError) {
+      if (e instanceof CvError) {
         // print error message in a better way
         logger.error(e.message);
         process.exit(1);

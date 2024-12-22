@@ -5,7 +5,7 @@ import { MetaTable } from '~/utils/globals';
 import { prepareForDb } from '~/utils/modelUtils';
 import { extractProps } from '~/helpers/extractProps';
 import Model from '~/models/Model';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 export default class Comment implements CommentType {
   id?: string;
@@ -111,7 +111,7 @@ export default class Comment implements CommentType {
       'created_by_email',
     ]);
 
-    if (!insertObj.fk_model_id) NcError.tableNotFound(insertObj.fk_model_id);
+    if (!insertObj.fk_model_id) CvError.tableNotFound(insertObj.fk_model_id);
 
     if (!insertObj.source_id) {
       const model = await Model.getByIdOrName(

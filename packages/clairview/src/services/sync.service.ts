@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AppEvents } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import { Base, SyncSource } from '~/models';
 
@@ -53,7 +53,7 @@ export class SyncService {
     const syncSource = await SyncSource.get(context, param.syncId);
 
     if (!syncSource) {
-      NcError.badRequest('Sync source not found');
+      CvError.badRequest('Sync source not found');
     }
 
     const res = await SyncSource.delete(context, param.syncId);
@@ -76,7 +76,7 @@ export class SyncService {
     const syncSource = await SyncSource.get(context, param.syncId);
 
     if (!syncSource) {
-      NcError.badRequest('Sync source not found');
+      CvError.badRequest('Sync source not found');
     }
 
     const res = await SyncSource.update(

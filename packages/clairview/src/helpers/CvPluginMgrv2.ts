@@ -1,5 +1,5 @@
 import { PluginCategory } from 'clairview-sdk';
-import { NcError } from './catchError';
+import { CvError } from './catchError';
 import type {
   IEmailAdapter,
   IStorageAdapterV2,
@@ -57,7 +57,7 @@ const defaultPlugins = [
   R2PluginConfig,
 ];
 
-class NcPluginMgrv2 {
+class CvPluginMgrv2 {
   /* active plugins */
 
   // constructor(app: Noco, ncMeta: NcMetaIO) {
@@ -296,7 +296,7 @@ class NcPluginMgrv2 {
           await tempPlugin.init(args?.input);
 
           if (!tempPlugin?.getAdapter()?.test)
-            NcError.notImplemented('Plugin Test');
+            CvError.notImplemented('Plugin Test');
 
           return tempPlugin?.getAdapter()?.test?.();
         }
@@ -310,7 +310,7 @@ class NcPluginMgrv2 {
           await tempPlugin.init(args?.input);
 
           if (!tempPlugin?.getAdapter()?.test)
-            NcError.notImplemented('Plugin Test');
+            CvError.notImplemented('Plugin Test');
 
           return tempPlugin?.getAdapter()?.test?.();
         }
@@ -323,7 +323,7 @@ class NcPluginMgrv2 {
         await tempPlugin.init(args?.input);
 
         if (!tempPlugin?.getAdapter()?.test)
-          NcError.notImplemented('Plugin Test');
+          CvError.notImplemented('Plugin Test');
 
         return tempPlugin?.getAdapter()?.test?.();
       }
@@ -331,4 +331,4 @@ class NcPluginMgrv2 {
   }
 }
 
-export default NcPluginMgrv2;
+export default CvPluginMgrv2;

@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import type { FilterType } from 'clairview-sdk';
 import type { BaseModelSqlv2 } from '~/db/BaseModelSqlv2';
 import Filter from '~/models/Filter';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 // refer : https://github.com/brianc/node-pg-types/blob/master/lib/builtins.js
 const pgTypes = {
@@ -698,7 +698,7 @@ const parseCondition = (obj, columnAliases, qb, pKey?) => {
               qb = qb.whereNotIn(fieldName, val);
               break;
             default:
-              NcError.metaError({
+              CvError.metaError({
                 message: `Found invalid conditional operator "${key}" in expression`,
                 sql: '',
               });

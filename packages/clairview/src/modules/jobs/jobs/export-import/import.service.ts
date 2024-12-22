@@ -31,7 +31,7 @@ import {
   withoutId,
   withoutNull,
 } from '~/helpers/exportImportHelpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { TablesService } from '~/services/tables.service';
 import { ColumnsService } from '~/services/columns.service';
 import { FiltersService } from '~/services/filters.service';
@@ -46,7 +46,7 @@ import { GalleriesService } from '~/services/galleries.service';
 import { KanbansService } from '~/services/kanbans.service';
 import { HooksService } from '~/services/hooks.service';
 import { ViewsService } from '~/services/views.service';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { BulkDataAliasService } from '~/services/bulk-data-alias.service';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import { sanitizeColumnName } from '~/helpers';
@@ -108,11 +108,11 @@ export class ImportService {
 
     const base = await Base.get(context, param.baseId);
 
-    if (!base) return NcError.baseNotFound(param.baseId);
+    if (!base) return CvError.baseNotFound(param.baseId);
 
     const source = await Source.get(context, param.sourceId);
 
-    if (!source) return NcError.sourceNotFound(param.sourceId);
+    if (!source) return CvError.sourceNotFound(param.sourceId);
 
     const tableReferences = new Map<string, Model>();
     const linkMap = new Map<string, string>();
@@ -1762,14 +1762,14 @@ export class ImportService {
     const destProject = await Base.get(context, baseId);
     const destBase = await Source.get(context, sourceId);
 
-    if (!destProject) return NcError.baseNotFound(baseId);
-    if (!destBase) return NcError.sourceNotFound(sourceId);
+    if (!destProject) return CvError.baseNotFound(baseId);
+    if (!destBase) return CvError.sourceNotFound(sourceId);
 
     switch (src.type) {
       case 'local': {
         const path = src.path.replace(/\/$/, '');
 
-        const storageAdapter = await NcPluginMgrv2.storageAdapter();
+        const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
         try {
           const schema = JSON.parse(

@@ -42,7 +42,7 @@ jobs:
         id: cpr
         uses: repo-sync/pull-request@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}
         with:
           source_branch: "develop"
           destination_branch: "master"  
@@ -57,6 +57,6 @@ jobs:
         if: ${{ github.event.inputs.targetEnv == 'PROD' || inputs.targetEnv == 'PROD' }}
         uses: "pascalgn/automerge-action@v0.15.5"
         env:
-           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+           GITHUB_TOKEN: "${{ secrets.DIGITRANS_GITHUB_TOKEN }}"
            PULL_REQUEST: "${{ steps.cpr.outputs.pr_number }}"
            MERGE_LABELS: "Bot: Automerge"

@@ -13,7 +13,7 @@ import {
 } from '~/utils/globals';
 import Noco from '~/Noco';
 import { extractProps } from '~/helpers/extractProps';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import {
   parseMetaProp,
@@ -141,7 +141,7 @@ export default class Source implements SourceType {
   ) {
     const oldSource = await this.get(context, sourceId, false, ncMeta);
 
-    if (!oldSource) NcError.sourceNotFound(sourceId);
+    if (!oldSource) CvError.sourceNotFound(sourceId);
 
     const updateObj = extractProps(source, [
       'alias',
@@ -194,7 +194,7 @@ export default class Source implements SourceType {
     // keep order 1 for default source
     if (!oldSource.isMeta()) {
       if (updateObj.order <= 1) {
-        NcError.badRequest('Cannot change order to 1 or less');
+        CvError.badRequest('Cannot change order to 1 or less');
       }
 
       // if order is 1 for non-default source, move it to last
@@ -405,7 +405,7 @@ export default class Source implements SourceType {
     );
 
     if ((sources[0].id === this.id || this.isMeta()) && !force) {
-      NcError.badRequest('Cannot delete first source');
+      CvError.badRequest('Cannot delete first source');
     }
 
     const models = await Model.list(
@@ -512,7 +512,7 @@ export default class Source implements SourceType {
     );
 
     if ((sources[0].id === this.id || this.isMeta()) && !force) {
-      NcError.badRequest('Cannot delete first base');
+      CvError.badRequest('Cannot delete first base');
     }
 
     await Source.update(context, this.id, { deleted: true }, ncMeta);

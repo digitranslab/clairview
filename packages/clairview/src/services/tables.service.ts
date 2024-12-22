@@ -26,7 +26,7 @@ import type { NcContext, NcRequest } from '~/interface/config';
 import { Base, Column, Model, ModelRoleVisibility } from '~/models';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import ProjectMgrv2 from '~/db/sql-mgr/v2/ProjectMgrv2';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getColumnPropsFromUIDT from '~/helpers/getColumnPropsFromUIDT';
 import getColumnUiType from '~/helpers/getColumnUiType';
 import getTableNameAlias, { getColumnNameAlias } from '~/helpers/getTableName';
@@ -69,7 +69,7 @@ export class TablesService {
     const source = base.sources.find((b) => b.id === model.source_id);
 
     if (model.base_id !== base.id) {
-      NcError.badRequest('Model does not belong to base');
+      CvError.badRequest('Model does not belong to base');
     }
 
     // if meta/description present update and return
@@ -82,11 +82,11 @@ export class TablesService {
 
     // allow user to only update meta json data when source is restricted changes to schema
     if (source?.is_schema_readonly) {
-      NcError.sourceMetaReadOnly(source.alias);
+      CvError.sourceMetaReadOnly(source.alias);
     }
 
     if (!param.table.table_name) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Missing table name `table_name` property in request body',
       );
     }
@@ -107,7 +107,7 @@ export class TablesService {
 
     // validate table name
     if (/^\s+|\s+$/.test(param.table.table_name)) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Leading or trailing whitespace not allowed in table names',
       );
     }
@@ -119,7 +119,7 @@ export class TablesService {
         source_id: source.id,
       }))
     ) {
-      NcError.badRequest('Duplicate table name');
+      CvError.badRequest('Duplicate table name');
     }
 
     if (!param.table.title) {
@@ -137,7 +137,7 @@ export class TablesService {
         source_id: source.id,
       }))
     ) {
-      NcError.badRequest('Duplicate table alias');
+      CvError.badRequest('Duplicate table alias');
     }
 
     const sqlMgr = await ProjectMgrv2.getSqlMgr(context, base);
@@ -154,7 +154,7 @@ export class TablesService {
     }
 
     if (param.table.table_name.length > tableNameLengthLimit) {
-      NcError.badRequest(
+      CvError.badRequest(
         `Table name exceeds ${tableNameLengthLimit} characters`,
       );
     }
@@ -225,7 +225,7 @@ export class TablesService {
         }),
       );
 
-      NcError.badRequest(
+      CvError.badRequest(
         `This is a many to many table for ${tables[0]?.title} (${relColumns[0]?.title}) & ${tables[1]?.title} (${relColumns[1]?.title}). You can disable "Show M2M tables" in base settings to avoid seeing this.`,
       );
     } else {
@@ -246,7 +246,7 @@ export class TablesService {
           colId: relations[0].fk_column_id,
         });
         const relTable = await Model.get(context, relCol.fk_model_id);
-        NcError.tableAssociatedWithLink(table.id, {
+        CvError.tableAssociatedWithLink(table.id, {
           customMessage: `This is a many to many table for '${relTable?.title}' (${relTable?.title}), please delete the column before deleting the table.`,
         });
       }
@@ -268,7 +268,7 @@ export class TablesService {
             .then(),
         ),
       );
-      NcError.badRequest(
+      CvError.badRequest(
         `Table can't be deleted since Table is being referred in following tables : ${referredTables.join(
           ', ',
         )}. Delete LinkToAnotherRecord columns and try again.`,
@@ -347,7 +347,7 @@ export class TablesService {
     });
 
     if (!table) {
-      NcError.tableNotFound(param.tableId);
+      CvError.tableNotFound(param.tableId);
     }
 
     // todo: optimise
@@ -580,7 +580,7 @@ export class TablesService {
     }
 
     if (!tableCreatePayLoad.title) {
-      NcError.badRequest('Missing table `title` property in request body');
+      CvError.badRequest('Missing table `title` property in request body');
     }
 
     if (!tableCreatePayLoad.table_name) {
@@ -594,7 +594,7 @@ export class TablesService {
         source_id: source.id,
       }))
     ) {
-      NcError.badRequest('Duplicate table alias');
+      CvError.badRequest('Duplicate table alias');
     }
 
     if (source.type === 'databricks') {
@@ -615,7 +615,7 @@ export class TablesService {
 
     // validate table name
     if (/^\s+|\s+$/.test(tableCreatePayLoad.table_name)) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Leading or trailing whitespace not allowed in table names',
       );
     }
@@ -627,7 +627,7 @@ export class TablesService {
         source_id: source.id,
       }))
     ) {
-      NcError.badRequest('Duplicate table name');
+      CvError.badRequest('Duplicate table name');
     }
 
     if (!tableCreatePayLoad.title) {
@@ -653,7 +653,7 @@ export class TablesService {
     }
 
     if (tableCreatePayLoad.table_name.length > tableNameLengthLimit) {
-      NcError.badRequest(
+      CvError.badRequest(
         `Table name exceeds ${tableNameLengthLimit} characters`,
       );
     }
@@ -699,7 +699,7 @@ export class TablesService {
       }
 
       if (column.title && column.title.length > 255) {
-        NcError.badRequest(
+        CvError.badRequest(
           `Column title ${column.title} exceeds 255 characters`,
         );
       }

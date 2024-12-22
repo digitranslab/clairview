@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import type { AppConfig, NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Base } from '~/models';
 
 // todo: load from config
@@ -41,11 +41,11 @@ export class SharedBasesService {
     }
 
     if (roles === 'editor') {
-      NcError.badRequest('Only viewer role is supported');
+      CvError.badRequest('Only viewer role is supported');
     }
 
     if (!base) {
-      NcError.baseNotFound(param.baseId);
+      CvError.baseNotFound(param.baseId);
     }
 
     const data: any = {
@@ -92,11 +92,11 @@ export class SharedBasesService {
     }
 
     if (!base) {
-      NcError.baseNotFound(param.baseId);
+      CvError.baseNotFound(param.baseId);
     }
 
     if (roles === 'editor' && process.env.NC_CLOUD === 'true') {
-      NcError.badRequest('Only viewer role is supported');
+      CvError.badRequest('Only viewer role is supported');
     }
 
     const data: any = {
@@ -146,7 +146,7 @@ export class SharedBasesService {
     const base = await Base.get(context, param.baseId);
 
     if (!base) {
-      NcError.baseNotFound(param.baseId);
+      CvError.baseNotFound(param.baseId);
     }
     const data: any = {
       uuid: null,
@@ -171,7 +171,7 @@ export class SharedBasesService {
     const base = await Base.get(context, param.baseId);
 
     if (!base) {
-      NcError.baseNotFound(param.baseId);
+      CvError.baseNotFound(param.baseId);
     }
     const data: any = {
       uuid: base.uuid,

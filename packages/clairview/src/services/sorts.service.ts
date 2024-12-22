@@ -4,7 +4,7 @@ import type { SortReqType } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Sort } from '~/models';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class SortsService {
     const sort = await Sort.get(context, param.sortId);
 
     if (!sort) {
-      NcError.badRequest('Sort not found');
+      CvError.badRequest('Sort not found');
     }
 
     await Sort.delete(context, param.sortId);
@@ -43,7 +43,7 @@ export class SortsService {
     const sort = await Sort.get(context, param.sortId);
 
     if (!sort) {
-      NcError.badRequest('Sort not found');
+      CvError.badRequest('Sort not found');
     }
 
     const res = await Sort.update(context, param.sortId, param.sort);

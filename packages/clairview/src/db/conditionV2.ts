@@ -18,7 +18,7 @@ import type LookupColumn from '~/models/LookupColumn';
 import type RollupColumn from '~/models/RollupColumn';
 import type FormulaColumn from '~/models/FormulaColumn';
 import { getColumnName } from '~/db/BaseModelSqlv2';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import formulaQueryBuilderv2 from '~/db/formulav2/formulaQueryBuilderv2';
 import genRollupSelectv2 from '~/db/genRollupSelectv2';
 import { sanitize } from '~/helpers/sqlSanitize';
@@ -180,13 +180,13 @@ const parseConditionV2 = async (
     const filterColumn = await filter.getColumn(context);
     if (!filterColumn) {
       if (throwErrorIfInvalid) {
-        NcError.fieldNotFound(filter.fk_column_id);
+        CvError.fieldNotFound(filter.fk_column_id);
       }
     }
     const column = await getRefColumnIfAlias(context, filterColumn);
     if (!column) {
       if (throwErrorIfInvalid) {
-        NcError.fieldNotFound(filter.fk_column_id);
+        CvError.fieldNotFound(filter.fk_column_id);
       }
     }
     if (column.uidt === UITypes.LinkToAnotherRecord) {

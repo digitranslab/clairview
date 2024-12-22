@@ -1,4 +1,4 @@
-import { NcErrorType } from 'clairview-sdk'
+import { CvErrorType } from 'clairview-sdk'
 
 export async function extractSdkResponseErrorMsg(e: Error & { response: any }) {
   if (!e || !e.response) {
@@ -32,12 +32,12 @@ export async function extractSdkResponseErrorMsg(e: Error & { response: any }) {
 }
 
 export async function extractSdkResponseErrorMsgv2(e: Error & { response: any }): Promise<{
-  error: NcErrorType
+  error: CvErrorType
   message: string
   details?: any
 }> {
   const unknownError = {
-    error: NcErrorType.UNKNOWN_ERROR,
+    error: CvErrorType.UNKNOWN_ERROR,
     message: 'Something went wrong',
   }
 
@@ -48,7 +48,7 @@ export async function extractSdkResponseErrorMsgv2(e: Error & { response: any })
   if (e.response.data instanceof Blob) {
     try {
       const parsedError = JSON.parse(await e.response.data.text())
-      if (parsedError.error && parsedError.error in NcErrorType) {
+      if (parsedError.error && parsedError.error in CvErrorType) {
         return parsedError
       }
       return unknownError
@@ -56,7 +56,7 @@ export async function extractSdkResponseErrorMsgv2(e: Error & { response: any })
       return unknownError
     }
   } else {
-    if (e.response.data.error && e.response.data.error in NcErrorType) {
+    if (e.response.data.error && e.response.data.error in CvErrorType) {
       return e.response.data
     }
 
@@ -64,4 +64,4 @@ export async function extractSdkResponseErrorMsgv2(e: Error & { response: any })
   }
 }
 
-export { NcErrorType }
+export { CvErrorType }

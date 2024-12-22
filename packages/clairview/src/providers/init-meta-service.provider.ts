@@ -4,13 +4,13 @@ import { T } from '~/utils';
 import { populatePluginsForCloud } from '~/utils/cloud/populateCloudPlugins';
 import { MetaService } from '~/meta/meta.service';
 import Noco from '~/Noco';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import NcUpgrader from '~/version-upgrader/NcUpgrader';
 import NocoCache from '~/cache/NocoCache';
 import getInstance from '~/utils/getInstance';
 import initAdminFromEnv from '~/helpers/initAdminFromEnv';
 import { User } from '~/models';
-import { NcConfig, prepareEnv } from '~/utils/cv-config';
+import { CvConfig, prepareEnv } from '~/utils/cv-config';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import { updateMigrationJobsState } from '~/helpers/migrationJobs';
 import { initBaseBehavior } from '~/helpers/initBaseBehaviour';
@@ -28,7 +28,7 @@ export const InitMetaServiceProvider: FactoryProvider = {
     // NC_DATABASE_URL_FILE, DATABASE_URL_FILE, DATABASE_URL, NC_DATABASE_URL to NC_DB
     await prepareEnv();
 
-    const config = await NcConfig.createByEnv();
+    const config = await CvConfig.createByEnv();
 
     // set version
     process.env.NC_VERSION = '0258003';
@@ -61,7 +61,7 @@ export const InitMetaServiceProvider: FactoryProvider = {
 
     // Avoid upgrading directly from versions lower than 0100002 (NC_VERSION)
     if (instanceConfig) {
-      const configObj: NcConfig = JSON.parse(instanceConfig.value);
+      const configObj: CvConfig = JSON.parse(instanceConfig.value);
 
       if (+configObj.version < 100002) {
         throw new Error(
@@ -104,7 +104,7 @@ export const InitMetaServiceProvider: FactoryProvider = {
     await NcUpgrader.upgrade({ ncMeta: Noco._ncMeta });
 
     // init plugin manager
-    await NcPluginMgrv2.init(Noco.ncMeta);
+    await CvPluginMgrv2.init(Noco.ncMeta);
 
     if (process.env.NC_CLOUD === 'true') {
       await populatePluginsForCloud({ ncMeta: Noco.ncMeta });

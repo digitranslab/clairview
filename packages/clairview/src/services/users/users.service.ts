@@ -23,8 +23,8 @@ import { MetaTable, RootScopes } from '~/utils/globals';
 import Noco from '~/Noco';
 import { Store, User, UserRefreshToken } from '~/models';
 import { randomTokenString } from '~/helpers/stringHelpers';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
-import { NcError } from '~/helpers/catchError';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
+import { CvError } from '~/helpers/catchError';
 import { BasesService } from '~/services/bases.service';
 import { extractProps } from '~/helpers/extractProps';
 
@@ -42,7 +42,7 @@ export class UsersService {
     if (emailPattern) {
       const regex = new RegExp(emailPattern);
       if (!regex.test(email)) {
-        NcError.forbidden('Not allowed to signup/signin with this email');
+        CvError.forbidden('Not allowed to signup/signin with this email');
       }
     }
   }
@@ -131,7 +131,7 @@ export class UsersService {
       } catch {}
 
       if (settings?.invite_only_signup) {
-        NcError.badRequest('Not allowed to signup, contact super admin.');
+        CvError.badRequest('Not allowed to signup, contact super admin.');
       } else {
         roles = OrgUserRoles.VIEWER;
       }
@@ -170,14 +170,14 @@ export class UsersService {
     const { currentPassword, newPassword } = param.body;
 
     if (!currentPassword || !newPassword) {
-      return NcError.badRequest('Missing new/old password');
+      return CvError.badRequest('Missing new/old password');
     }
 
     // validate password and throw error if password is satisfying the conditions
     const { valid, error } = validatePassword(newPassword);
 
     if (!valid) {
-      NcError.badRequest(`Password : ${error}`);
+      CvError.badRequest(`Password : ${error}`);
     }
 
     const user = await User.getByEmail(param.user.email);
@@ -188,7 +188,7 @@ export class UsersService {
     );
 
     if (hashedPassword !== user.password) {
-      return NcError.badRequest('Current password is wrong');
+      return CvError.badRequest('Current password is wrong');
     }
 
     const salt = await promisify(bcrypt.genSalt)(10);
@@ -226,7 +226,7 @@ export class UsersService {
     const _email = param.body.email;
 
     if (!_email) {
-      NcError.badRequest('Please enter your email address.');
+      CvError.badRequest('Please enter your email address.');
     }
 
     const email = _email.toLowerCase();
@@ -244,7 +244,7 @@ export class UsersService {
         const template = (
           await import('~/modules/auth/ui/emailTemplates/forgotPassword')
         ).default;
-        await NcPluginMgrv2.emailAdapter().then((adapter) =>
+        await CvPluginMgrv2.emailAdapter().then((adapter) =>
           adapter.mailSend({
             to: user.email,
             subject: 'Password Reset Link',
@@ -256,7 +256,7 @@ export class UsersService {
         );
       } catch (e) {
         console.log(e);
-        return NcError.badRequest(
+        return CvError.badRequest(
           'Email Plugin is not found. Please contact administrators to configure it in App Store first.',
         );
       }
@@ -267,7 +267,7 @@ export class UsersService {
         req: param.req,
       });
     } else {
-      return NcError.badRequest('Your email has not been registered.');
+      return CvError.badRequest('Your email has not been registered.');
     }
 
     return true;
@@ -286,10 +286,10 @@ export class UsersService {
     );
 
     if (!user || !user.email) {
-      NcError.badRequest('Invalid reset url');
+      CvError.badRequest('Invalid reset url');
     }
     if (new Date(user.reset_password_expires) < new Date()) {
-      NcError.badRequest('Password reset url expired');
+      CvError.badRequest('Password reset url expired');
     }
 
     return true;
@@ -317,19 +317,19 @@ export class UsersService {
     );
 
     if (!user) {
-      NcError.badRequest('Invalid reset url');
+      CvError.badRequest('Invalid reset url');
     }
     if (user.reset_password_expires < new Date()) {
-      NcError.badRequest('Password reset url expired');
+      CvError.badRequest('Password reset url expired');
     }
     if (user.provider && user.provider !== 'local') {
-      NcError.badRequest('Email registered via social account');
+      CvError.badRequest('Email registered via social account');
     }
 
     // validate password and throw error if password is satisfying the conditions
     const { valid, error } = validatePassword(body.password);
     if (!valid) {
-      NcError.badRequest(`Password : ${error}`);
+      CvError.badRequest(`Password : ${error}`);
     }
 
     const salt = await promisify(bcrypt.genSalt)(10);
@@ -370,7 +370,7 @@ export class UsersService {
     );
 
     if (!user) {
-      NcError.badRequest('Invalid verification url');
+      CvError.badRequest('Invalid verification url');
     }
 
     await User.update(user.id, {
@@ -395,7 +395,7 @@ export class UsersService {
   }): Promise<any> {
     try {
       if (!param.req?.cookies?.refresh_token) {
-        NcError.badRequest(`Missing refresh token`);
+        CvError.badRequest(`Missing refresh token`);
       }
 
       const oldRefreshToken = param.req.cookies.refresh_token;
@@ -403,7 +403,7 @@ export class UsersService {
       const user = await User.getByRefreshToken(oldRefreshToken);
 
       if (!user) {
-        NcError.badRequest(`Invalid refresh token`);
+        CvError.badRequest(`Invalid refresh token`);
       }
 
       const refreshToken = randomTokenString();
@@ -412,7 +412,7 @@ export class UsersService {
         await UserRefreshToken.updateOldToken(oldRefreshToken, refreshToken);
       } catch (error) {
         console.error('Failed to update old refresh token:', error);
-        NcError.internalServerError('Failed to update refresh token');
+        CvError.internalServerError('Failed to update refresh token');
       }
 
       setTokenCookie(param.res, refreshToken);
@@ -421,7 +421,7 @@ export class UsersService {
         token: genJwt(user, Noco.getConfig()),
       } as any;
     } catch (e) {
-      NcError.badRequest(e.message);
+      CvError.badRequest(e.message);
     }
   }
 
@@ -439,11 +439,11 @@ export class UsersService {
     // validate password and throw error if password is satisfying the conditions
     const { valid, error } = validatePassword(password);
     if (!valid) {
-      NcError.badRequest(`Password : ${error}`);
+      CvError.badRequest(`Password : ${error}`);
     }
 
     if (!isEmail(_email)) {
-      NcError.badRequest(`Invalid email`);
+      CvError.badRequest(`Invalid email`);
     }
 
     const email = _email.toLowerCase();
@@ -455,9 +455,9 @@ export class UsersService {
     if (user) {
       if (token) {
         if (token !== user.invite_token) {
-          NcError.badRequest(`Invalid invite url`);
+          CvError.badRequest(`Invalid invite url`);
         } else if (user.invite_token_expires < new Date()) {
-          NcError.badRequest(
+          CvError.badRequest(
             'Expired invite url, Please contact super admin to get a new invite url',
           );
         }
@@ -487,7 +487,7 @@ export class UsersService {
           email: user.email,
         });
       } else {
-        NcError.badRequest('User already exist');
+        CvError.badRequest('User already exist');
       }
     } else {
       const { createdProject: _createdProject } =
@@ -506,7 +506,7 @@ export class UsersService {
       const template = (await import('~/modules/auth/ui/emailTemplates/verify'))
         .default;
       await (
-        await NcPluginMgrv2.emailAdapter()
+        await CvPluginMgrv2.emailAdapter()
       ).mailSend({
         to: email,
         subject: 'Verify email',
@@ -568,7 +568,7 @@ export class UsersService {
       }
       return { msg: 'Signed out successfully' };
     } catch (e) {
-      NcError.badRequest(e.message);
+      CvError.badRequest(e.message);
     }
   }
 

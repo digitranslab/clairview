@@ -29,7 +29,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4.2.3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}
         with:
           signoff: true
           branch: "bot/update-clairview-sdk-path"
@@ -43,6 +43,6 @@ jobs:
       - name: automerge
         uses: "pascalgn/automerge-action@v0.15.5"
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.DIGITRANS_GITHUB_TOKEN }}"
           PULL_REQUEST: "${{ steps.cpr.outputs.pull-request-number }}"
           MERGE_LABELS: "Bot: Automerge"

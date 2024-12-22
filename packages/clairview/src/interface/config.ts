@@ -169,7 +169,7 @@ export interface NcGui {
 }
 
 // @ts-ignore
-export interface NcConfig {
+export interface CvConfig {
   title?: string;
   version?: string;
 
@@ -191,7 +191,7 @@ export interface NcConfig {
   cluster?: number;
 
   mailer?: MailerConfig;
-  make?: () => NcConfig;
+  make?: () => CvConfig;
   serverless?: ServerlessConfig;
 
   toolDir?: string;

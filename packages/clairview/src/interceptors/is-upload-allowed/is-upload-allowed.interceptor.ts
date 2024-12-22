@@ -7,7 +7,7 @@ import type {
   NestInterceptor,
 } from '@nestjs/common';
 import Noco from '~/Noco';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { MetaTable } from '~/utils/globals';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class UploadAllowedInterceptor implements NestInterceptor {
 
     if (!request['user']?.id) {
       if (!request['user']?.isPublicBase) {
-        NcError.unauthorized('Unauthorized');
+        CvError.unauthorized('Unauthorized');
       }
     }
 
@@ -43,6 +43,6 @@ export class UploadAllowedInterceptor implements NestInterceptor {
       }
     } catch {}
 
-    NcError.badRequest('Upload not allowed');
+    CvError.badRequest('Upload not allowed');
   }
 }

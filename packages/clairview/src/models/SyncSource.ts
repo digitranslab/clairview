@@ -1,6 +1,6 @@
 import type { NcContext } from '~/interface/config';
 import User from '~/models/User';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import Noco from '~/Noco';
 import { extractProps } from '~/helpers/extractProps';
 import { MetaTable } from '~/utils/globals';
@@ -151,7 +151,7 @@ export default class SyncSource {
   }
 
   static async deleteByUserId(userId: string, ncMeta = Noco.ncMeta) {
-    if (!userId) NcError.badRequest('User Id is required');
+    if (!userId) CvError.badRequest('User Id is required');
 
     return await ncMeta
       .knex(MetaTable.SYNC_SOURCE)

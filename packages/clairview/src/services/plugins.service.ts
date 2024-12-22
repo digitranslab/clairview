@@ -4,7 +4,7 @@ import type { PluginTestReqType, PluginType } from 'clairview-sdk';
 import type { NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { Plugin } from '~/models';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class PluginsService {
       testBody: param.body,
       req: param.req,
     });
-    return await NcPluginMgrv2.test(param.body);
+    return await CvPluginMgrv2.test(param.body);
   }
 
   async pluginRead(param: { pluginId: string }) {

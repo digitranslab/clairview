@@ -3,7 +3,7 @@ import type { NcContext } from '~/interface/config';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import Noco from '~/Noco';
 import { extractProps } from '~/helpers/extractProps';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { isEE } from '~/utils';
 import {
   IntegrationSlotTypes,
@@ -65,7 +65,7 @@ export default class IntegrationStore {
     const storeDefinition = STORE_DEFINITIONS[integration.type];
 
     if (!storeDefinition) {
-      NcError.badRequest('Invalid integration type');
+      CvError.badRequest('Invalid integration type');
     }
 
     const storeKeys = Object.keys(storeDefinition);
@@ -73,7 +73,7 @@ export default class IntegrationStore {
     const insertObj = extractProps(data, [...storeKeys]);
 
     if (isEE && !context.workspace_id) {
-      NcError.badRequest('Missing required fields');
+      CvError.badRequest('Missing required fields');
     }
 
     insertObj.fk_workspace_id = context.workspace_id;
@@ -84,7 +84,7 @@ export default class IntegrationStore {
 
     for (const [k, v] of Object.entries(storeDefinition)) {
       if (v.required && !insertObj[k]) {
-        NcError.badRequest(`Missing required field: ${v.id}`);
+        CvError.badRequest(`Missing required field: ${v.id}`);
       }
 
       if (
@@ -92,7 +92,7 @@ export default class IntegrationStore {
         v.type === IntegrationSlotTypes.NUMBER &&
         isNaN(Number(insertObj[k]))
       ) {
-        NcError.badRequest(`Invalid type for field: ${v.id}`);
+        CvError.badRequest(`Invalid type for field: ${v.id}`);
       }
 
       if (v.type === IntegrationSlotTypes.BOOLEAN) {
@@ -104,12 +104,12 @@ export default class IntegrationStore {
           try {
             insertObj[k] = JSON.parse(insertObj[k]);
           } catch (e) {
-            NcError.badRequest(`Invalid type for field: ${v.id}`);
+            CvError.badRequest(`Invalid type for field: ${v.id}`);
           }
         }
 
         if (!Array.isArray(insertObj[k])) {
-          NcError.badRequest(`Invalid type for field: ${v.id}`);
+          CvError.badRequest(`Invalid type for field: ${v.id}`);
         }
 
         insertObj[k] = JSON.stringify(insertObj[k]);
@@ -120,12 +120,12 @@ export default class IntegrationStore {
           try {
             insertObj[k] = JSON.parse(insertObj[k]);
           } catch (e) {
-            NcError.badRequest(`Invalid type for field: ${v.id}`);
+            CvError.badRequest(`Invalid type for field: ${v.id}`);
           }
         }
 
         if (typeof insertObj[k] !== 'object') {
-          NcError.badRequest(`Invalid type for field: ${v.id}`);
+          CvError.badRequest(`Invalid type for field: ${v.id}`);
         }
 
         insertObj[k] = JSON.stringify(insertObj[k]);
@@ -136,7 +136,7 @@ export default class IntegrationStore {
         v.type === IntegrationSlotTypes.STRING &&
         typeof insertObj[k] !== 'string'
       ) {
-        NcError.badRequest(`Invalid type for field: ${v.id}`);
+        CvError.badRequest(`Invalid type for field: ${v.id}`);
       }
 
       if (k !== v.id) {
@@ -183,7 +183,7 @@ export default class IntegrationStore {
     const storeDefinition = STORE_DEFINITIONS[integrationStoreData.type];
 
     if (!storeDefinition) {
-      NcError.badRequest('Invalid integration type');
+      CvError.badRequest('Invalid integration type');
     }
 
     const data = prepareResponse(integrationStoreData, storeDefinition);
@@ -236,7 +236,7 @@ export default class IntegrationStore {
       const storeDefinition = STORE_DEFINITIONS[d.type];
 
       if (!storeDefinition) {
-        NcError.badRequest('Invalid integration type');
+        CvError.badRequest('Invalid integration type');
       }
 
       const data = prepareResponse(d, storeDefinition);
@@ -259,16 +259,16 @@ export default class IntegrationStore {
     const storeDefinition = STORE_DEFINITIONS[integration.type];
 
     if (!storeDefinition) {
-      NcError.badRequest('Invalid integration type');
+      CvError.badRequest('Invalid integration type');
     }
 
     for (const field of fields) {
       if (!storeDefinition[field]) {
-        NcError.badRequest('Invalid field');
+        CvError.badRequest('Invalid field');
       }
 
       if (storeDefinition[field].type !== IntegrationSlotTypes.NUMBER) {
-        NcError.badRequest(
+        CvError.badRequest(
           'This operation is only supported for number fields',
         );
       }
@@ -299,7 +299,7 @@ export default class IntegrationStore {
     const storeDefinition = STORE_DEFINITIONS[integration.type];
 
     if (!storeDefinition) {
-      NcError.badRequest('Invalid integration type');
+      CvError.badRequest('Invalid integration type');
     }
 
     const result = await ncMeta

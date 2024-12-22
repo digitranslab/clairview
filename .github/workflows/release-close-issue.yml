@@ -31,4 +31,4 @@ jobs:
         env:
           LABEL: ${{ github.event.inputs.issue_label || inputs.issue_label }}
           VERSION: ${{ github.event.inputs.version || inputs.version }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}

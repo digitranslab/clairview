@@ -3,7 +3,7 @@ import addFormats from 'ajv-formats';
 import type { ErrorObject } from 'ajv';
 import type { NextFunction, Request, Response } from 'express';
 import swagger from '~/schema';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 export function parseHrtimeToMilliSeconds(hrtime) {
   const milliseconds = (hrtime[0] * 1000 + hrtime[1] / 1e6).toFixed(3);
@@ -49,7 +49,7 @@ export const validatePayload = (schema: string, payload: any) => {
       ajv.errors || validate.errors;
 
     // If the request body is invalid, throw error with error message  and errors
-    NcError.ajvValidationError({
+    CvError.ajvValidationError({
       message: 'Invalid request body',
       errors,
     });

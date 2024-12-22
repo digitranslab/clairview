@@ -1,6 +1,6 @@
 import { extractLimitAndOffset } from '.';
 import type { PaginatedType } from 'clairview-sdk';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 export class PagedResponseImpl<T> {
   constructor(
@@ -39,7 +39,7 @@ export class PagedResponseImpl<T> {
       }
 
       if (offset && offset >= +count) {
-        NcError.invalidOffsetValue(offset);
+        CvError.invalidOffsetValue(offset);
       }
     }
 

@@ -54,11 +54,11 @@ export class AuthService {
     // // validate password and throw error if password is satisfying the conditions
     // const { valid, error } = validatePassword(password);
     // if (!valid) {
-    //   NcError.badRequest(`Password : ${error}`);
+    //   CvError.badRequest(`Password : ${error}`);
     // }
     //
     // if (!isEmail(_email)) {
-    //   NcError.badRequest(`Invalid email`);
+    //   CvError.badRequest(`Invalid email`);
     // }
 
     const email = _email.toLowerCase();
@@ -68,9 +68,9 @@ export class AuthService {
     if (user) {
       // if (token) {
       //   if (token !== user.invite_token) {
-      //     NcError.badRequest(`Invalid invite url`);
+      //     CvError.badRequest(`Invalid invite url`);
       //   } else if (user.invite_token_expires < new Date()) {
-      //     NcError.badRequest(
+      //     CvError.badRequest(
       //       'Expired invite url, Please contact super admin to get a new invite url'
       //     );
       //   }
@@ -101,7 +101,7 @@ export class AuthService {
       //     email: user.email,
       //   });
       // } else {
-      //   NcError.badRequest('User already exist');
+      //   CvError.badRequest('User already exist');
       // }
     } else {
       await this.registerNewUserIfAllowed({
@@ -118,7 +118,7 @@ export class AuthService {
     // try {
     //   const template = (await import('./ui/emailTemplates/verify')).default;
     //   await (
-    //     await NcPluginMgrv2.emailAdapter()
+    //     await CvPluginMgrv2.emailAdapter()
     //   ).mailSend({
     //     to: email,
     //     subject: 'Verify email',
@@ -181,7 +181,7 @@ export class AuthService {
     //   } catch {}
     //
     //   if (settings?.invite_only_signup) {
-    //     NcError.badRequest('Not allowed to signup, contact super admin.');
+    //     CvError.badRequest('Not allowed to signup, contact super admin.');
     //   } else {
     //     roles = OrgUserRoles.VIEWER;
     //   }

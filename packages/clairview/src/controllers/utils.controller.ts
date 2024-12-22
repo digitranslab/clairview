@@ -26,7 +26,7 @@ import { TelemetryService } from '~/services/telemetry.service';
 import { NcRequest } from '~/interface/config';
 import { Integration } from '~/models';
 import { MetaTable, RootScopes } from '~/utils/globals';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { deepMerge, isEE } from '~/utils';
 import Noco from '~/Noco';
 
@@ -79,11 +79,11 @@ export class UtilsController {
       );
 
       if (!integration || integration.type !== IntegrationsType.Database) {
-        NcError.integrationNotFound(body.fk_integration_id);
+        CvError.integrationNotFound(body.fk_integration_id);
       }
 
       if (integration.is_private && integration.created_by !== req.user.id) {
-        NcError.forbidden('You do not have access to this integration');
+        CvError.forbidden('You do not have access to this integration');
       }
 
       if (!req.user.roles[OrgUserRoles.CREATOR]) {
@@ -105,7 +105,7 @@ export class UtilsController {
           .first();
 
         if (!baseWithPermission)
-          NcError.forbidden('You do not have access to this integration');
+          CvError.forbidden('You do not have access to this integration');
       }
 
       config = await integration.getConfig();

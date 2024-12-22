@@ -1,6 +1,6 @@
 import { extractRolesObj, type UserType } from 'clairview-sdk';
 import type { NcContext } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import Noco from '~/Noco';
 import { extractProps } from '~/helpers/extractProps';
 import NocoCache from '~/cache/NocoCache';
@@ -112,7 +112,7 @@ export default class User implements UserType {
       // check if the target email addr is in use or not
       const targetUser = await this.getByEmail(updateObj.email, ncMeta);
       if (targetUser && targetUser.id !== id) {
-        NcError.badRequest('email is in use');
+        CvError.badRequest('email is in use');
       }
     } else {
       // set email prop to avoid generation of invalid cache key
@@ -294,11 +294,11 @@ export default class User implements UserType {
   }
 
   static async delete(userId: string, ncMeta = Noco.ncMeta) {
-    if (!userId) NcError.badRequest('userId is required');
+    if (!userId) CvError.badRequest('userId is required');
 
     const user = await this.get(userId, ncMeta);
 
-    if (!user) NcError.userNotFound(userId);
+    if (!user) CvError.userNotFound(userId);
 
     // clear all user related cache
     await this.clearCache(userId, ncMeta);
@@ -323,7 +323,7 @@ export default class User implements UserType {
   ) {
     const user = args.user ?? (await this.get(userId, ncMeta));
 
-    if (!user) NcError.userNotFound(userId);
+    if (!user) CvError.userNotFound(userId);
 
     const baseRoles = await new Promise((resolve) => {
       if (args.baseId) {
@@ -351,7 +351,7 @@ export default class User implements UserType {
 
   protected static async clearCache(userId: string, ncMeta = Noco.ncMeta) {
     const user = await this.get(userId, ncMeta);
-    if (!user) NcError.userNotFound(userId);
+    if (!user) CvError.userNotFound(userId);
 
     // todo: skip base user cache delete based on flag
     const bases = await BaseUser.getProjectsList(userId, {}, ncMeta);

@@ -207,7 +207,7 @@ const [useProvideIntegrationViewStore, _useIntegrationStore] = useInjectionState
     } catch (e) {
       const error = await extractSdkResponseErrorMsgv2(e)
 
-      if (error.error === NcErrorType.INTEGRATION_NOT_FOUND) {
+      if (error.error === CvErrorType.INTEGRATION_NOT_FOUND) {
         await message.error(error.message?.replace(integration.id, integration.title!))
         window.location.reload()
         return
@@ -374,7 +374,7 @@ const [useProvideIntegrationViewStore, _useIntegrationStore] = useInjectionState
     } catch (e) {
       const error = await extractSdkResponseErrorMsgv2(e)
 
-      if (error.error === NcErrorType.INTEGRATION_NOT_FOUND) {
+      if (error.error === CvErrorType.INTEGRATION_NOT_FOUND) {
         await message.error(error.message?.replace(integration.id!, integration.title!))
         window.location.reload()
         return

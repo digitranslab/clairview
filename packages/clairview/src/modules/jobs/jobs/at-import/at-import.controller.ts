@@ -10,7 +10,7 @@ import { Request } from 'express';
 import { GlobalGuard } from '~/guards/global/global.guard';
 import { Acl } from '~/middlewares/extract-ids/extract-ids.middleware';
 import { SyncSource } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { JobTypes } from '~/interface/Jobs';
 import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 import { IJobsService } from '~/modules/jobs/jobs-service.interface';
@@ -35,7 +35,7 @@ export class AtImportController {
     const fnd = jobs.find((j) => j.data.syncId === req.params.syncId);
 
     if (fnd) {
-      NcError.badRequest('Sync already in progress');
+      CvError.badRequest('Sync already in progress');
     }
 
     const syncSource = await SyncSource.get(context, req.params.syncId);

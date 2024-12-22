@@ -11,7 +11,7 @@ import { populateMeta, validatePayload } from '~/helpers';
 import { populateRollupColumnAndHideLTAR } from '~/helpers/populateMeta';
 import { syncBaseMigration } from '~/helpers/syncMigration';
 import { Base, Integration, Source } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import Noco from '~/Noco';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class SourcesService {
     const source = await Source.get(context, param.sourceId);
 
     if (!source) {
-      NcError.sourceNotFound(param.sourceId);
+      CvError.sourceNotFound(param.sourceId);
     }
 
     source.config = await source.getSourceConfig();
@@ -77,7 +77,7 @@ export class SourcesService {
         req: param.req,
       });
     } catch (e) {
-      NcError.badRequest(e);
+      CvError.badRequest(e);
     }
     return true;
   }
@@ -91,7 +91,7 @@ export class SourcesService {
       const source = await Source.get(context, param.sourceId, false, ncMeta);
       await source.softDelete(context, ncMeta);
     } catch (e) {
-      NcError.badRequest(e);
+      CvError.badRequest(e);
     }
     return true;
   }
@@ -144,7 +144,7 @@ export class SourcesService {
 
       // Check if integration exists
       if (!integration) {
-        NcError.integrationNotFound((baseBody as any).fk_integration_id);
+        CvError.integrationNotFound((baseBody as any).fk_integration_id);
       }
 
       // check if integration is of type Database
@@ -152,7 +152,7 @@ export class SourcesService {
         integration.type !== IntegrationsType.Database ||
         !integration.sub_type
       ) {
-        NcError.badRequest('Integration type should be Database');
+        CvError.badRequest('Integration type should be Database');
       }
 
       baseBody.type = integration.sub_type as unknown as BaseReqType['type'];

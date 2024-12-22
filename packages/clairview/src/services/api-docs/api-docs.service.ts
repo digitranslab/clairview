@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import getSwaggerJSON from './swagger/getSwaggerJSON';
 import getSwaggerJSONV2 from './swaggerV2/getSwaggerJSONV2';
 import type { NcContext } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Base, Model } from '~/models';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class ApiDocsService {
   ) {
     const base = await Base.get(context, param.baseId);
 
-    if (!base) NcError.baseNotFound(param.baseId);
+    if (!base) CvError.baseNotFound(param.baseId);
 
     const models = await Model.list(context, {
       base_id: param.baseId,
@@ -45,7 +45,7 @@ export class ApiDocsService {
   ) {
     const base = await Base.get(context, param.baseId);
 
-    if (!base) NcError.baseNotFound(param.baseId);
+    if (!base) CvError.baseNotFound(param.baseId);
 
     const models = await Model.list(context, {
       base_id: param.baseId,

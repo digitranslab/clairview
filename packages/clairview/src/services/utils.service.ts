@@ -14,7 +14,7 @@ import {
   NC_MAX_ATTACHMENTS_ALLOWED,
 } from '~/constants';
 import SqlMgrv2 from '~/db/sql-mgr/v2/SqlMgrv2';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Base, Store, User } from '~/models';
 import Noco from '~/Noco';
 import { T } from '~/utils';
@@ -220,7 +220,7 @@ export class UtilsService {
       const connectionConfig = jdbcToXcConfig(url);
       return connectionConfig;
     } catch (error) {
-      return NcError.internalServerError(
+      return CvError.internalServerError(
         'Please check server log for more details',
       );
     }

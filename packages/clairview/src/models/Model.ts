@@ -17,7 +17,7 @@ import Comment from '~/models/Comment';
 import Column from '~/models/Column';
 import { extractProps } from '~/helpers/extractProps';
 import { sanitize } from '~/helpers/sqlSanitize';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import {
   CacheDelDirection,
   CacheGetType,
@@ -769,10 +769,10 @@ export default class Model implements TableType {
     ncMeta = Noco.ncMeta,
   ) {
     if (!title) {
-      NcError.badRequest("Missing 'title' property in body");
+      CvError.badRequest("Missing 'title' property in body");
     }
     if (!table_name) {
-      NcError.badRequest("Missing 'table_name' property in body");
+      CvError.badRequest("Missing 'table_name' property in body");
     }
 
     const oldModel = await this.get(context, tableId, ncMeta);
@@ -918,7 +918,7 @@ export default class Model implements TableType {
     const model = await this.getWithInfo(context, { id: tableId }, ncMeta);
     const newPvCol = model.columnsById[columnId];
 
-    if (!newPvCol) NcError.fieldNotFound(columnId);
+    if (!newPvCol) CvError.fieldNotFound(columnId);
 
     // drop existing primary column/s
     for (const col of model.columns?.filter((c) => c.pv) || []) {

@@ -6,7 +6,7 @@ import type LinkToAnotherRecordColumn from '~/models/LinkToAnotherRecordColumn';
 import type LookupColumn from '~/models/LookupColumn';
 import type { NcContext } from '~/interface/config';
 import { nocoExecute } from '~/utils';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getAst from '~/helpers/getAst';
 import { Model, View } from '~/models';
 import Source from '~/models/Source';
@@ -41,7 +41,7 @@ export async function getViewAndModelByAliasOrId(
     aliasOrId: param.tableName,
   });
 
-  if (!model) NcError.tableNotFound(param.tableName);
+  if (!model) CvError.tableNotFound(param.tableName);
 
   const view =
     param.viewName &&
@@ -49,7 +49,7 @@ export async function getViewAndModelByAliasOrId(
       titleOrId: param.viewName,
       fk_model_id: model.id,
     }));
-  if (param.viewName && !view) NcError.viewNotFound(param.viewName);
+  if (param.viewName && !view) CvError.viewNotFound(param.viewName);
 
   return { model, view };
 }
@@ -257,7 +257,7 @@ export async function getColumnByIdOrName(
       c.column_name === columnNameOrId,
   );
 
-  if (!column) NcError.fieldNotFound(columnNameOrId);
+  if (!column) CvError.fieldNotFound(columnNameOrId);
 
   return column;
 }

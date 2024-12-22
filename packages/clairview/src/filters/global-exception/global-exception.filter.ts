@@ -3,7 +3,7 @@ import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 import { ThrottlerException } from '@nestjs/throttler';
 import hash from 'object-hash';
 import {
-  NcErrorType,
+  CvErrorType,
   NcSDKError,
   BadRequest as SdkBadRequest,
 } from 'clairview-sdk';
@@ -45,7 +45,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       exception.status === 400 &&
       /^Unexpected token .*? in JSON/.test(exception.message)
     ) {
-      exception = new NcBaseErrorv2(NcErrorType.BAD_JSON);
+      exception = new NcBaseErrorv2(CvErrorType.BAD_JSON);
     }
 
     // try to extract db error for unknown errors
@@ -72,9 +72,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         exception instanceof NcSDKError ||
         (exception instanceof NcBaseErrorv2 &&
           ![
-            NcErrorType.INTERNAL_SERVER_ERROR,
-            NcErrorType.DATABASE_ERROR,
-            NcErrorType.UNKNOWN_ERROR,
+            CvErrorType.INTERNAL_SERVER_ERROR,
+            CvErrorType.DATABASE_ERROR,
+            CvErrorType.UNKNOWN_ERROR,
           ].includes(exception.error))
       )
     )

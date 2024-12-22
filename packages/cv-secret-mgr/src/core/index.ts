@@ -1,4 +1,4 @@
-export * from './NcConfig';
-export * from './NcError';
+export * from './CvConfig';
+export * from './CvError';
 export * as logger from './logger';
 export * from './SecretManager';

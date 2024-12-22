@@ -8,7 +8,7 @@ import type {
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { FormView, Model, Source, View } from '~/models';
 import NocoCache from '~/cache/NocoCache';
 import { CacheScope } from '~/utils/globals';
@@ -42,7 +42,7 @@ export class FormsService {
     const source = await Source.get(context, model.source_id);
 
     if (source.is_data_readonly) {
-      NcError.sourceDataReadOnly(source.alias);
+      CvError.sourceDataReadOnly(source.alias);
     }
 
     const { id } = await View.insertMetaOnly(
@@ -93,7 +93,7 @@ export class FormsService {
     const view = await View.get(context, param.formViewId);
 
     if (!view) {
-      NcError.viewNotFound(param.formViewId);
+      CvError.viewNotFound(param.formViewId);
     }
 
     const res = await FormView.update(context, param.formViewId, param.form);

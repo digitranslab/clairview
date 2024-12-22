@@ -18,7 +18,7 @@ import type { Request } from 'express';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { populateMeta, validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { extractPropsAndSanitize } from '~/helpers/extractProps';
 import syncMigration from '~/helpers/syncMigration';
 import { Base, BaseUser, Integration } from '~/models';
@@ -130,7 +130,7 @@ export class BasesService {
         data.title,
       ))
     ) {
-      NcError.badRequest('Base title already in use');
+      CvError.badRequest('Base title already in use');
     }
   }
 
@@ -141,7 +141,7 @@ export class BasesService {
     const base = await Base.getWithInfo(context, param.baseId);
 
     if (!base) {
-      NcError.baseNotFound(param.baseId);
+      CvError.baseNotFound(param.baseId);
     }
 
     await Base.softDelete(context, param.baseId);
@@ -237,7 +237,7 @@ export class BasesService {
       }
     } else {
       if (process.env.NC_CONNECT_TO_EXTERNAL_DB_DISABLED) {
-        NcError.badRequest('Connecting to external db is disabled');
+        CvError.badRequest('Connecting to external db is disabled');
       }
 
       for (const source of baseBody.sources || []) {
@@ -263,7 +263,7 @@ export class BasesService {
 
     if (baseBody?.title.length > 50) {
       // Limited for consistent behaviour across identifier names for table, view, columns
-      NcError.badRequest('Base title exceeds 50 characters');
+      CvError.badRequest('Base title exceeds 50 characters');
     }
 
     baseBody.title = DOMPurify.sanitize(baseBody.title);

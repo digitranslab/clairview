@@ -4,7 +4,7 @@ import mime from 'mime/lite';
 import slash from 'slash';
 import { PublicAttachmentScope } from 'clairview-sdk';
 import { getToolDir } from '~/utils/cv-config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 const previewableMimeTypes = ['image', 'pdf', 'video', 'audio'];
 
@@ -48,9 +48,9 @@ export function validateAndNormaliseLocalPath(
   // Check if the resolved path is within the intended directory
   if (!absolutePath.startsWith(absoluteBasePath)) {
     if (throw404) {
-      NcError.notFound();
+      CvError.notFound();
     } else {
-      NcError.badRequest('Invalid path');
+      CvError.badRequest('Invalid path');
     }
   }
 

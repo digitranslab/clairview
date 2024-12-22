@@ -19,7 +19,7 @@ jobs:
         id: "get-pr-commits"
         uses: tim-actions/get-pr-commits@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}
       - name: DCO Check
         uses: tim-actions/dco@master
         with:

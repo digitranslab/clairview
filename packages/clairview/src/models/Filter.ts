@@ -18,7 +18,7 @@ import {
   MetaTable,
 } from '~/utils/globals';
 import NocoCache from '~/cache/NocoCache';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { extractProps } from '~/helpers/extractProps';
 
 export default class Filter implements FilterType {
@@ -137,7 +137,7 @@ export default class Filter implements FilterType {
           ncMeta,
         );
       } else {
-        NcError.invalidFilter(JSON.stringify(filter));
+        CvError.invalidFilter(JSON.stringify(filter));
       }
 
       if (model != null) {

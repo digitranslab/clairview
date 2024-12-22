@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import contentDisposition from 'content-disposition';
 import slash from 'slash';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import Noco from '~/Noco';
 import NocoCache from '~/cache/NocoCache';
 import { CacheGetType, CacheScope } from '~/utils/globals';
@@ -185,7 +185,7 @@ export default class PresignedUrl {
       }
     }
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter(ncMeta);
+    const storageAdapter = await CvPluginMgrv2.storageAdapter(ncMeta);
 
     if (typeof (storageAdapter as any).getSignedUrl === 'function') {
       tempUrl = await (storageAdapter as any).getSignedUrl(

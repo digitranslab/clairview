@@ -1,6 +1,6 @@
 import { FormulaDataTypes } from 'clairview-sdk';
 import type { MapFnArgs } from '../mapFunctionName';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 async function treatArgAsConditionalExp(
   args: MapFnArgs,
@@ -272,7 +272,7 @@ export default {
   RECORD_ID: async (args: MapFnArgs) => {
     const pkCol = args.model?.primaryKey;
     if (!pkCol) {
-      NcError.badRequest('Primary key not found');
+      CvError.badRequest('Primary key not found');
     }
 
     return {
@@ -289,7 +289,7 @@ export default {
       (col) => col.column_name === 'created_at',
     );
     if (!createdAtCol) {
-      NcError.badRequest('Created at field not found');
+      CvError.badRequest('Created at field not found');
     }
 
     return {
@@ -306,7 +306,7 @@ export default {
       (col) => col.column_name === 'updated_at',
     );
     if (!createdAtCol) {
-      NcError.badRequest('Updated at field not found');
+      CvError.badRequest('Updated at field not found');
     }
 
     return {

@@ -5,7 +5,7 @@ import Noco from '~/Noco';
 import NocoCache from '~/cache/NocoCache';
 import { extractProps } from '~/helpers/extractProps';
 import { CacheGetType, CacheScope, MetaTable } from '~/utils/globals';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 export const ROLLUP_FUNCTIONS = <const>[
   'count',
@@ -52,7 +52,7 @@ export default class RollupColumn implements RollupType {
     );
 
     if (!column) {
-      NcError.fieldNotFound(insertObj.fk_column_id);
+      CvError.fieldNotFound(insertObj.fk_column_id);
     }
 
     await ncMeta.metaInsert2(

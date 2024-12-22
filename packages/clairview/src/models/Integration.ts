@@ -11,7 +11,7 @@ import type IntegrationWrapper from '~/integrations/integration.wrapper';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import Noco from '~/Noco';
 import { extractProps } from '~/helpers/extractProps';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import {
   parseMetaProp,
   prepareForDb,
@@ -171,7 +171,7 @@ export default class Integration implements IntegrationType {
       ncMeta,
     );
 
-    if (!oldIntegration) NcError.integrationNotFound(integrationId);
+    if (!oldIntegration) CvError.integrationNotFound(integrationId);
 
     const updateObj = extractProps(integration, [
       'title',
@@ -239,7 +239,7 @@ export default class Integration implements IntegrationType {
     const integration = await this.get(context, integrationId, false, ncMeta);
 
     if (!integration) {
-      NcError.integrationNotFound(integrationId);
+      CvError.integrationNotFound(integrationId);
     }
 
     // return if integration is already default

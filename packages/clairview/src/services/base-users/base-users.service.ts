@@ -14,8 +14,8 @@ import type { NcContext, NcRequest } from '~/interface/config';
 import { validatePayload } from '~/helpers';
 import Noco from '~/Noco';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
-import { NcError } from '~/helpers/catchError';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import { CvError } from '~/helpers/catchError';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import { randomTokenString } from '~/helpers/stringHelpers';
 import { Base, BaseUser, User } from '~/models';
@@ -62,7 +62,7 @@ export class BaseUsersService {
         base_roles: extractRolesObj(param.baseUser.roles),
       }) > getProjectRolePower(param.req.user)
     ) {
-      NcError.badRequest(`Insufficient privilege to invite with this role`);
+      CvError.badRequest(`Insufficient privilege to invite with this role`);
     }
 
     if (
@@ -75,7 +75,7 @@ export class BaseUsersService {
         ProjectRoles.NO_ACCESS,
       ].includes(param.baseUser.roles as ProjectRoles)
     ) {
-      NcError.badRequest('Invalid role');
+      CvError.badRequest('Invalid role');
     }
 
     const emails = (param.baseUser.email || '')
@@ -86,10 +86,10 @@ export class BaseUsersService {
     // check for invalid emails
     const invalidEmails = emails.filter((v) => !validator.isEmail(v));
     if (!emails.length) {
-      return NcError.badRequest('Invalid email address');
+      return CvError.badRequest('Invalid email address');
     }
     if (invalidEmails.length) {
-      NcError.badRequest('Invalid email address : ' + invalidEmails.join(', '));
+      CvError.badRequest('Invalid email address : ' + invalidEmails.join(', '));
     }
 
     const invite_token = uuidv4();
@@ -102,7 +102,7 @@ export class BaseUsersService {
       const base = await Base.get(context, param.baseId);
 
       if (!base) {
-        return NcError.baseNotFound(param.baseId);
+        return CvError.baseNotFound(param.baseId);
       }
 
       if (user) {
@@ -112,12 +112,12 @@ export class BaseUsersService {
         const base = await Base.get(context, param.baseId);
 
         if (!base) {
-          return NcError.baseNotFound(param.baseId);
+          return CvError.baseNotFound(param.baseId);
         }
 
         // if already exists and has a role then throw error
         if (baseUser?.is_mapped && baseUser?.roles) {
-          NcError.badRequest(
+          CvError.badRequest(
             `${user.email} with role ${baseUser.roles} already exists in this base`,
           );
         }
@@ -233,13 +233,13 @@ export class BaseUsersService {
     );
 
     if (!param.baseId) {
-      NcError.badRequest('Missing base id');
+      CvError.badRequest('Missing base id');
     }
 
     const base = await Base.get(context, param.baseId);
 
     if (!base) {
-      return NcError.baseNotFound(param.baseId);
+      return CvError.baseNotFound(param.baseId);
     }
 
     if (
@@ -252,13 +252,13 @@ export class BaseUsersService {
         ProjectRoles.NO_ACCESS,
       ].includes(param.baseUser.roles as ProjectRoles)
     ) {
-      NcError.badRequest('Invalid role');
+      CvError.badRequest('Invalid role');
     }
 
     const user = await User.get(param.userId);
 
     if (!user) {
-      NcError.badRequest(`User with id '${param.userId}' doesn't exist`);
+      CvError.badRequest(`User with id '${param.userId}' doesn't exist`);
     }
 
     const targetUser = await User.getWithRoles(context, param.userId, {
@@ -267,7 +267,7 @@ export class BaseUsersService {
     });
 
     if (!targetUser) {
-      NcError.badRequest(
+      CvError.badRequest(
         `User with id '${param.userId}' doesn't exist in this base`,
       );
     }
@@ -281,11 +281,11 @@ export class BaseUsersService {
         baseUsers.filter((u) => u.roles?.includes(ProjectRoles.OWNER))
           .length === 1
       )
-        NcError.badRequest('At least one owner is required');
+        CvError.badRequest('At least one owner is required');
     }
 
     if (getProjectRolePower(targetUser) > getProjectRolePower(param.req.user)) {
-      NcError.badRequest(`Insufficient privilege to update user`);
+      CvError.badRequest(`Insufficient privilege to update user`);
     }
 
     await BaseUser.updateRoles(
@@ -321,18 +321,18 @@ export class BaseUsersService {
     const base_id = param.baseId;
 
     if (param.req.user?.id === param.userId) {
-      NcError.badRequest("Admin can't delete themselves!");
+      CvError.badRequest("Admin can't delete themselves!");
     }
 
     const user = await User.get(param.userId);
 
     if (!user) {
-      NcError.userNotFound(param.userId);
+      CvError.userNotFound(param.userId);
     }
 
     if (!param.req.user?.base_roles?.owner) {
       if (user.roles?.split(',').includes('super'))
-        NcError.forbidden(
+        CvError.forbidden(
           'Insufficient privilege to delete a super admin user.',
         );
     }
@@ -346,7 +346,7 @@ export class BaseUsersService {
       getProjectRolePower(baseUser.base_roles) >
       getProjectRolePower(param.req.user)
     ) {
-      NcError.badRequest('Insufficient privilege to delete user');
+      CvError.badRequest('Insufficient privilege to delete user');
     }
 
     // if old role is owner and there is only one owner then restrict to delete
@@ -358,7 +358,7 @@ export class BaseUsersService {
         baseUsers.filter((u) => u.roles?.includes(ProjectRoles.OWNER))
           .length === 1
       )
-        NcError.badRequest('At least one owner is required');
+        CvError.badRequest('At least one owner is required');
     }
 
     // block self delete if user is owner or super
@@ -366,7 +366,7 @@ export class BaseUsersService {
       param.req.user.id === param.userId &&
       param.req.user.roles.includes('owner')
     ) {
-      NcError.badRequest("Admin can't delete themselves!");
+      CvError.badRequest("Admin can't delete themselves!");
     }
 
     await BaseUser.delete(context, base_id, param.userId);
@@ -386,13 +386,13 @@ export class BaseUsersService {
     const user = await User.get(param.userId);
 
     if (!user) {
-      NcError.badRequest(`User with id '${param.userId}' not found`);
+      CvError.badRequest(`User with id '${param.userId}' not found`);
     }
 
     const base = await Base.get(context, param.baseId);
 
     if (!base) {
-      return NcError.baseNotFound(param.baseId);
+      return CvError.baseNotFound(param.baseId);
     }
 
     const invite_token = uuidv4();
@@ -415,7 +415,7 @@ export class BaseUsersService {
     );
 
     if (!pluginData) {
-      NcError.badRequest(
+      CvError.badRequest(
         `No Email Plugin is found. Please go to App Store to configure first or copy the invitation URL to users instead.`,
       );
     }
@@ -468,7 +468,7 @@ export class BaseUsersService {
           await import('~/services/base-users/ui/emailTemplates/invite')
         ).default;
       }
-      const emailAdapter = await NcPluginMgrv2.emailAdapter();
+      const emailAdapter = await CvPluginMgrv2.emailAdapter();
 
       if (emailAdapter) {
         await emailAdapter.mailSend({

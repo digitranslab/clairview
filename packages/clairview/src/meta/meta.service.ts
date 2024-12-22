@@ -10,9 +10,9 @@ import type { Condition } from '~/db/CustomKnex';
 import XcMigrationSource from '~/meta/migrations/XcMigrationSource';
 import XcMigrationSourcev2 from '~/meta/migrations/XcMigrationSourcev2';
 import { XKnex } from '~/db/CustomKnex';
-import { NcConfig } from '~/utils/cv-config';
+import { CvConfig } from '~/utils/cv-config';
 import { MetaTable, RootScopes, RootScopeTables } from '~/utils/globals';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -25,7 +25,7 @@ export class MetaService {
   private _knex: knex.Knex;
   private _config: any;
 
-  constructor(config: NcConfig, @Optional() trx = null) {
+  constructor(config: CvConfig, @Optional() trx = null) {
     this._config = config;
     this._knex = XKnex({
       ...this._config.meta.db,
@@ -38,7 +38,7 @@ export class MetaService {
     return this._knex;
   }
 
-  get config(): NcConfig {
+  get config(): CvConfig {
     return this._config;
   }
 
@@ -114,21 +114,21 @@ export class MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -174,21 +174,21 @@ export class MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -237,21 +237,21 @@ export class MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -267,7 +267,7 @@ export class MetaService {
       query.whereIn('id', ids).update(updateObj);
     } else {
       if (![MetaTable.FILE_REFERENCES].includes(target as MetaTable)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'This table does not support conditional bulk update',
           sql: '',
         });
@@ -365,21 +365,21 @@ export class MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -438,21 +438,21 @@ export class MetaService {
       // bypass
     } else if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -521,21 +521,21 @@ export class MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -595,21 +595,21 @@ export class MetaService {
       // bypass
     } else if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -656,21 +656,21 @@ export class MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -737,7 +737,7 @@ export class MetaService {
    * */
   public async baseUpdate(baseId: string, config: any): Promise<any> {
     if (!baseId) {
-      NcError.metaError({
+      CvError.metaError({
         message: 'Base Id is required to update base config',
         sql: '',
       });
@@ -849,7 +849,7 @@ export class MetaService {
     }
 
     // Throw an error if no condition is found in the query builder.
-    NcError.metaError({
+    CvError.metaError({
       message: 'A condition is required to ' + operation + ' records.',
       sql,
     });

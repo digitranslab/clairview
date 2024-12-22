@@ -18,7 +18,7 @@ import getColumnUiType from '~/helpers/getColumnUiType';
 import getTableNameAlias, { getColumnNameAlias } from '~/helpers/getTableName';
 import { getUniqueColumnAliasName } from '~/helpers/getUniqueName';
 import mapDefaultDisplayValue from '~/helpers/mapDefaultDisplayValue';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import NcHelp from '~/utils/NcHelp';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import { Base, Column, Model, Source } from '~/models';
@@ -679,7 +679,7 @@ export class MetaDiffsService {
     },
   ) {
     if (source.is_meta) {
-      if (throwOnFail) NcError.badRequest('Cannot sync meta source');
+      if (throwOnFail) CvError.badRequest('Cannot sync meta source');
       return;
     }
 

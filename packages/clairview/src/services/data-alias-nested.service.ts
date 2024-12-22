@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UITypes } from 'clairview-sdk';
 import type { PathParams } from '~/helpers/dataHelpers';
 import type { NcContext } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import {
   getColumnByIdOrName,
@@ -24,7 +24,7 @@ export class DataAliasNestedService {
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
 
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 
@@ -41,7 +41,7 @@ export class DataAliasNestedService {
       !column ||
       ![UITypes.LinkToAnotherRecord, UITypes.Links].includes(column.uidt)
     )
-      NcError.badRequest('Column is not LTAR');
+      CvError.badRequest('Column is not LTAR');
 
     const data = await baseModel.mmList(
       {
@@ -73,7 +73,7 @@ export class DataAliasNestedService {
     },
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 
@@ -117,7 +117,7 @@ export class DataAliasNestedService {
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
 
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 
@@ -161,7 +161,7 @@ export class DataAliasNestedService {
     },
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 
@@ -204,7 +204,7 @@ export class DataAliasNestedService {
     },
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
-    if (!model) NcError.notFound('Table not found');
+    if (!model) CvError.notFound('Table not found');
 
     const source = await Source.get(context, model.source_id);
 
@@ -250,7 +250,7 @@ export class DataAliasNestedService {
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
 
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 
@@ -264,7 +264,7 @@ export class DataAliasNestedService {
     const column = await getColumnByIdOrName(context, param.columnName, model);
 
     if (![UITypes.LinkToAnotherRecord, UITypes.Links].includes(column.uidt))
-      NcError.badRequest('Column is not LTAR');
+      CvError.badRequest('Column is not LTAR');
 
     const data = await baseModel.hmList(
       {
@@ -298,7 +298,7 @@ export class DataAliasNestedService {
     },
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 
@@ -332,7 +332,7 @@ export class DataAliasNestedService {
     },
   ) {
     const { model, view } = await getViewAndModelByAliasOrId(context, param);
-    if (!model) NcError.tableNotFound(param.tableName);
+    if (!model) CvError.tableNotFound(param.tableName);
 
     const source = await Source.get(context, model.source_id);
 

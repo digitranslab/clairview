@@ -16,7 +16,7 @@ import NocoCache from '~/cache/NocoCache';
 import { parseMetaProp, stringifyMetaProp } from '~/utils/modelUtils';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import { cleanCommandPaletteCache } from '~/helpers/commandPaletteHelpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 const logger = new Logger('Base');
 
@@ -408,7 +408,7 @@ export default class Base implements BaseType {
     );
 
     if (!base) {
-      NcError.baseNotFound(baseId);
+      CvError.baseNotFound(baseId);
     }
 
     const users = await BaseUser.getUsersList(

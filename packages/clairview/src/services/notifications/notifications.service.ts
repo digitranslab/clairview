@@ -9,7 +9,7 @@ import type { UserType } from 'clairview-sdk';
 import type { NcRequest } from '~/interface/config';
 import type { Response } from 'express';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import { Notification } from '~/models';
 
@@ -156,7 +156,7 @@ export class NotificationsService implements OnModuleInit, OnModuleDestroy {
     });
 
     if (!notification) {
-      NcError.unauthorized('Unauthorized to update notification');
+      CvError.unauthorized('Unauthorized to update notification');
     }
     await Notification.update(param.notificationId, param.body);
 
@@ -170,7 +170,7 @@ export class NotificationsService implements OnModuleInit, OnModuleDestroy {
     });
 
     if (!notification) {
-      NcError.unauthorized('Unauthorized to delete notification');
+      CvError.unauthorized('Unauthorized to delete notification');
     }
 
     await Notification.update(param.notificationId, {
@@ -180,7 +180,7 @@ export class NotificationsService implements OnModuleInit, OnModuleDestroy {
 
   async markAllRead(param: { user: UserType }) {
     if (!param.user?.id) {
-      NcError.badRequest('User id is required');
+      CvError.badRequest('User id is required');
     }
     await Notification.markAllAsRead(param.user.id);
     return true;

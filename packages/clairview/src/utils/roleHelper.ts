@@ -1,5 +1,5 @@
 import { OrderedProjectRoles } from 'clairview-sdk';
-import { NcError } from 'src/helpers/catchError';
+import { CvError } from 'src/helpers/catchError';
 import type { ProjectRoles } from 'clairview-sdk';
 
 export function getProjectRolePower(user: any) {
@@ -23,7 +23,7 @@ export function getProjectRolePower(user: any) {
   const ind = reverseOrderedProjectRoles.indexOf(role);
 
   if (ind === -1) {
-    NcError.badRequest('Forbidden');
+    CvError.badRequest('Forbidden');
   }
 
   return ind;

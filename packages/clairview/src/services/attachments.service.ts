@@ -13,11 +13,11 @@ import moment from 'moment';
 import type { AttachmentReqType, FileType } from 'clairview-sdk';
 import type { NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { mimeIcons } from '~/utils/mimeTypes';
 import { FileReference, PresignedUrl } from '~/models';
 import { utf8ify } from '~/helpers/stringHelpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { IJobsService } from '~/modules/jobs/jobs-service.interface';
 import { JobTypes } from '~/interface/Jobs';
 import { RootScopes } from '~/utils/globals';
@@ -64,7 +64,7 @@ export class AttachmentsService {
       param.scope &&
       !Object.values(PublicAttachmentScope).includes(param.scope)
     ) {
-      NcError.invalidAttachmentUploadScope();
+      CvError.invalidAttachmentUploadScope();
     }
 
     const userId = param.req?.user.id || 'anonymous';
@@ -83,7 +83,7 @@ export class AttachmentsService {
       ..._filePath,
     );
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
     // just in case we want to increase concurrency in future
     const queue = new PQueue({ concurrency: 1 });
@@ -92,7 +92,7 @@ export class AttachmentsService {
     const errors = [];
 
     if (!param.files?.length) {
-      NcError.badRequest('No attachment provided!');
+      CvError.badRequest('No attachment provided!');
     }
 
     queue.addAll(
@@ -228,7 +228,7 @@ export class AttachmentsService {
       param.scope &&
       !Object.values(PublicAttachmentScope).includes(param.scope)
     ) {
-      NcError.invalidAttachmentUploadScope();
+      CvError.invalidAttachmentUploadScope();
     }
 
     const userId = param.req?.user.id || 'anonymous';
@@ -247,7 +247,7 @@ export class AttachmentsService {
       ...filePath,
     );
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
     // just in case we want to increase concurrency in future
     const queue = new PQueue({ concurrency: 1 });
@@ -256,7 +256,7 @@ export class AttachmentsService {
     const errors = [];
 
     if (!param.urls?.length) {
-      NcError.badRequest('No attachment provided!');
+      CvError.badRequest('No attachment provided!');
     }
 
     queue.addAll(
@@ -291,7 +291,7 @@ export class AttachmentsService {
             finalUrl = response.request.res.responseUrl;
           } else {
             if (!url.startsWith('data')) {
-              NcError.badRequest('Invalid data URL format');
+              CvError.badRequest('Invalid data URL format');
             }
 
             const [metadata, base64Data] = url.split(',');
@@ -299,7 +299,7 @@ export class AttachmentsService {
             const metadataHelper = metadata.split(':');
 
             if (metadataHelper.length < 2) {
-              NcError.badRequest('Invalid data URL format');
+              CvError.badRequest('Invalid data URL format');
             }
 
             const mimetypeHelper = metadataHelper[1].split(';');
@@ -467,7 +467,7 @@ export class AttachmentsService {
     const attachment = record[column.title];
 
     if (!attachment || !attachment.length) {
-      NcError.genericNotFound('Attachment', urlOrPath);
+      CvError.genericNotFound('Attachment', urlOrPath);
     }
 
     const fileObject = attachment.find(
@@ -475,7 +475,7 @@ export class AttachmentsService {
     );
 
     if (!fileObject) {
-      NcError.genericNotFound('Attachment', urlOrPath);
+      CvError.genericNotFound('Attachment', urlOrPath);
     }
 
     await PresignedUrl.signAttachment({

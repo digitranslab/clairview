@@ -56,7 +56,7 @@ import {
   validateRequiredField,
   validateRollupPayload,
 } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getColumnPropsFromUIDT from '~/helpers/getColumnPropsFromUIDT';
 import {
   getUniqueColumnAliasName,
@@ -323,7 +323,7 @@ export class ColumnsService {
     ) {
       /*
       throw error if source is readonly and column type is not allowed
-      NcError.sourceMetaReadOnly(source.alias);
+      CvError.sourceMetaReadOnly(source.alias);
 
       Get all the columns in the table and return
       */
@@ -384,13 +384,13 @@ export class ColumnsService {
       !isVirtualCol(param.column) &&
       param.column.column_name.length > mxColumnLength
     ) {
-      NcError.badRequest(
+      CvError.badRequest(
         `Column name ${param.column.column_name} exceeds ${mxColumnLength} characters`,
       );
     }
 
     if (param.column.title && param.column.title.length > 255) {
-      NcError.badRequest(
+      CvError.badRequest(
         `Column title ${param.column.title} exceeds 255 characters`,
       );
     }
@@ -405,7 +405,7 @@ export class ColumnsService {
         exclude_id: param.columnId,
       }))
     ) {
-      NcError.badRequest('Duplicate column name');
+      CvError.badRequest('Duplicate column name');
     }
     if (
       !(await Column.checkAliasAvailable(context, {
@@ -415,7 +415,7 @@ export class ColumnsService {
       }))
     ) {
       // This error will be thrown if there are more than one column linking to the same table. You have to delete one of them
-      NcError.badRequest(
+      CvError.badRequest(
         `Duplicate column alias for table ${table.title} and column is ${param.column.title}. Please change the name of this column and retry.`,
       );
     }
@@ -544,17 +544,17 @@ export class ColumnsService {
               );
             } catch (e) {
               console.error(e);
-              NcError.badRequest('Invalid Formula');
+              CvError.badRequest('Invalid Formula');
             }
           } else if (colBody.type === ButtonActionsType.Webhook) {
             if (!colBody.fk_webhook_id) {
-              NcError.badRequest('Webhook not found');
+              CvError.badRequest('Webhook not found');
             }
 
             const hook = await Hook.get(context, colBody.fk_webhook_id);
 
             if (!hook || !hook.active || hook.event !== 'manual') {
-              NcError.badRequest('Webhook not found');
+              CvError.badRequest('Webhook not found');
             }
           } else if (colBody.type === ButtonActionsType.Ai) {
             /*
@@ -569,7 +569,7 @@ export class ColumnsService {
                   const column = table.columns.find((c) => c.title === p1);
 
                   if (!column) {
-                    NcError.badRequest(`Field '${p1}' not found`);
+                    CvError.badRequest(`Field '${p1}' not found`);
                   }
 
                   return `{${column.id}}`;
@@ -676,7 +676,7 @@ export class ColumnsService {
 
         await this.updateRollupOrLookup(context, colBody, column);
       } else {
-        NcError.notImplemented(`Updating ${column.uidt} => ${colBody.uidt}`);
+        CvError.notImplemented(`Updating ${column.uidt} => ${colBody.uidt}`);
       }
     } else if (
       [
@@ -689,7 +689,7 @@ export class ColumnsService {
         UITypes.ForeignKey,
       ].includes(colBody.uidt)
     ) {
-      NcError.notImplemented(`Updating ${colBody.uidt} => ${colBody.uidt}`);
+      CvError.notImplemented(`Updating ${colBody.uidt} => ${colBody.uidt}`);
     } else if (
       [
         UITypes.CreatedTime,
@@ -803,7 +803,7 @@ export class ColumnsService {
                 const values = String(el[column.column_name]).split(',');
                 if (values.length > 1) {
                   if (colBody.uidt === UITypes.SingleSelect) {
-                    NcError.badRequest(
+                    CvError.badRequest(
                       'SingleSelect cannot have comma separated values, please use MultiSelect instead.',
                     );
                   }
@@ -843,14 +843,14 @@ export class ColumnsService {
           if (colBody.uidt === UITypes.SingleSelect) {
             try {
               if (!optionTitles.includes(colBody.cdf.replace(/'/g, "''"))) {
-                NcError.badRequest(
+                CvError.badRequest(
                   `Default value '${colBody.cdf}' is not a select option.`,
                 );
               }
             } catch (e) {
               colBody.cdf = colBody.cdf.replace(/^'/, '').replace(/'$/, '');
               if (!optionTitles.includes(colBody.cdf.replace(/'/g, "''"))) {
-                NcError.badRequest(
+                CvError.badRequest(
                   `Default value '${colBody.cdf}' is not a select option.`,
                 );
               }
@@ -859,7 +859,7 @@ export class ColumnsService {
             try {
               for (const cdf of colBody.cdf.split(',')) {
                 if (!optionTitles.includes(cdf.replace(/'/g, "''"))) {
-                  NcError.badRequest(
+                  CvError.badRequest(
                     `Default value '${cdf}' is not a select option.`,
                   );
                 }
@@ -868,7 +868,7 @@ export class ColumnsService {
               colBody.cdf = colBody.cdf.replace(/^'/, '').replace(/'$/, '');
               for (const cdf of colBody.cdf.split(',')) {
                 if (!optionTitles.includes(cdf.replace(/'/g, "''"))) {
-                  NcError.badRequest(
+                  CvError.badRequest(
                     `Default value '${cdf}' is not a select option.`,
                   );
                 }
@@ -895,7 +895,7 @@ export class ColumnsService {
             return titles.indexOf(item) !== titles.lastIndexOf(item);
           })
         ) {
-          NcError.badRequest('Duplicates are not allowed!');
+          CvError.badRequest('Duplicates are not allowed!');
         }
 
         // Restrict empty options
@@ -904,7 +904,7 @@ export class ColumnsService {
             return item === '';
           })
         ) {
-          NcError.badRequest('Empty options are not allowed!');
+          CvError.badRequest('Empty options are not allowed!');
         }
 
         // Trim end of enum/set
@@ -925,7 +925,7 @@ export class ColumnsService {
             ? `${colBody.colOptions.options
                 .map((o) => {
                   if (o.title.includes(',')) {
-                    NcError.badRequest("Illegal char(',') for MultiSelect");
+                    CvError.badRequest("Illegal char(',') for MultiSelect");
                   }
                   return `'${o.title.replace(/'/gi, "''")}'`;
                 })
@@ -961,7 +961,7 @@ export class ColumnsService {
               !supportedDrivers.includes(driverType) &&
               column.uidt === UITypes.MultiSelect
             ) {
-              NcError.badRequest(
+              CvError.badRequest(
                 'Your database not yet supported for this operation. Please remove option from records manually before dropping.',
               );
             }
@@ -1059,7 +1059,7 @@ export class ColumnsService {
               !supportedDrivers.includes(driverType) &&
               column.uidt === UITypes.MultiSelect
             ) {
-              NcError.badRequest(
+              CvError.badRequest(
                 'Your database not yet supported for this operation. Please remove option from records manually before updating.',
               );
             }
@@ -1098,7 +1098,7 @@ export class ColumnsService {
                   ? `${column.colOptions.options
                       .map((o) => {
                         if (o.title.includes(',')) {
-                          NcError.badRequest(
+                          CvError.badRequest(
                             "Illegal char(',') for MultiSelect",
                           );
                           throw new Error('');
@@ -1346,7 +1346,7 @@ export class ColumnsService {
         });
 
         if (emailsNotPresent.length) {
-          NcError.badRequest(
+          CvError.badRequest(
             `The following default users are not part of workspace: ${emailsNotPresent.join(
               ', ',
             )}`,
@@ -1570,7 +1570,7 @@ export class ColumnsService {
         (await KanbanView.getViewsByGroupingColId(context, column.id)).length >
           0
       ) {
-        NcError.badRequest(
+        CvError.badRequest(
           `The column '${column.column_name}' is being used in Kanban View. Please update stack by field or delete Kanban View first.`,
         );
       }
@@ -1610,7 +1610,7 @@ export class ColumnsService {
             const column = table.columns.find((c) => c.title === p1);
 
             if (!column) {
-              NcError.badRequest(`Field '${p1}' not found`);
+              CvError.badRequest(`Field '${p1}' not found`);
             }
 
             return `{${column.id}}`;
@@ -1729,7 +1729,7 @@ export class ColumnsService {
       source?.is_schema_readonly &&
       !readonlyMetaAllowedTypes.includes(param.column.uidt as UITypes)
     ) {
-      NcError.sourceMetaReadOnly(source.alias);
+      CvError.sourceMetaReadOnly(source.alias);
     }
 
     const base = await reuseOrSave('base', reuse, async () =>
@@ -1782,13 +1782,13 @@ export class ColumnsService {
         param.column.column_name &&
         param.column.column_name.length > mxColumnLength
       ) {
-        NcError.badRequest(
+        CvError.badRequest(
           `Column name ${param.column.column_name} exceeds ${mxColumnLength} characters`,
         );
       }
 
       if (param.column.title && param.column.title.length > 255) {
-        NcError.badRequest(
+        CvError.badRequest(
           `Column title ${param.column.title} exceeds 255 characters`,
         );
       }
@@ -1801,7 +1801,7 @@ export class ColumnsService {
         fk_model_id: param.tableId,
       }))
     ) {
-      NcError.badRequest('Duplicate column name');
+      CvError.badRequest('Duplicate column name');
     }
     if (
       !(await Column.checkAliasAvailable(context, {
@@ -1809,7 +1809,7 @@ export class ColumnsService {
         fk_model_id: param.tableId,
       }))
     ) {
-      NcError.badRequest('Duplicate column alias');
+      CvError.badRequest('Duplicate column alias');
     }
 
     let colBody: any = param.column;
@@ -1975,7 +1975,7 @@ export class ColumnsService {
             );
           } catch (e) {
             console.error(e);
-            NcError.badRequest('Invalid URL Formula');
+            CvError.badRequest('Invalid URL Formula');
           }
         } else if (colBody.type === ButtonActionsType.Webhook) {
           if (!colBody.fk_webhook_id) {
@@ -2000,7 +2000,7 @@ export class ColumnsService {
                 const column = table.columns.find((c) => c.title === p1);
 
                 if (!column) {
-                  NcError.badRequest(`Field '${p1}' not found`);
+                  CvError.badRequest(`Field '${p1}' not found`);
                 }
 
                 return `{${column.id}}`;
@@ -2141,14 +2141,14 @@ export class ColumnsService {
               if (colBody.uidt === UITypes.SingleSelect) {
                 try {
                   if (!optionTitles.includes(colBody.cdf.replace(/'/g, "''"))) {
-                    NcError.badRequest(
+                    CvError.badRequest(
                       `Default value '${colBody.cdf}' is not a select option.`,
                     );
                   }
                 } catch (e) {
                   colBody.cdf = colBody.cdf.replace(/^'/, '').replace(/'$/, '');
                   if (!optionTitles.includes(colBody.cdf.replace(/'/g, "''"))) {
-                    NcError.badRequest(
+                    CvError.badRequest(
                       `Default value '${colBody.cdf}' is not a select option.`,
                     );
                   }
@@ -2157,7 +2157,7 @@ export class ColumnsService {
                 try {
                   for (const cdf of colBody.cdf.split(',')) {
                     if (!optionTitles.includes(cdf.replace(/'/g, "''"))) {
-                      NcError.badRequest(
+                      CvError.badRequest(
                         `Default value '${cdf}' is not a select option.`,
                       );
                     }
@@ -2166,7 +2166,7 @@ export class ColumnsService {
                   colBody.cdf = colBody.cdf.replace(/^'/, '').replace(/'$/, '');
                   for (const cdf of colBody.cdf.split(',')) {
                     if (!optionTitles.includes(cdf.replace(/'/g, "''"))) {
-                      NcError.badRequest(
+                      CvError.badRequest(
                         `Default value '${cdf}' is not a select option.`,
                       );
                     }
@@ -2193,7 +2193,7 @@ export class ColumnsService {
                 return titles.indexOf(item) !== titles.lastIndexOf(item);
               })
             ) {
-              NcError.badRequest('Duplicates are not allowed!');
+              CvError.badRequest('Duplicates are not allowed!');
             }
 
             // Restrict empty options
@@ -2202,7 +2202,7 @@ export class ColumnsService {
                 return item === '';
               })
             ) {
-              NcError.badRequest('Empty options are not allowed!');
+              CvError.badRequest('Empty options are not allowed!');
             }
 
             // Trim end of enum/set
@@ -2223,7 +2223,7 @@ export class ColumnsService {
                 ? `${colBody.colOptions.options
                     .map((o) => {
                       if (o.title.includes(',')) {
-                        NcError.badRequest("Illegal char(',') for MultiSelect");
+                        CvError.badRequest("Illegal char(',') for MultiSelect");
                       }
                       return `'${o.title.replace(/'/gi, "''")}'`;
                     })
@@ -2264,7 +2264,7 @@ export class ColumnsService {
               });
 
               if (emailsNotPresent.length) {
-                NcError.badRequest(
+                CvError.badRequest(
                   `The following default users are not part of workspace: ${emailsNotPresent.join(
                     ', ',
                   )}`,
@@ -2295,7 +2295,7 @@ export class ColumnsService {
                 const column = table.columns.find((c) => c.title === p1);
 
                 if (!column) {
-                  NcError.badRequest(`Field '${p1}' not found`);
+                  CvError.badRequest(`Field '${p1}' not found`);
                 }
 
                 return `{${column.id}}`;
@@ -2389,7 +2389,7 @@ export class ColumnsService {
     const column = await Column.get(context, { colId: param.columnId }, ncMeta);
 
     if (column.system && !param.forceDeleteSystem) {
-      NcError.badRequest(
+      CvError.badRequest(
         `The column '${
           column.title || column.column_name
         }' is a system column and cannot be deleted.`,
@@ -2414,7 +2414,7 @@ export class ColumnsService {
       source?.is_schema_readonly &&
       !readonlyMetaAllowedTypes.includes(column.uidt)
     ) {
-      NcError.sourceMetaReadOnly(source.alias);
+      CvError.sourceMetaReadOnly(source.alias);
     }
 
     const sqlMgr = await reuseOrSave('sqlMgr', reuse, async () =>
@@ -2464,7 +2464,7 @@ export class ColumnsService {
           ncMeta,
         );
         const table = await linkCol.getModel(context, ncMeta);
-        NcError.columnAssociatedWithLink(column.id, {
+        CvError.columnAssociatedWithLink(column.id, {
           customMessage: `Column is associated with Link column '${
             linkCol.title || linkCol.column_name
           }' (${
@@ -2504,7 +2504,7 @@ export class ColumnsService {
               ncMeta,
             )
           ) {
-            NcError.badRequest(
+            CvError.badRequest(
               `The column '${column.column_name}' is being used in Calendar View. Please delete Calendar View first.`,
             );
           }
@@ -2523,7 +2523,7 @@ export class ColumnsService {
             ncMeta,
           ))
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             `The column '${column.column_name}' is being used in Calendar View. Please delete Calendar View first.`,
           );
         }
@@ -2743,7 +2743,7 @@ export class ColumnsService {
         });
         break;
       case UITypes.ForeignKey: {
-        NcError.notImplemented(`Support for ${column.uidt}`);
+        CvError.notImplemented(`Support for ${column.uidt}`);
         break;
       }
       case UITypes.SingleSelect: {
@@ -2751,7 +2751,7 @@ export class ColumnsService {
           (await KanbanView.getViewsByGroupingColId(context, column.id))
             .length > 0
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             `The column '${column.column_name}' is being used in Kanban View. Please delete Kanban View first.`,
           );
         }
@@ -2767,7 +2767,7 @@ export class ColumnsService {
             ncMeta,
           ))
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             `The column '${column.column_name}' is being used in Calendar View. Please delete Calendar View first.`,
           );
         }
@@ -3679,7 +3679,7 @@ export class ColumnsService {
     });
 
     if (!table) {
-      NcError.tableNotFound(tableId);
+      CvError.tableNotFound(tableId);
     }
 
     const columns = await table.getColumns(context);
@@ -3708,13 +3708,13 @@ export class ColumnsService {
     });
 
     if (!table) {
-      NcError.tableNotFound(tableId);
+      CvError.tableNotFound(tableId);
     }
 
     const columns = await table.getColumns(context);
 
     if (hash(columns) !== params.hash) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Columns are updated by someone else! Your changes are rejected. Please refresh the page and try again.',
       );
     }
@@ -3722,13 +3722,13 @@ export class ColumnsService {
     const source = await Source.get(context, table.source_id);
 
     if (!source) {
-      NcError.sourceNotFound(table.source_id);
+      CvError.sourceNotFound(table.source_id);
     }
 
     const base = await source.getProject(context);
 
     if (!base) {
-      NcError.baseNotFound(source.base_id);
+      CvError.baseNotFound(source.base_id);
     }
 
     const dbDriver = await NcConnectionMgrv2.get(source);
@@ -3742,7 +3742,7 @@ export class ColumnsService {
     });
 
     if (!dbDriver || !sqlClient || !sqlMgr || !baseModel) {
-      NcError.badRequest('There was an error handling your request');
+      CvError.badRequest('There was an error handling your request');
     }
 
     const reuse: ReusableParams = {
@@ -3760,19 +3760,19 @@ export class ColumnsService {
     for (const op of ops) {
       if (op.op === 'update') {
         if (!op.column || !op.column?.id) {
-          NcError.badRequest(
+          CvError.badRequest(
             'Bad request, update operation requires column id',
           );
         }
       } else if (op.op === 'delete') {
         if (!op.column || !op.column?.id) {
-          NcError.badRequest(
+          CvError.badRequest(
             'Bad request, delete operation requires column id',
           );
         }
       } else if (op.op === 'add') {
         if (!op.column) {
-          NcError.badRequest('Bad request, add operation requires column');
+          CvError.badRequest('Bad request, add operation requires column');
         }
       }
     }

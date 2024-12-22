@@ -6,7 +6,7 @@ import type { NcContext } from '~/interface/config';
 import { nocoExecute } from '~/utils';
 import { Column, Model, Source, View } from '~/models';
 import { DatasService } from '~/services/datas.service';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getAst from '~/helpers/getAst';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
@@ -60,7 +60,7 @@ export class DataTableService {
     });
 
     if (!row) {
-      NcError.recordNotFound(param.rowId);
+      CvError.recordNotFound(param.rowId);
     }
 
     return row;
@@ -87,7 +87,7 @@ export class DataTableService {
     });
 
     if (view.type !== ViewTypes.GRID) {
-      NcError.badRequest('Aggregation is only supported on grid views');
+      CvError.badRequest('Aggregation is only supported on grid views');
     }
 
     const listArgs: any = { ...param.query };
@@ -246,7 +246,7 @@ export class DataTableService {
     const model = await Model.get(context, param.modelId);
 
     if (!model) {
-      NcError.tableNotFound(param.modelId);
+      CvError.tableNotFound(param.modelId);
     }
 
     if (param.baseId && model.base_id !== param.baseId) {
@@ -258,7 +258,7 @@ export class DataTableService {
     if (param.viewId) {
       view = await View.get(context, param.viewId);
       if (!view || (view.fk_model_id && view.fk_model_id !== param.modelId)) {
-        NcError.viewNotFound(param.viewId);
+        CvError.viewNotFound(param.viewId);
       }
     }
 
@@ -323,11 +323,11 @@ export class DataTableService {
           .join('___');
       // if duplicate then throw error
       if (keys.has(pk)) {
-        NcError.unprocessableEntity('Duplicate record with id ' + pk);
+        CvError.unprocessableEntity('Duplicate record with id ' + pk);
       }
 
       if (pk === undefined || pk === null) {
-        NcError.unprocessableEntity('Primary key is required');
+        CvError.unprocessableEntity('Primary key is required');
       }
       keys.add(pk);
     }
@@ -353,7 +353,7 @@ export class DataTableService {
     });
 
     if (!(await baseModel.exist(param.rowId))) {
-      NcError.recordNotFound(`${param.rowId}`);
+      CvError.recordNotFound(`${param.rowId}`);
     }
 
     const column = await this.getColumn(context, param);
@@ -436,12 +436,12 @@ export class DataTableService {
   ) {
     const column = await Column.get(context, { colId: param.columnId });
 
-    if (!column) NcError.fieldNotFound(param.columnId);
+    if (!column) CvError.fieldNotFound(param.columnId);
 
     if (column.fk_model_id !== param.modelId)
-      NcError.badRequest('Column not belong to model');
+      CvError.badRequest('Column not belong to model');
 
-    if (!isLinksOrLTAR(column)) NcError.badRequest('Column is not LTAR');
+    if (!isLinksOrLTAR(column)) CvError.badRequest('Column is not LTAR');
     return column;
   }
 
@@ -504,7 +504,7 @@ export class DataTableService {
     this.validateIds(param.refRowIds);
 
     const { model, view } = await this.getModelAndView(context, param);
-    if (!model) NcError.tableNotFound(param.modelId);
+    if (!model) CvError.tableNotFound(param.modelId);
 
     const source = await Source.get(context, model.source_id);
 
@@ -590,7 +590,7 @@ export class DataTableService {
       operationMap.deleteAll &&
       !(await baseModel.exist(operationMap.deleteAll.rowId))
     ) {
-      NcError.recordNotFound(operationMap.deleteAll.rowId);
+      CvError.recordNotFound(operationMap.deleteAll.rowId);
     } else if (operationMap.copy && operationMap.paste) {
       const [existsCopyRow, existsPasteRow] = await Promise.all([
         baseModel.exist(operationMap.copy.rowId),
@@ -598,13 +598,13 @@ export class DataTableService {
       ]);
 
       if (!existsCopyRow && !existsPasteRow) {
-        NcError.recordNotFound(
+        CvError.recordNotFound(
           `'${operationMap.copy.rowId}' and '${operationMap.paste.rowId}'`,
         );
       } else if (!existsCopyRow) {
-        NcError.recordNotFound(operationMap.copy.rowId);
+        CvError.recordNotFound(operationMap.copy.rowId);
       } else if (!existsPasteRow) {
-        NcError.recordNotFound(operationMap.paste.rowId);
+        CvError.recordNotFound(operationMap.paste.rowId);
       }
     }
 
@@ -723,7 +723,7 @@ export class DataTableService {
       const set = new Set<string>();
       for (const rowId of rowIds) {
         if (rowId === undefined || rowId === null)
-          NcError.recordNotFound(rowId);
+          CvError.recordNotFound(rowId);
         if (map.has(rowId)) {
           set.add(rowId);
         } else {
@@ -731,9 +731,9 @@ export class DataTableService {
         }
       }
 
-      if (set.size > 0) NcError.duplicateRecord([...set]);
+      if (set.size > 0) CvError.duplicateRecord([...set]);
     } else if (rowIds === undefined || rowIds === null) {
-      NcError.recordNotFound(rowIds);
+      CvError.recordNotFound(rowIds);
     }
   }
 
@@ -781,7 +781,7 @@ export class DataTableService {
     } catch (e) {}
 
     if (!bulkFilterList?.length) {
-      NcError.badRequest('Invalid bulkFilterList');
+      CvError.badRequest('Invalid bulkFilterList');
     }
 
     const dataListResults = await bulkFilterList.reduce(
@@ -835,7 +835,7 @@ export class DataTableService {
     } catch (e) {}
 
     if (!bulkFilterList?.length) {
-      NcError.badRequest('Invalid bulkFilterList');
+      CvError.badRequest('Invalid bulkFilterList');
     }
 
     const [data, count] = await Promise.all([

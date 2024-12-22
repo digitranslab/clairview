@@ -4,7 +4,7 @@ import type { LinkToAnotherRecordColumn } from '~/models';
 import type { NcContext } from '~/interface/config';
 import { nocoExecute } from '~/utils';
 import { Column, Model, Source, View } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getAst from '~/helpers/getAst';
 import { PagedResponseImpl } from '~/helpers/PagedResponse';
 import { getColumnByIdOrName } from '~/helpers/dataHelpers';
@@ -40,7 +40,7 @@ export class PublicDatasService {
     const { sharedViewUuid, password, query = {} } = param;
     const view = await View.getByUUID(context, sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(sharedViewUuid);
+    if (!view) CvError.viewNotFound(sharedViewUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
@@ -48,11 +48,11 @@ export class PublicDatasService {
       view.type !== ViewTypes.MAP &&
       view.type !== ViewTypes.CALENDAR
     ) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -94,7 +94,7 @@ export class PublicDatasService {
       count = await baseModel.count(listArgs);
     } catch (e) {
       console.log(e);
-      NcError.internalServerError('Please check server log for more details');
+      CvError.internalServerError('Please check server log for more details');
     }
 
     return new PagedResponseImpl(data, { ...param.query, count });
@@ -111,7 +111,7 @@ export class PublicDatasService {
     const { sharedViewUuid, password } = param;
     const view = await View.getByUUID(context, sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(sharedViewUuid);
+    if (!view) CvError.viewNotFound(sharedViewUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
@@ -119,11 +119,11 @@ export class PublicDatasService {
       view.type !== ViewTypes.MAP &&
       view.type !== ViewTypes.CALENDAR
     ) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -159,14 +159,14 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (view.type !== ViewTypes.GRID) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -207,18 +207,18 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
       view.type !== ViewTypes.GALLERY
     ) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -296,7 +296,7 @@ export class PublicDatasService {
       });
     } catch (e) {
       console.log(e);
-      NcError.internalServerError('Please check server log for more details');
+      CvError.internalServerError('Please check server log for more details');
     }
     return data;
   }
@@ -311,14 +311,14 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (view.type !== ViewTypes.GRID) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -366,7 +366,7 @@ export class PublicDatasService {
       });
     } catch (e) {
       console.log(e);
-      NcError.internalServerError('Please check server log for more details');
+      CvError.internalServerError('Please check server log for more details');
     }
   }
 
@@ -382,11 +382,11 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
-    if (view.type !== ViewTypes.FORM) NcError.notFound();
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
+    if (view.type !== ViewTypes.FORM) CvError.notFound();
 
     if (view.password && view.password !== param.password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -396,7 +396,7 @@ export class PublicDatasService {
     const source = await Source.get(context, model.source_id);
 
     if (source?.is_data_readonly) {
-      NcError.sourceDataReadOnly(source.alias);
+      CvError.sourceDataReadOnly(source.alias);
     }
 
     const baseModel = await Model.getBaseModelSQL(context, {
@@ -499,14 +499,14 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (view.type !== ViewTypes.FORM && view.type !== ViewTypes.GALLERY) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      NcError.invalidSharedViewPassword();
+      CvError.invalidSharedViewPassword();
     }
 
     const column = await Column.get(context, { colId: param.columnId });
@@ -566,7 +566,7 @@ export class PublicDatasService {
       } as any);
     } catch (e) {
       console.log(e);
-      NcError.internalServerError('Please check server log for more details');
+      CvError.internalServerError('Please check server log for more details');
     }
 
     return new PagedResponseImpl(data, { ...param.query, count });
@@ -584,18 +584,18 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
       view.type !== ViewTypes.GALLERY &&
       view.type !== ViewTypes.CALENDAR
     ) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      NcError.invalidSharedViewPassword();
+      CvError.invalidSharedViewPassword();
     }
 
     const column = await getColumnByIdOrName(
@@ -605,7 +605,7 @@ export class PublicDatasService {
     );
 
     if (column.fk_model_id !== view.fk_model_id)
-      NcError.badRequest("Column doesn't belongs to the model");
+      CvError.badRequest("Column doesn't belongs to the model");
 
     const source = await Source.get(context, view.source_id);
 
@@ -664,18 +664,18 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
       view.type !== ViewTypes.GALLERY &&
       view.type !== ViewTypes.CALENDAR
     ) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      NcError.invalidSharedViewPassword();
+      CvError.invalidSharedViewPassword();
     }
 
     const column = await getColumnByIdOrName(
@@ -685,7 +685,7 @@ export class PublicDatasService {
     );
 
     if (column.fk_model_id !== view.fk_model_id)
-      NcError.badRequest("Column doesn't belongs to the model");
+      CvError.badRequest("Column doesn't belongs to the model");
 
     const source = await Source.get(context, view.source_id);
 
@@ -743,7 +743,7 @@ export class PublicDatasService {
     const { sharedViewUuid, rowId, password, query = {} } = param;
     const view = await View.getByUUID(context, sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(sharedViewUuid);
+    if (!view) CvError.viewNotFound(sharedViewUuid);
     if (
       view.type !== ViewTypes.GRID &&
       view.type !== ViewTypes.KANBAN &&
@@ -751,11 +751,11 @@ export class PublicDatasService {
       view.type !== ViewTypes.MAP &&
       view.type !== ViewTypes.CALENDAR
     ) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -774,7 +774,7 @@ export class PublicDatasService {
     const row = await baseModel.readByPk(rowId, false, query);
 
     if (!row) {
-      NcError.recordNotFound(param.rowId);
+      CvError.recordNotFound(param.rowId);
     }
 
     return row;
@@ -791,14 +791,14 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (view.type !== ViewTypes.GRID) {
-      NcError.notFound('Not found');
+      CvError.notFound('Not found');
     }
 
     if (view.password && view.password !== param.password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -822,7 +822,7 @@ export class PublicDatasService {
     } catch (e) {}
 
     if (!bulkFilterList?.length) {
-      NcError.badRequest('Invalid bulkFilterList');
+      CvError.badRequest('Invalid bulkFilterList');
     }
 
     const dataListResults = await bulkFilterList.reduce(
@@ -855,10 +855,10 @@ export class PublicDatasService {
   ) {
     const view = await View.getByUUID(context, param.sharedViewUuid);
 
-    if (!view) NcError.viewNotFound(param.sharedViewUuid);
+    if (!view) CvError.viewNotFound(param.sharedViewUuid);
 
     if (view.password && view.password !== param.password) {
-      return NcError.invalidSharedViewPassword();
+      return CvError.invalidSharedViewPassword();
     }
 
     const model = await Model.getByIdOrName(context, {
@@ -887,7 +887,7 @@ export class PublicDatasService {
     } catch (e) {}
 
     if (!bulkFilterList?.length) {
-      NcError.badRequest('Invalid bulkFilterList');
+      CvError.badRequest('Invalid bulkFilterList');
     }
 
     const [data, count] = await Promise.all([

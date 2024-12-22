@@ -15,7 +15,7 @@ import type {
   RollupColumn,
 } from '~/models';
 import { Column } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import genRollupSelectv2 from '~/db/genRollupSelectv2';
 import generateLookupSelectQuery from '~/db/generateLookupSelectQuery';
 import { genPgAggregateQuery } from '~/db/aggregations/pg';
@@ -29,7 +29,7 @@ const validateColType = (column: Column, aggregation: string) => {
   );
 
   if (!agg.includes(aggregation)) {
-    NcError.badRequest(
+    CvError.badRequest(
       `Aggregation ${aggregation} is not available for column type ${column.uidt}`,
     );
   }
@@ -108,7 +108,7 @@ export default async function applyAggregation({
 
   // If the aggregation is not available for the column type, we throw an error.
   if (aggType === 'unknown') {
-    NcError.notImplemented(`Aggregation ${aggregation} is not implemented yet`);
+    CvError.notImplemented(`Aggregation ${aggregation} is not implemented yet`);
   }
 
   // If the column is a barcode or qr code column, we fetch the column that the virtual column refers to.
@@ -213,7 +213,7 @@ export default async function applyAggregation({
       alias: alias,
     });
   } else {
-    NcError.notImplemented(
+    CvError.notImplemented(
       `Aggregation is not implemented for ${knex.client.config.client} yet.`,
     );
   }

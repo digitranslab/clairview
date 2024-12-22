@@ -4,7 +4,7 @@ import type { VisibilityRuleReqType } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Base, Model, ModelRoleVisibility, View } from '~/models';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class ModelVisibilitiesService {
     const base = await Base.getWithInfo(context, param.baseId);
 
     if (!base) {
-      NcError.baseNotFound(param.baseId);
+      CvError.baseNotFound(param.baseId);
     }
 
     for (const d of param.visibilityRule) {
@@ -35,7 +35,7 @@ export class ModelVisibilitiesService {
         const view = await View.get(context, d.id);
 
         if (view.base_id !== param.baseId) {
-          NcError.badRequest('View does not belong to the base');
+          CvError.badRequest('View does not belong to the base');
         }
 
         const dataInDb = await ModelRoleVisibility.get(context, {

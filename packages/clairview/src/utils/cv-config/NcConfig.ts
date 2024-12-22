@@ -6,7 +6,7 @@ import { DriverClient } from './interfaces';
 import type { DbConfig } from './interfaces';
 import { SqlClientFactory } from '~/db/sql-client/lib/SqlClientFactory';
 
-export class NcConfig {
+export class CvConfig {
   version: string;
   meta: {
     db: DbConfig;
@@ -59,11 +59,11 @@ export class NcConfig {
     worker?: boolean;
     dashboardPath?: string;
     publicUrl?: string;
-  }): Promise<NcConfig> {
+  }): Promise<CvConfig> {
     const { meta, secret, port, worker, tryMode, publicUrl, dashboardPath } =
       param;
 
-    const ncConfig = new NcConfig();
+    const ncConfig = new CvConfig();
 
     ncConfig.auth = {
       jwt: {
@@ -135,8 +135,8 @@ export class NcConfig {
     return ncConfig;
   }
 
-  public static async createByEnv(): Promise<NcConfig> {
-    return NcConfig.create({
+  public static async createByEnv(): Promise<CvConfig> {
+    return CvConfig.create({
       meta: {
         metaUrl: process.env.NC_DB,
         metaJson: process.env.NC_DB_JSON,

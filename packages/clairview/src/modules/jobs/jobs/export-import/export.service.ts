@@ -24,8 +24,8 @@ import {
   generateBaseIdMap,
   getEntityIdentifier,
 } from '~/helpers/exportImportHelpers';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
-import { NcError } from '~/helpers/catchError';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
+import { CvError } from '~/helpers/catchError';
 import { DatasService } from '~/services/datas.service';
 import { parseMetaProp } from '~/utils/modelUtils';
 
@@ -67,7 +67,7 @@ export class ExportService {
 
       let pgSerialLastVal;
 
-      if (!model) return NcError.tableNotFound(modelId);
+      if (!model) return CvError.tableNotFound(modelId);
 
       const fndProject = bases.find((p) => p.id === model.base_id);
       const base = fndProject || (await Base.get(context, model.base_id));
@@ -948,7 +948,7 @@ export class ExportService {
 
     const source = await Source.get(context, param.sourceId);
 
-    if (!source) NcError.sourceNotFound(param.sourceId);
+    if (!source) CvError.sourceNotFound(param.sourceId);
 
     const base = await Base.get(context, source.base_id);
 
@@ -972,7 +972,7 @@ export class ExportService {
       models: exportedModels,
     };
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
     const destPath = `export/${base.id}/${source.id}/${param.path}`;
 
@@ -1063,7 +1063,7 @@ export class ExportService {
         'exportBase',
       );
     } catch (e) {
-      throw NcError.badRequest(e);
+      throw CvError.badRequest(e);
     }
 
     return {

@@ -1,5 +1,5 @@
 import type { SortType } from 'clairview-sdk';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { extractProps } from '~/helpers/extractProps';
 import Noco from '~/Noco';
 import {
@@ -57,7 +57,7 @@ export default class Store {
 
   static async saveOrUpdate(store: Store, ncMeta = Noco.ncMeta) {
     if (!store.key) {
-      NcError.badRequest('Key is required');
+      CvError.badRequest('Key is required');
     }
 
     const insertObj = extractProps(store, [

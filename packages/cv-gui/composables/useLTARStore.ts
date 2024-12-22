@@ -287,7 +287,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
         // temporary fix to handle when offset is beyond limit
         const error = await extractSdkResponseErrorMsgv2(e)
 
-        if (error.error === NcErrorType.INVALID_OFFSET_VALUE) {
+        if (error.error === CvErrorType.INVALID_OFFSET_VALUE) {
           childrenExcludedListPagination.page = 0
           return loadChildrenExcludedList(activeState, true)
         }

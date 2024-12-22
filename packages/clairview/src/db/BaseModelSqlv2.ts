@@ -66,7 +66,7 @@ import conditionV2 from '~/db/conditionV2';
 import sortV2 from '~/db/sortV2';
 import { customValidators } from '~/db/util/customValidators';
 import { extractLimitAndOffset } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getAst from '~/helpers/getAst';
 import { sanitize, unsanitize } from '~/helpers/sqlSanitize';
 import Noco from '~/Noco';
@@ -813,7 +813,7 @@ class BaseModelSqlv2 {
       });
 
       if (!bulkFilterList?.length) {
-        return NcError.badRequest('bulkFilterList is required');
+        return CvError.badRequest('bulkFilterList is required');
       }
 
       for (const f of bulkFilterList) {
@@ -847,12 +847,12 @@ class BaseModelSqlv2 {
 
             switch (column.uidt) {
               case UITypes.Attachment:
-                NcError.badRequest(
+                CvError.badRequest(
                   'Group by using attachment column is not supported',
                 );
                 break;
               case UITypes.Button: {
-                NcError.badRequest(
+                CvError.badRequest(
                   'Group by using Button column is not supported',
                 );
                 break;
@@ -1069,7 +1069,7 @@ class BaseModelSqlv2 {
             );
             break;
           default:
-            NcError.notImplemented(
+            CvError.notImplemented(
               'This database does not support bulk groupBy count',
             );
         }
@@ -1118,7 +1118,7 @@ class BaseModelSqlv2 {
 
     try {
       if (!bulkFilterList?.length) {
-        return NcError.badRequest('bulkFilterList is required');
+        return CvError.badRequest('bulkFilterList is required');
       }
 
       for (const f of bulkFilterList) {
@@ -1139,7 +1139,7 @@ class BaseModelSqlv2 {
               (c) => c.column_name === col || c.title === col,
             );
             if (!column) {
-              throw NcError.fieldNotFound(col);
+              throw CvError.fieldNotFound(col);
             }
             return column?.id;
           })
@@ -1165,12 +1165,12 @@ class BaseModelSqlv2 {
 
             switch (column.uidt) {
               case UITypes.Attachment:
-                NcError.badRequest(
+                CvError.badRequest(
                   'Group by using attachment column is not supported',
                 );
                 break;
               case UITypes.Button: {
-                NcError.badRequest(
+                CvError.badRequest(
                   'Group by using Button column is not supported',
                 );
                 break;
@@ -1457,7 +1457,7 @@ class BaseModelSqlv2 {
             );
             break;
           default:
-            NcError.notImplemented(
+            CvError.notImplemented(
               'This database does not support bulk groupBy',
             );
         }
@@ -1637,7 +1637,7 @@ class BaseModelSqlv2 {
             break;
           }
           default:
-            NcError.notImplemented(
+            CvError.notImplemented(
               'This database is not supported for bulk aggregation',
             );
         }
@@ -1811,7 +1811,7 @@ class BaseModelSqlv2 {
           (c) => c.column_name === col || c.title === col,
         );
         if (!column) {
-          throw NcError.fieldNotFound(col);
+          throw CvError.fieldNotFound(col);
         }
 
         // if qrCode or Barcode replace it with value column nd keep the alias
@@ -1827,13 +1827,13 @@ class BaseModelSqlv2 {
 
         switch (column.uidt) {
           case UITypes.Attachment:
-            NcError.badRequest(
+            CvError.badRequest(
               'Group by using attachment column is not supported',
             );
             break;
           case UITypes.Button:
             {
-              NcError.badRequest(
+              CvError.badRequest(
                 'Group by using Button column is not supported',
               );
             }
@@ -2120,7 +2120,7 @@ class BaseModelSqlv2 {
           (c) => c.column_name === col || c.title === col,
         );
         if (!column) {
-          throw NcError.fieldNotFound(col);
+          throw CvError.fieldNotFound(col);
         }
 
         // if qrCode or Barcode replace it with value column nd keep the alias
@@ -2134,12 +2134,12 @@ class BaseModelSqlv2 {
 
         switch (column.uidt) {
           case UITypes.Attachment:
-            NcError.badRequest(
+            CvError.badRequest(
               'Group by using attachment column is not supported',
             );
             break;
           case UITypes.Button: {
-            NcError.badRequest('Group by using Button column is not supported');
+            CvError.badRequest('Group by using Button column is not supported');
             break;
           }
           case UITypes.Rollup:
@@ -4832,7 +4832,7 @@ class BaseModelSqlv2 {
       );
 
       if (!prevData) {
-        NcError.recordNotFound(id);
+        CvError.recordNotFound(id);
       }
 
       await this.prepareNocoData(updateObj, false, cookie, prevData);
@@ -5557,7 +5557,7 @@ class BaseModelSqlv2 {
           isCreatedOrLastModifiedTimeCol(col) ||
           isCreatedOrLastModifiedByCol(col)
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             `Column "${col.title}" is auto generated and cannot be updated`,
           );
         }
@@ -5567,7 +5567,7 @@ class BaseModelSqlv2 {
           !allowSystemColumn &&
           [UITypes.ForeignKey, UITypes.Order].includes(col.uidt)
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             `Column "${col.title}" is system column and cannot be updated`,
           );
         }
@@ -5622,7 +5622,7 @@ class BaseModelSqlv2 {
                 ? await fn(arg)
                 : fn(arg))
             ) {
-              NcError.badRequest(
+              CvError.badRequest(
                 msg[j]
                   .replace(/\{VALUE}/g, columnValue)
                   .replace(/\{cn}/g, columnTitle),
@@ -5927,7 +5927,7 @@ class BaseModelSqlv2 {
         if (!pkValues) {
           // throw or skip if no pk provided
           if (throwExceptionIfNotExist) {
-            NcError.recordNotFound(pkValues);
+            CvError.recordNotFound(pkValues);
           }
           continue;
         }
@@ -5954,7 +5954,7 @@ class BaseModelSqlv2 {
               if (!oldRecord) {
                 // throw or skip if no record found
                 if (throwExceptionIfNotExist) {
-                  NcError.recordNotFound(record);
+                  CvError.recordNotFound(record);
                 }
                 continue;
               }
@@ -6064,7 +6064,7 @@ class BaseModelSqlv2 {
       // if attachment provided error out
       for (const col of columns) {
         if (col.uidt === UITypes.Attachment && updateData[col.column_name]) {
-          NcError.notImplemented(`Attachment bulk update all`);
+          CvError.notImplemented(`Attachment bulk update all`);
         }
       }
 
@@ -6174,7 +6174,7 @@ class BaseModelSqlv2 {
         if (!pkValues) {
           // throw or skip if no pk provided
           if (throwExceptionIfNotExist) {
-            NcError.recordNotFound(pkValues);
+            CvError.recordNotFound(pkValues);
           }
           continue;
         }
@@ -6205,7 +6205,7 @@ class BaseModelSqlv2 {
               if (!oldRecord) {
                 // throw or skip if no record found
                 if (throwExceptionIfNotExist) {
-                  NcError.recordNotFound(pk);
+                  CvError.recordNotFound(pk);
                 }
                 continue;
               }
@@ -6836,13 +6836,13 @@ class BaseModelSqlv2 {
           isCreatedOrLastModifiedTimeCol(column) ||
           isCreatedOrLastModifiedByCol(column)
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             `Column "${column.title}" is auto generated and cannot be updated`,
           );
         }
 
         if (column.system && column.uidt !== UITypes.ForeignKey) {
-          NcError.badRequest(
+          CvError.badRequest(
             `Column "${column.title}" is system column and cannot be updated`,
           );
         }
@@ -6874,7 +6874,7 @@ class BaseModelSqlv2 {
           ![null, undefined, ''].includes(columnValue) &&
           !(fn.constructor.name === 'AsyncFunction' ? await fn(arg) : fn(arg))
         ) {
-          NcError.badRequest(
+          CvError.badRequest(
             msg[j]
               .replace(/\{VALUE}/g, columnValue)
               .replace(/\{cn}/g, columnTitle),
@@ -6897,7 +6897,7 @@ class BaseModelSqlv2 {
       typeof column.dtxp === 'number' &&
       column.dtxp < data[column.title]?.length
     ) {
-      NcError.badRequest(
+      CvError.badRequest(
         `Column "${column.title}" value exceeds the maximum length of ${column.dtxp}`,
       );
     }
@@ -6959,7 +6959,7 @@ class BaseModelSqlv2 {
     for (let j = 0; j < columnValueArr.length; ++j) {
       const val = columnValueArr[j];
       if (!options.includes(val) && !options.includes(`'${val}'`)) {
-        NcError.badRequest(
+        CvError.badRequest(
           `Invalid option "${val}" provided for column "${columnTitle}". Valid options are "${options.join(
             ', ',
           )}"`,
@@ -6990,7 +6990,7 @@ class BaseModelSqlv2 {
       !column ||
       ![UITypes.LinkToAnotherRecord, UITypes.Links].includes(column.uidt)
     )
-      NcError.fieldNotFound(colId);
+      CvError.fieldNotFound(colId);
 
     const colOptions = await column.getColOptions<LinkToAnotherRecordColumn>(
       this.context,
@@ -7692,7 +7692,7 @@ class BaseModelSqlv2 {
       !column ||
       ![UITypes.LinkToAnotherRecord, UITypes.Links].includes(column.uidt)
     )
-      NcError.fieldNotFound(colId);
+      CvError.fieldNotFound(colId);
 
     const colOptions = await column.getColOptions<LinkToAnotherRecordColumn>(
       this.context,
@@ -7959,9 +7959,9 @@ class BaseModelSqlv2 {
       const columns = await this.model.getColumns(this.context);
       const column = columns?.find((col) => col.id === args.groupColumnId);
 
-      if (!column) NcError.fieldNotFound(args.groupColumnId);
+      if (!column) CvError.fieldNotFound(args.groupColumnId);
       if (isVirtualCol(column))
-        NcError.notImplemented('Grouping for virtual columns');
+        CvError.notImplemented('Grouping for virtual columns');
 
       // extract distinct group column values
       let groupingValues: Set<any>;
@@ -8135,9 +8135,9 @@ class BaseModelSqlv2 {
     const columns = await this.model.getColumns(this.context);
     const column = columns?.find((col) => col.id === args.groupColumnId);
 
-    if (!column) NcError.fieldNotFound(args.groupColumnId);
+    if (!column) CvError.fieldNotFound(args.groupColumnId);
     if (isVirtualCol(column))
-      NcError.notImplemented('Grouping for virtual columns');
+      CvError.notImplemented('Grouping for virtual columns');
 
     const qb = this.dbDriver(this.tnPath).count('*', { as: 'count' });
 
@@ -8990,7 +8990,7 @@ class BaseModelSqlv2 {
     await this.model.getColumns(this.context);
     const column = this.model.columnsById[colId];
 
-    if (!column || !isLinksOrLTAR(column)) NcError.fieldNotFound(colId);
+    if (!column || !isLinksOrLTAR(column)) CvError.fieldNotFound(colId);
 
     const row = await this.readByPk(
       rowId,
@@ -9001,7 +9001,7 @@ class BaseModelSqlv2 {
 
     // validate rowId
     if (!row) {
-      NcError.recordNotFound(rowId);
+      CvError.recordNotFound(rowId);
     }
 
     if (!_childIds.length) return;
@@ -9160,7 +9160,7 @@ class BaseModelSqlv2 {
                   !childRows.find((r) => r[parentColumn.column_name] === id),
               );
 
-              NcError.recordNotFound(extractIds(missingIds));
+              CvError.recordNotFound(extractIds(missingIds));
             }
 
             insertData = childRows
@@ -9238,7 +9238,7 @@ class BaseModelSqlv2 {
                   !childRows.find((r) => r[parentColumn.column_name] === id),
               );
 
-              NcError.recordNotFound(extractIds(missingIds));
+              CvError.recordNotFound(extractIds(missingIds));
             }
           }
           const updateQb = this.dbDriver(childTn).update({
@@ -9295,7 +9295,7 @@ class BaseModelSqlv2 {
             });
 
             if (!childRow) {
-              NcError.recordNotFound(extractIds(childIds, true));
+              CvError.recordNotFound(extractIds(childIds, true));
             }
           }
 
@@ -9380,7 +9380,7 @@ class BaseModelSqlv2 {
     await this.model.getColumns(this.context);
     const column = this.model.columnsById[colId];
 
-    if (!column || !isLinksOrLTAR(column)) NcError.fieldNotFound(colId);
+    if (!column || !isLinksOrLTAR(column)) CvError.fieldNotFound(colId);
 
     const row = await this.readByPk(
       rowId,
@@ -9391,7 +9391,7 @@ class BaseModelSqlv2 {
 
     // validate rowId
     if (!row) {
-      NcError.recordNotFound(rowId);
+      CvError.recordNotFound(rowId);
     }
 
     if (!childIds.length) return;
@@ -9510,7 +9510,7 @@ class BaseModelSqlv2 {
                   ),
               );
 
-              NcError.recordNotFound(extractIds(missingIds));
+              CvError.recordNotFound(extractIds(missingIds));
             }
           }
 
@@ -9598,7 +9598,7 @@ class BaseModelSqlv2 {
                   ),
               );
 
-              NcError.recordNotFound(extractIds(missingIds));
+              CvError.recordNotFound(extractIds(missingIds));
             }
           }
 
@@ -9644,7 +9644,7 @@ class BaseModelSqlv2 {
           // validate Ids
           {
             if (childIds.length > 1)
-              NcError.unprocessableEntity(
+              CvError.unprocessableEntity(
                 'Request must contain only one parent id',
               );
 
@@ -9659,7 +9659,7 @@ class BaseModelSqlv2 {
             });
 
             if (!childRow) {
-              NcError.recordNotFound(extractIds(childIds, true));
+              CvError.recordNotFound(extractIds(childIds, true));
             }
           }
 
@@ -9748,7 +9748,7 @@ class BaseModelSqlv2 {
 
       // validate rowId
       if (!row) {
-        NcError.recordNotFound(id);
+        CvError.recordNotFound(id);
       }
 
       const parentCol = await (
@@ -9899,7 +9899,7 @@ class BaseModelSqlv2 {
                 data[column.column_name] = JSON.parse(data[column.column_name]);
               }
             } catch (e) {
-              NcError.invalidAttachmentJson(data[column.column_name]);
+              CvError.invalidAttachmentJson(data[column.column_name]);
             }
           }
 
@@ -9971,7 +9971,7 @@ class BaseModelSqlv2 {
           if (Array.isArray(data[column.column_name])) {
             for (const attachment of data[column.column_name]) {
               if (!('url' in attachment) && !('path' in attachment)) {
-                NcError.unprocessableEntity(
+                CvError.unprocessableEntity(
                   'Attachment object must contain either url or path',
                 );
               }
@@ -10050,7 +10050,7 @@ class BaseModelSqlv2 {
                 if ('id' in user) {
                   const u = baseUsers.find((u) => u.id === user.id);
                   if (!u) {
-                    NcError.unprocessableEntity(
+                    CvError.unprocessableEntity(
                       `User with id '${user.id}' is not part of this workspace`,
                     );
                   }
@@ -10064,16 +10064,16 @@ class BaseModelSqlv2 {
                   if (user.email.length === 0) continue;
                   const u = baseUsers.find((u) => u.email === user.email);
                   if (!u) {
-                    NcError.unprocessableEntity(
+                    CvError.unprocessableEntity(
                       `User with email '${user.email}' is not part of this workspace`,
                     );
                   }
                   userIds.push(u.id);
                 } else {
-                  NcError.unprocessableEntity('Invalid user object');
+                  CvError.unprocessableEntity('Invalid user object');
                 }
               } catch (e) {
-                NcError.unprocessableEntity(e.message);
+                CvError.unprocessableEntity(e.message);
               }
             }
           } else if (typeof data[column.column_name] === 'string') {
@@ -10086,7 +10086,7 @@ class BaseModelSqlv2 {
                 if (user.includes('@')) {
                   const u = baseUsers.find((u) => u.email === user);
                   if (!u) {
-                    NcError.unprocessableEntity(
+                    CvError.unprocessableEntity(
                       `User with email '${user}' is not part of this workspace`,
                     );
                   }
@@ -10094,21 +10094,21 @@ class BaseModelSqlv2 {
                 } else {
                   const u = baseUsers.find((u) => u.id === user);
                   if (!u) {
-                    NcError.unprocessableEntity(
+                    CvError.unprocessableEntity(
                       `User with id '${user}' is not part of this workspace`,
                     );
                   }
                   userIds.push(u.id);
                 }
               } catch (e) {
-                NcError.unprocessableEntity(e.message);
+                CvError.unprocessableEntity(e.message);
               }
             }
           } else {
             logger.error(
               `${data[column.column_name]} is not a valid user input`,
             );
-            NcError.unprocessableEntity('Invalid user object');
+            CvError.unprocessableEntity('Invalid user object');
           }
 
           if (userIds.length === 0) {
@@ -10117,7 +10117,7 @@ class BaseModelSqlv2 {
             const userSet = new Set(userIds);
 
             if (userSet.size !== userIds.length) {
-              NcError.unprocessableEntity(
+              CvError.unprocessableEntity(
                 'Duplicate users not allowed for user field',
               );
             }
@@ -10126,7 +10126,7 @@ class BaseModelSqlv2 {
               data[column.column_name] = userIds.join(',');
             } else {
               if (userIds.length > 1) {
-                NcError.unprocessableEntity(
+                CvError.unprocessableEntity(
                   `Multiple users not allowed for '${column.title}'`,
                 );
               } else {
@@ -10314,7 +10314,7 @@ export function extractSortsObject(
     }
 
     if (throwErrorIfInvalid && !sort.fk_column_id)
-      NcError.fieldNotFound(s.replace(/^[+-]/, ''));
+      CvError.fieldNotFound(s.replace(/^[+-]/, ''));
     return new Sort(sort);
   });
 }
@@ -10351,7 +10351,7 @@ export function _wherePk(
       } else if (pk.column_name in id) {
         key = pk.column_name;
       } else {
-        NcError.badRequest(
+        CvError.badRequest(
           `Primary key column ${pk.title} not found in id object`,
         );
       }
@@ -10359,7 +10359,7 @@ export function _wherePk(
       // validate value if auto-increment column
       // todo: add more validation based on column constraints
       if (!skipPkValidation && pk.ai && !/^\d+$/.test(id[key])) {
-        NcError.invalidPrimaryKey(id[key], pk.title);
+        CvError.invalidPrimaryKey(id[key], pk.title);
       }
     }
 
@@ -10416,7 +10416,7 @@ export function _wherePk(
 
 export function getCompositePkValue(primaryKeys: Column[], row) {
   if (row === null || row === undefined) {
-    NcError.requiredFieldMissing(primaryKeys.map((c) => c.title).join(','));
+    CvError.requiredFieldMissing(primaryKeys.map((c) => c.title).join(','));
   }
 
   if (typeof row !== 'object') return row;

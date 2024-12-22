@@ -20,7 +20,7 @@ import { UsersService } from '~/services/users/users.service';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 
 import { GlobalGuard } from '~/guards/global/global.guard';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Acl } from '~/middlewares/extract-ids/extract-ids.middleware';
 import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 import { PublicApiLimiterGuard } from '~/guards/public-api-limiter.guard';
@@ -44,7 +44,7 @@ export class AuthController {
   @HttpCode(200)
   async signup(@Req() req: NcRequest, @Res() res: Response): Promise<any> {
     if (this.config.get('auth', { infer: true }).disableEmailAuth) {
-      NcError.forbidden('Email authentication is disabled');
+      CvError.forbidden('Email authentication is disabled');
     }
     res.json(
       await this.usersService.signup({
@@ -86,7 +86,7 @@ export class AuthController {
   @HttpCode(200)
   async signin(@Req() req: NcRequest, @Res() res: Response) {
     if (this.config.get('auth', { infer: true }).disableEmailAuth) {
-      NcError.forbidden('Email authentication is disabled');
+      CvError.forbidden('Email authentication is disabled');
     }
     await this.setRefreshToken({ req, res });
     res.json(await this.usersService.login(req.user, req));
@@ -97,7 +97,7 @@ export class AuthController {
   @HttpCode(200)
   async signOut(@Req() req: NcRequest, @Res() res: Response): Promise<any> {
     if (!(req as any).isAuthenticated?.()) {
-      NcError.forbidden('Not allowed');
+      CvError.forbidden('Not allowed');
     }
     res.json(
       await this.usersService.signOut({
@@ -151,7 +151,7 @@ export class AuthController {
   @HttpCode(200)
   async passwordChange(@Req() req: NcRequest, @Res() res): Promise<any> {
     if (!(req as any).isAuthenticated?.()) {
-      NcError.forbidden('Not allowed');
+      CvError.forbidden('Not allowed');
     }
 
     await this.usersService.passwordChange({

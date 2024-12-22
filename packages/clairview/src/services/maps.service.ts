@@ -4,7 +4,7 @@ import type { MapUpdateReqType, UserType, ViewCreateReqType } from 'clairview-sd
 import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { MapView, Model, View } from '~/models';
 import { CacheScope } from '~/utils/globals';
 import NocoCache from '~/cache/NocoCache';
@@ -79,7 +79,7 @@ export class MapsService {
     const view = await View.get(context, param.mapViewId);
 
     if (!view) {
-      NcError.viewNotFound(param.mapViewId);
+      CvError.viewNotFound(param.mapViewId);
     }
 
     const res = await MapView.update(context, param.mapViewId, param.map);

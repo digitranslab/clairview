@@ -6,7 +6,7 @@ import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
 import { Base, Integration } from '~/models';
-import { NcBaseError, NcError } from '~/helpers/catchError';
+import { NcBaseError, CvError } from '~/helpers/catchError';
 import { Source } from '~/models';
 import { CacheScope, MetaTable, RootScopes } from '~/utils/globals';
 import Noco from '~/Noco';
@@ -31,7 +31,7 @@ export class IntegrationsService {
     const integration = await Integration.get(context, param.integrationId);
 
     if (!integration) {
-      NcError.integrationNotFound(param.integrationId);
+      CvError.integrationNotFound(param.integrationId);
     }
 
     integration.config = await integration.getConnectionConfig();
@@ -115,7 +115,7 @@ export class IntegrationsService {
       );
 
       if (!integration) {
-        NcError.integrationNotFound(param.integrationId);
+        CvError.integrationNotFound(param.integrationId);
       }
 
       // get linked sources
@@ -149,7 +149,7 @@ export class IntegrationsService {
           }),
         );
 
-        NcError.integrationLinkedWithMultiple(bases, sources);
+        CvError.integrationLinkedWithMultiple(bases, sources);
       }
 
       await integration.delete(ncMeta);
@@ -162,8 +162,8 @@ export class IntegrationsService {
       await ncMeta.commit();
     } catch (e) {
       await ncMeta.rollback(e);
-      if (e instanceof NcError || e instanceof NcBaseError) throw e;
-      NcError.badRequest(e);
+      if (e instanceof CvError || e instanceof NcBaseError) throw e;
+      CvError.badRequest(e);
     }
 
     return true;
@@ -176,7 +176,7 @@ export class IntegrationsService {
     try {
       const integration = await Integration.get(context, param.integrationId);
       if (!integration) {
-        NcError.integrationNotFound(param.integrationId);
+        CvError.integrationNotFound(param.integrationId);
       }
 
       const ncMeta = await Noco.ncMeta.startTransaction();
@@ -221,11 +221,11 @@ export class IntegrationsService {
         await ncMeta.commit();
       } catch (e) {
         await ncMeta.rollback(e);
-        if (e instanceof NcError || e instanceof NcBaseError) throw e;
-        NcError.badRequest(e);
+        if (e instanceof CvError || e instanceof NcBaseError) throw e;
+        CvError.badRequest(e);
       }
     } catch (e) {
-      NcError.badRequest(e);
+      CvError.badRequest(e);
     }
     return true;
   }
@@ -252,7 +252,7 @@ export class IntegrationsService {
       );
 
       if (!integrationBody?.id) {
-        NcError.integrationNotFound(param.integration.copy_from_id);
+        CvError.integrationNotFound(param.integration.copy_from_id);
       }
 
       integrationBody.config = await integrationBody.getConnectionConfig();
@@ -284,7 +284,7 @@ export class IntegrationsService {
             (integrationBody.config?.connection?.filename ||
               integrationBody.config?.connection?.connection?.filename)
           ) {
-            NcError.badRequest('Integration with same file already exists');
+            CvError.badRequest('Integration with same file already exists');
           }
         }
       }
@@ -428,7 +428,7 @@ export class IntegrationsService {
     const wrapper = integration.getIntegrationWrapper();
 
     if (!integrationMeta || !wrapper) {
-      NcError.badRequest('Invalid integration');
+      CvError.badRequest('Invalid integration');
     }
 
     if (
@@ -436,7 +436,7 @@ export class IntegrationsService {
       !(params.endpoint in wrapper) ||
       typeof wrapper[params.endpoint] !== 'function'
     ) {
-      NcError.genericNotFound('Endpoint', params.endpoint);
+      CvError.genericNotFound('Endpoint', params.endpoint);
     }
 
     return wrapper[params.endpoint](context, params.payload);

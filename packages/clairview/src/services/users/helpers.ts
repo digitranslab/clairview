@@ -1,13 +1,13 @@
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import type User from '~/models/User';
-import type { NcConfig } from '~/interface/config';
+import type { CvConfig } from '~/interface/config';
 import type { Response } from 'express';
 import { NC_REFRESH_TOKEN_EXP_IN_DAYS } from '~/constants';
 
 export function genJwt(
   user: User & { extra?: Record<string, any> },
-  config: NcConfig,
+  config: CvConfig,
 ) {
   return jwt.sign(
     {

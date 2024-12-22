@@ -20,7 +20,7 @@ import { IJobsService } from '~/modules/jobs/jobs-service.interface';
 import { TenantContext } from '~/decorators/tenant-context.decorator';
 import { NcContext, NcRequest } from '~/interface/config';
 import { RootScopes } from '~/utils/globals';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 @Controller()
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
@@ -217,10 +217,10 @@ export class DuplicateController {
 
     // if data/schema is readonly, then restrict duplication
     if (source.is_schema_readonly) {
-      NcError.sourceMetaReadOnly(source.alias);
+      CvError.sourceMetaReadOnly(source.alias);
     }
     if (source.is_data_readonly) {
-      NcError.sourceDataReadOnly(source.alias);
+      CvError.sourceDataReadOnly(source.alias);
     }
 
     const models = await source.getModels(context);
@@ -293,10 +293,10 @@ export class DuplicateController {
     // check if source is readonly and column type is not allowed
     if (!readonlyMetaAllowedTypes.includes(column.uidt)) {
       if (source.is_schema_readonly) {
-        NcError.sourceMetaReadOnly(source.alias);
+        CvError.sourceMetaReadOnly(source.alias);
       }
       if (source.is_data_readonly) {
-        NcError.sourceDataReadOnly(source.alias);
+        CvError.sourceDataReadOnly(source.alias);
       }
     }
 

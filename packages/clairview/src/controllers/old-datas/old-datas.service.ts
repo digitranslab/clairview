@@ -3,7 +3,7 @@ import type { OldPathParams } from '~/helpers/dataHelpers';
 import type { NcContext } from '~/interface/config';
 import { nocoExecute } from '~/utils';
 import getAst from '~/helpers/getAst';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { Base, Model, Source, View } from '~/models';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 
@@ -165,7 +165,7 @@ export class OldDatasService {
         titleOrId: req.params.viewName,
         fk_model_id: model.id,
       }));
-    if (!model) NcError.tableNotFound(req.params.tableName);
+    if (!model) CvError.tableNotFound(req.params.tableName);
     return { model, view };
   }
 }

@@ -16,7 +16,7 @@ import { TenantContext } from '~/decorators/tenant-context.decorator';
 import { NcContext, NcRequest } from '~/interface/config';
 import { Column } from '~/models';
 import { AttachmentsService } from '~/services/attachments.service';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 @UseGuards(PublicApiLimiterGuard)
 @Controller()
@@ -227,7 +227,7 @@ export class PublicDatasController {
     });
 
     if (!column) {
-      NcError.fieldNotFound(columnId);
+      CvError.fieldNotFound(columnId);
     }
 
     const record = await this.publicDatasService.dataRead(context, {
@@ -240,7 +240,7 @@ export class PublicDatasController {
     });
 
     if (!record) {
-      NcError.recordNotFound(rowId);
+      CvError.recordNotFound(rowId);
     }
 
     return this.attachmentsService.getAttachmentFromRecord({

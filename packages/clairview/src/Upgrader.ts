@@ -3,7 +3,7 @@ import type { Condition } from '~/db/CustomKnex';
 import Noco from '~/Noco';
 import { MetaService } from '~/meta/meta.service';
 import { MetaTable, RootScopes, RootScopeTables } from '~/utils/globals';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 const BATCH_SIZE = 500;
 
@@ -42,21 +42,21 @@ export default class Upgrader extends MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -105,21 +105,21 @@ export default class Upgrader extends MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -169,21 +169,21 @@ export default class Upgrader extends MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -199,7 +199,7 @@ export default class Upgrader extends MetaService {
       query.whereIn('id', ids).update(updateObj);
     } else {
       if (![MetaTable.FILE_REFERENCES].includes(target as MetaTable)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'This table does not support conditional bulk update',
           sql: '',
         });
@@ -237,21 +237,21 @@ export default class Upgrader extends MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });
@@ -302,21 +302,21 @@ export default class Upgrader extends MetaService {
 
     if (workspace_id === base_id) {
       if (!Object.values(RootScopes).includes(workspace_id as RootScopes)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Invalid scope',
           sql: '',
         });
       }
 
       if (!RootScopeTables[workspace_id].includes(target)) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Table not accessible from this scope',
           sql: '',
         });
       }
     } else {
       if (!base_id) {
-        NcError.metaError({
+        CvError.metaError({
           message: 'Base ID is required',
           sql: '',
         });

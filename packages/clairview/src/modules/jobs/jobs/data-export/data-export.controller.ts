@@ -18,7 +18,7 @@ import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 import { IJobsService } from '~/modules/jobs/jobs-service.interface';
 import { TenantContext } from '~/decorators/tenant-context.decorator';
 import { NcContext, NcRequest } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 @Controller()
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
@@ -41,7 +41,7 @@ export class DataExportController {
   ) {
     const view = await View.get(context, viewId);
 
-    if (!view) NcError.viewNotFound(viewId);
+    if (!view) CvError.viewNotFound(viewId);
 
     const job = await this.jobsService.add(JobTypes.DataExport, {
       context,

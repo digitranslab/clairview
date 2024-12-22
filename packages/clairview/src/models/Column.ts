@@ -28,7 +28,7 @@ import {
   LinksColumn,
 } from '~/models';
 import { extractProps } from '~/helpers/extractProps';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import addFormulaErrorIfMissingColumn from '~/helpers/addFormulaErrorIfMissingColumn';
 import Noco from '~/Noco';
 import {
@@ -151,7 +151,7 @@ export default class Column<T = any> implements ColumnType {
     } & Pick<ColumnReqType, 'column_order'>,
     ncMeta = Noco.ncMeta,
   ) {
-    if (!column.fk_model_id) NcError.badRequest('Missing model id');
+    if (!column.fk_model_id) CvError.badRequest('Missing model id');
 
     // TODO: fix type
     const insertObj = extractProps(column as any, [

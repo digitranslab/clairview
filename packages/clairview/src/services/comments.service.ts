@@ -7,7 +7,7 @@ import type {
   UserType,
 } from 'clairview-sdk';
 import type { NcContext, NcRequest } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { validatePayload } from '~/helpers';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import Comment from '~/models/Comment';
@@ -59,7 +59,7 @@ export class CommentsService {
     const comment = await Comment.get(context, param.commentId);
 
     if (comment.created_by !== param.user.id || comment.is_deleted) {
-      NcError.unauthorized('Unauthorized access');
+      CvError.unauthorized('Unauthorized access');
     }
 
     const res = await Comment.delete(context, param.commentId);
@@ -118,7 +118,7 @@ export class CommentsService {
     const comment = await Comment.get(context, param.commentId);
 
     if (comment.created_by !== param.user.id || comment.is_deleted) {
-      NcError.unauthorized('Unauthorized access');
+      CvError.unauthorized('Unauthorized access');
     }
 
     const res = await Comment.update(context, param.commentId, {

@@ -66,13 +66,13 @@ jobs:
           sleep 300 &&
           echo "$(date)" &&
           targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeClairviewSdk.js &&
-          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} node scripts/bumpNcGuiVersion.js &&
+          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} node scripts/bumpCvGuiVersion.js &&
           pnpm --filter=cv-gui install --ignore-scripts --no-frozen-lockfile &&
           targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} pnpm --filter=cv-gui run build:copy:publish --no-git-checks &&
           echo "$(date)" &&
           sleep 300 &&
           echo "$(date)" &&
-          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeNcGui.js && cd packages/clairview && pnpm run obfuscate:build:publish --no-git-checks
+          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeCvGui.js && cd packages/clairview && pnpm run obfuscate:build:publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
       - name: Create Pull Request
@@ -80,7 +80,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4.2.3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}
         with:
           signoff: true
           branch: "release/${{ github.event.inputs.tag || inputs.tag }}"
@@ -96,6 +96,6 @@ jobs:
         if: ${{ github.event.inputs.targetEnv == 'PROD' || inputs.targetEnv == 'PROD' }}
         uses: "pascalgn/automerge-action@v0.15.5"
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.DIGITRANS_GITHUB_TOKEN }}"
           PULL_REQUEST: "${{ steps.cpr.outputs.pull-request-number }}"
           MERGE_LABELS: "Bot: Automerge"

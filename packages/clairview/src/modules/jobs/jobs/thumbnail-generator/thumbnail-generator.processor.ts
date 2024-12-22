@@ -6,7 +6,7 @@ import type { IStorageAdapterV2 } from '~/types/cv-plugin';
 import type { Job } from 'bull';
 import type { AttachmentResType, PublicAttachmentScope } from 'clairview-sdk';
 import type { ThumbnailGeneratorJobData } from '~/interface/Jobs';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import { getPathFromUrl } from '~/helpers/attachmentHelpers';
 import Noco from '~/Noco';
 
@@ -49,7 +49,7 @@ export class ThumbnailGeneratorProcessor {
     sharp.concurrency(1);
 
     try {
-      const storageAdapter = await NcPluginMgrv2.storageAdapter();
+      const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
       const { file, relativePath } = await this.getFileData(
         attachment,

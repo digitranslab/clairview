@@ -15,7 +15,7 @@ import { Model } from '~/models';
 import formulaQueryBuilderv2 from '~/db/formulav2/formulaQueryBuilderv2';
 import genRollupSelectv2 from '~/db/genRollupSelectv2';
 import { getAliasGenerator } from '~/utils';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 const LOOKUP_VAL_SEPARATOR = '___';
 
@@ -65,7 +65,7 @@ export default async function generateLookupSelectQuery({
     if (column.uidt === UITypes.Lookup) {
       lookupColOpt = await column.getColOptions<LookupColumn>(context);
     } else if (column.uidt !== UITypes.LinkToAnotherRecord) {
-      NcError.badRequest('Invalid field type');
+      CvError.badRequest('Invalid field type');
     }
 
     await column.getColOptions<LookupColumn>(context);
@@ -386,7 +386,7 @@ export default async function generateLookupSelectQuery({
           break;
         case UITypes.Attachment:
           if (!isAggregation) {
-            NcError.badRequest(
+            CvError.badRequest(
               'Group by using attachment column is not supported',
             );
             break;
@@ -484,6 +484,6 @@ export default async function generateLookupSelectQuery({
       };
     }
 
-    NcError.notImplemented('This operation on Lookup/LTAR for this database');
+    CvError.notImplemented('This operation on Lookup/LTAR for this database');
   }
 }

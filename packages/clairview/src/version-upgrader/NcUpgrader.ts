@@ -14,7 +14,7 @@ import ncXcdbCreatedAndUpdatedSystemFieldsUpgrader from './upgraders/0111005_ncX
 import ncDatasourceDecrypt from './upgraders/0225002_ncDatasourceDecrypt';
 import ncDuplicatePluginMerge from './upgraders/0258003_ncDuplicatePluginMerge';
 import type { MetaService } from '~/meta/meta.service';
-import type { NcConfig } from '~/interface/config';
+import type { CvConfig } from '~/interface/config';
 import { T } from '~/utils';
 import { MetaTable, RootScopes } from '~/utils/globals';
 
@@ -54,7 +54,7 @@ export default class NcUpgrader {
       const NC_VERSIONS: any[] = this.getUpgraderList();
 
       if (config) {
-        const configObj: NcConfig = JSON.parse(config.value);
+        const configObj: CvConfig = JSON.parse(config.value);
         if (configObj.version !== process.env.NC_VERSION) {
           oldVersion = configObj.version;
           for (const version of NC_VERSIONS) {

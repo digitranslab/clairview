@@ -94,10 +94,10 @@ jobs:
           targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} node scripts/bumpClairviewSdkVersion.js &&
           pnpm --filter=${CLAIRVIEW_SDK_PKG_NAME} install --ignore-scripts --no-frozen-lockfile --ignore-workspace && pnpm --filter=${CLAIRVIEW_SDK_PKG_NAME} run build &&
           targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeClairviewSdk.js &&
-          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} node scripts/bumpNcGuiVersion.js &&
+          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} node scripts/bumpCvGuiVersion.js &&
           pnpm --filter=cv-gui install --ignore-scripts --no-frozen-lockfile &&
           targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} targetVersion=${{ github.event.inputs.tag || inputs.tag }} pnpm --filter=cv-gui run build:copy &&
-          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeNcGui.js
+          targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeCvGui.js
 
       - name: Build clairview and docker files
         run: |

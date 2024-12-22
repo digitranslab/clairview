@@ -18,7 +18,7 @@ import type { NcContext, NcRequest } from '~/interface/config';
 import { AppHooksService } from '~/services/app-hooks/app-hooks.service';
 import { validatePayload } from '~/helpers';
 import { CalendarViewColumn, View } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import Noco from '~/Noco';
 
 @Injectable()
@@ -119,7 +119,7 @@ export class ViewColumnsService {
       : param.columns?.[APIContext.VIEW_COLUMNS];
 
     if (!columns) {
-      NcError.badRequest('Invalid request - fields not found');
+      CvError.badRequest('Invalid request - fields not found');
     }
 
     const view = await View.get(context, viewId);
@@ -130,7 +130,7 @@ export class ViewColumnsService {
     const ncMeta = await Noco.ncMeta.startTransaction();
 
     if (!view) {
-      NcError.notFound('View not found');
+      CvError.notFound('View not found');
     }
 
     try {

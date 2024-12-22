@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { GlobalGuard } from '~/guards/global/global.guard';
 import { Acl } from '~/middlewares/extract-ids/extract-ids.middleware';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import { JobTypes } from '~/interface/Jobs';
 import { SourcesService } from '~/services/sources.service';
 import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
@@ -40,7 +40,7 @@ export class SourceDeleteController {
     );
 
     if (fnd) {
-      NcError.badRequest('There is already a job running to delete this base.');
+      CvError.badRequest('There is already a job running to delete this base.');
     }
 
     await this.sourcesService.baseSoftDelete(context, { sourceId });

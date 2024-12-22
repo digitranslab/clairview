@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { extractRolesObj } from 'clairview-sdk';
 import type { AppConfig } from '~/interface/config';
 import { AuthService } from '~/modules/auth/auth.service';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -21,12 +21,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate(username: string, password: string): Promise<any> {
     if (this.config.get('auth.disableEmailAuth', { infer: true }))
-      NcError.forbidden('Not available');
+      CvError.forbidden('Not available');
 
     const user = await this.authService.validateUser(username, password);
 
     if (!user) {
-      NcError.badRequest('Invalid credentials');
+      CvError.badRequest('Invalid credentials');
     }
 
     user.roles = extractRolesObj(user.roles);

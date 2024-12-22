@@ -3,7 +3,7 @@ import debug from 'debug';
 import { Injectable } from '@nestjs/common';
 import PQueue from 'p-queue';
 import mime from 'mime/lite';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 import Noco from '~/Noco';
 import { RootScopes } from '~/utils/globals';
 import { ThumbnailGeneratorProcessor } from '~/modules/jobs/jobs/thumbnail-generator/thumbnail-generator.processor';
@@ -34,7 +34,7 @@ export class ThumbnailMigration {
 
       const ncMeta = Noco.ncMeta;
 
-      const storageAdapter = await NcPluginMgrv2.storageAdapter(ncMeta);
+      const storageAdapter = await CvPluginMgrv2.storageAdapter(ncMeta);
 
       const temp_file_references_table = 'nc_temp_file_references';
 

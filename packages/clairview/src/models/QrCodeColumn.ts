@@ -4,7 +4,7 @@ import NocoCache from '~/cache/NocoCache';
 import { extractProps } from '~/helpers/extractProps';
 import { CacheGetType, CacheScope, MetaTable } from '~/utils/globals';
 import { Column } from '~/models';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 
 export default class QrCodeColumn {
   base_id?: string;
@@ -35,7 +35,7 @@ export default class QrCodeColumn {
     );
 
     if (!column) {
-      NcError.fieldNotFound(insertObj.fk_column_id);
+      CvError.fieldNotFound(insertObj.fk_column_id);
     }
 
     await ncMeta.metaInsert2(

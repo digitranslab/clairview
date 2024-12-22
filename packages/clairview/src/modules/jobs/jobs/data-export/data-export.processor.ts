@@ -8,8 +8,8 @@ import { type DataExportJobData } from '~/interface/Jobs';
 import { elapsedTime, initTime } from '~/modules/jobs/helpers';
 import { ExportService } from '~/modules/jobs/jobs/export-import/export.service';
 import { Model, PresignedUrl, View } from '~/models';
-import { NcError } from '~/helpers/catchError';
-import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
+import { CvError } from '~/helpers/catchError';
+import CvPluginMgrv2 from '~/helpers/CvPluginMgrv2';
 
 function getViewTitle(view: View) {
   return view?.is_default ? 'Default View' : view?.title;
@@ -32,22 +32,22 @@ export class DataExportProcessor {
       ncSiteUrl,
     } = job.data;
 
-    if (exportAs !== 'csv') NcError.notImplemented(`Export as ${exportAs}`);
+    if (exportAs !== 'csv') CvError.notImplemented(`Export as ${exportAs}`);
 
     const hrTime = initTime();
 
     const model = await Model.get(context, modelId);
 
-    if (!model) NcError.tableNotFound(modelId);
+    if (!model) CvError.tableNotFound(modelId);
 
     const view = await View.get(context, viewId);
 
-    if (!view) NcError.viewNotFound(viewId);
+    if (!view) CvError.viewNotFound(viewId);
 
     // date time as containing folder YYYY-MM-DD/HH
     const dateFolder = moment().format('YYYY-MM-DD/HH');
 
-    const storageAdapter = await NcPluginMgrv2.storageAdapter();
+    const storageAdapter = await CvPluginMgrv2.storageAdapter();
 
     const destPath = `nc/uploads/data-export/${dateFolder}/${modelId}/${
       model.title

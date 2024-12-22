@@ -7,7 +7,7 @@ import {
 import DOMPurify from 'isomorphic-dompurify';
 import type { UserType } from 'clairview-sdk';
 import type { NcContext } from '~/interface/config';
-import { NcError } from '~/helpers/catchError';
+import { CvError } from '~/helpers/catchError';
 import getTableNameAlias, { getColumnNameAlias } from '~/helpers/getTableName';
 import ProjectMgrv2 from '~/db/sql-mgr/v2/ProjectMgrv2';
 import mapDefaultDisplayValue from '~/helpers/mapDefaultDisplayValue';
@@ -31,7 +31,7 @@ export class SqlViewsService {
       user: UserType;
     },
   ) {
-    NcError.notImplemented();
+    CvError.notImplemented();
     return;
     const body = { ...param.body };
 
@@ -43,7 +43,7 @@ export class SqlViewsService {
     }
 
     if (!body.view_name || (base.prefix && base.prefix === body.view_name)) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Missing table name `view_name` property in request body',
       );
     }
@@ -58,7 +58,7 @@ export class SqlViewsService {
 
     // validate table name
     if (/^\s+|\s+$/.test(body.view_name)) {
-      NcError.badRequest(
+      CvError.badRequest(
         'Leading or trailing whitespace not allowed in table names',
       );
     }
@@ -70,7 +70,7 @@ export class SqlViewsService {
         source_id: source.id,
       }))
     ) {
-      NcError.badRequest('Duplicate table name');
+      CvError.badRequest('Duplicate table name');
     }
 
     if (!body.title) {
@@ -84,7 +84,7 @@ export class SqlViewsService {
         source_id: source.id,
       }))
     ) {
-      NcError.badRequest('Duplicate table alias');
+      CvError.badRequest('Duplicate table alias');
     }
 
     const sqlMgr = await ProjectMgrv2.getSqlMgr(context, base);
@@ -102,7 +102,7 @@ export class SqlViewsService {
     }
 
     if (body.view_name.length > tableNameLengthLimit) {
-      NcError.badRequest(
+      CvError.badRequest(
         `Table name exceeds ${tableNameLengthLimit} characters`,
       );
     }
