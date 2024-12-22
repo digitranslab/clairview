@@ -28,7 +28,7 @@ jobs:
       - name: Pushes generated output
         uses: dmnemec/copy_file_to_another_repo_action@1b29cbd9a323185f20b175dc6d5f8f31be5c0658
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.DIGITRANS_GITHUB_TOKEN }}
         with:
           source_file: 'packages/noco-docs/dist/'
           clear_folder: 'docs/dist'
