@@ -9,11 +9,11 @@ export class ImportAirtablePage extends BasePage {
   constructor(dashboard: DashboardPage) {
     super(dashboard.rootPage);
     this.dashboard = dashboard;
-    this.importButton = dashboard.get().locator('.nc-btn-airtable-import');
+    this.importButton = dashboard.get().locator('.cv-btn-airtable-import');
   }
 
   get() {
-    return this.dashboard.get().locator(`.nc-modal-airtable-import`);
+    return this.dashboard.get().locator(`.cv-modal-airtable-import`);
   }
 
   async import({ key, sourceId }: { key: string; sourceId: string }) {
@@ -21,8 +21,8 @@ export class ImportAirtablePage extends BasePage {
     // additional time to allow the modal to render completely
     await this.rootPage.waitForTimeout(1000);
 
-    await this.get().locator(`.nc-input-api-key >> input`).fill(key);
-    await this.get().locator(`.nc-input-shared-base`).fill(sourceId);
+    await this.get().locator(`.cv-input-api-key >> input`).fill(key);
+    await this.get().locator(`.cv-input-shared-base`).fill(sourceId);
     await this.importButton.click();
 
     await this.get().locator(`button:has-text("Go to Dashboard")`).waitFor();

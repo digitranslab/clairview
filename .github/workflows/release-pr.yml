@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize, ready_for_review, closed]
     paths:
       - "packages/clairview-sdk/**"
-      - "packages/nc-gui/**"
+      - "packages/cv-gui/**"
       - "packages/clairview/**"
 
 concurrency:

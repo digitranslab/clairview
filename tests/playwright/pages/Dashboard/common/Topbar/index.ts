@@ -26,14 +26,14 @@ export class TopbarPage extends BasePage {
     this.share = new TopbarSharePage(this);
 
     this.btn_share = this.get().locator(`[data-testid="share-base-button"]`);
-    this.btn_data = this.get().locator(`.nc-tab:has-text("Data")`);
-    this.btn_details = this.get().locator(`.nc-tab:has-text("Details")`);
-    this.btn_cmdK = this.rootPage.locator('[data-testid="nc-topbar-cmd-k-btn"]');
-    this.btn_extension = this.get().locator('[data-testid="nc-topbar-extension-btn"]');
+    this.btn_data = this.get().locator(`.cv-tab:has-text("Data")`);
+    this.btn_details = this.get().locator(`.cv-tab:has-text("Details")`);
+    this.btn_cmdK = this.rootPage.locator('[data-testid="cv-topbar-cmd-k-btn"]');
+    this.btn_extension = this.get().locator('[data-testid="cv-topbar-extension-btn"]');
   }
 
   get() {
-    return this.rootPage.locator(`.nc-table-topbar`);
+    return this.rootPage.locator(`.cv-table-topbar`);
   }
 
   async clickShare() {
@@ -100,20 +100,20 @@ export class TopbarPage extends BasePage {
   }
 
   async clickRefresh() {
-    await this.get().locator(`.nc-icon-reload`).waitFor({ state: 'visible' });
-    await this.get().locator(`.nc-icon-reload`).click();
+    await this.get().locator(`.cv-icon-reload`).waitFor({ state: 'visible' });
+    await this.get().locator(`.cv-icon-reload`).click();
     await this.rootPage.waitForLoadState('networkidle');
   }
 
   async clickDownload(type: string, verificationFile = 'expectedData.txt') {
-    await this.get().locator(`.nc-toolbar-btn.nc-actions-menu-btn`).click();
+    await this.get().locator(`.cv-toolbar-btn.cv-actions-menu-btn`).click();
 
     const [download] = await Promise.all([
       // Start waiting for the download
       this.rootPage.waitForEvent('download'),
       // Perform the action that initiates download
       this.rootPage
-        .locator(`.nc-dropdown-actions-menu`)
+        .locator(`.cv-dropdown-actions-menu`)
         .locator(`li.ant-dropdown-menu-item:has-text("${type}")`)
         .click(),
     ]);

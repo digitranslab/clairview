@@ -674,7 +674,7 @@ export default class Column<T = any> implements ColumnType {
     );
 
     /*const columns = ncMeta
-      .knex('nc_models_v2 as tab')
+      .knex('cv_models_v2 as tab')
       .select(
         'col.id',
         'col.cn',

@@ -11,7 +11,7 @@ export class TopbarSharePage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`.nc-modal-share-collaborate`).locator('.ant-modal-content');
+    return this.rootPage.locator(`.cv-modal-share-collaborate`).locator('.ant-modal-content');
   }
 
   async clickShareView() {
@@ -40,7 +40,7 @@ export class TopbarSharePage extends BasePage {
 
   async clickShareViewWithPassword({ password }: { password: string }) {
     await this.get().locator(`[data-testid="share-password-toggle"]`).click();
-    await this.get().locator('[data-testid="nc-modal-share-view__password"]').fill(password);
+    await this.get().locator('[data-testid="cv-modal-share-view__password"]').fill(password);
   }
 
   async clickShareViewWithCSVDownload() {
@@ -53,7 +53,7 @@ export class TopbarSharePage extends BasePage {
 
   async clickShareBasePublicAccess() {
     await this.get()
-      .locator(`[data-testid="nc-share-base-sub-modal"]`)
+      .locator(`[data-testid="cv-share-base-sub-modal"]`)
       .locator('.ant-switch')
       .nth(0)
       .click({
@@ -63,7 +63,7 @@ export class TopbarSharePage extends BasePage {
 
   async isSharedBasePublicAccessEnabled() {
     return await this.get()
-      .locator(`[data-testid="nc-share-base-sub-modal"]`)
+      .locator(`[data-testid="cv-share-base-sub-modal"]`)
       .locator('.ant-switch')
       .nth(0)
       .isChecked();
@@ -72,11 +72,11 @@ export class TopbarSharePage extends BasePage {
   async clickShareBaseEditorAccess() {
     await this.rootPage.waitForTimeout(1000);
 
-    const shareBaseSwitch = this.get().locator(`[data-testid="nc-share-base-sub-modal"]`).locator('.ant-switch');
+    const shareBaseSwitch = this.get().locator(`[data-testid="cv-share-base-sub-modal"]`).locator('.ant-switch');
     const count = await shareBaseSwitch.count();
 
     await this.get()
-      .locator(`[data-testid="nc-share-base-sub-modal"]`)
+      .locator(`[data-testid="cv-share-base-sub-modal"]`)
       .locator('.ant-switch')
       .nth(count - 1)
       .click({
@@ -86,14 +86,14 @@ export class TopbarSharePage extends BasePage {
 
   async isSharedBaseEditorAccessEnabled() {
     return await this.get()
-      .locator(`[data-testid="nc-share-base-sub-modal"]`)
+      .locator(`[data-testid="cv-share-base-sub-modal"]`)
       .locator('.ant-switch')
       .nth(0)
       .isChecked();
   }
 
   async clickShareViewSurveyMode() {
-    await this.get().locator(`[data-testid="nc-modal-share-view__surveyMode"]`).click();
+    await this.get().locator(`[data-testid="cv-modal-share-view__surveyMode"]`).click();
   }
 
   async invite({ email, role }: { email: string; role: string }) {
@@ -104,10 +104,10 @@ export class TopbarSharePage extends BasePage {
       const roleField: Locator = this.get().locator('[data-testid="docs-share-dlg-share-base-collaborate-role"]');
       await roleField.click();
 
-      const roleOptionsMenu: Locator = this.rootPage.locator('.ant-select-dropdown.nc-dropdown-user-role');
-      console.log(await roleOptionsMenu.locator(`.nc-role-option`).count());
+      const roleOptionsMenu: Locator = this.rootPage.locator('.ant-select-dropdown.cv-dropdown-user-role');
+      console.log(await roleOptionsMenu.locator(`.cv-role-option`).count());
       await roleOptionsMenu
-        .locator(`.nc-role-option`)
+        .locator(`.cv-role-option`)
         .nth(role === 'editor' ? 0 : 1)
         .click();
     }

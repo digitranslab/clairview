@@ -21,13 +21,13 @@ import { T } from '~/utils';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import getInstance from '~/utils/getInstance';
 import { CacheScope, MetaTable, RootScopes } from '~/utils/globals';
-import { jdbcToXcConfig } from '~/utils/nc-config/helpers';
+import { jdbcToXcConfig } from '~/utils/cv-config/helpers';
 import { packageVersion } from '~/utils/packageVersion';
 import {
   defaultGroupByLimitConfig,
   defaultLimitConfig,
 } from '~/helpers/extractLimitAndOffset';
-import { DriverClient } from '~/utils/nc-config';
+import { DriverClient } from '~/utils/cv-config';
 import NocoCache from '~/cache/NocoCache';
 import { getCircularReplacer } from '~/utils';
 

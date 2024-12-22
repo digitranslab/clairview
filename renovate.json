@@ -49,8 +49,8 @@
   ],
   "ignorePaths": [
     "**/node_modules/**",
-    "**/nc-cli/**",
-    "**/nc-lib-gui/**",
+    "**/cv-cli/**",
+    "**/cv-lib-gui/**",
     "**/clairview-legacy/**",
     "**/test/**",
     "**/tests/**",

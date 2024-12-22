@@ -3,7 +3,7 @@ import { Readable } from 'stream';
 import { Client as MinioClient } from 'minio';
 import axios from 'axios';
 import { useAgent } from 'request-filtering-agent';
-import type { IStorageAdapterV2, XcFile } from '~/types/nc-plugin';
+import type { IStorageAdapterV2, XcFile } from '~/types/cv-plugin';
 
 interface MinioObjectStorageInput {
   bucket: string;
@@ -67,7 +67,7 @@ export default class Minio implements IStorageAdapterV2 {
   public async test(): Promise<boolean> {
     try {
       const createStream = Readable.from(['Hello from Minio, ClairView']);
-      await this.fileCreateByStream('nc-test-file.txt', createStream);
+      await this.fileCreateByStream('cv-test-file.txt', createStream);
       return true;
     } catch (e) {
       throw e;

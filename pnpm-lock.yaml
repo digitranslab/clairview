@@ -34,7 +34,7 @@ importers:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
 
-  packages/nc-gui:
+  packages/cv-gui:
     dependencies:
       '@ckpack/vue-color':
         specifier: ^1.5.0
@@ -482,7 +482,7 @@ importers:
         specifier: ^3.5.6
         version: 3.5.6
 
-  packages/nc-mail-templates:
+  packages/cv-mail-templates:
     dependencies:
       html-entities-decoder:
         specifier: ^1.0.5
@@ -501,7 +501,7 @@ importers:
         specifier: ^4.10.4
         version: 4.12.0
 
-  packages/nc-secret-mgr:
+  packages/cv-secret-mgr:
     dependencies:
       chalk:
         specifier: ^4.1.0
@@ -816,7 +816,7 @@ importers:
       nanoid:
         specifier: ^3.3.7
         version: 3.3.7
-      nc-lib-gui:
+      cv-lib-gui:
         specifier: 0.258.10
         version: 0.258.10
       nestjs-throttler-storage-redis:
@@ -11450,7 +11450,7 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  nc-lib-gui@0.258.10:
+  cv-lib-gui@0.258.10:
     resolution: {integrity: sha512-oH68ePmJ7SmAqDlxverh13+XJmCQgdurNDqiRJYnKtQQ3qF5cOXIma4tbjOM3jpUYokUlHzsY/ZGZu17I/zXxg==}
 
   negotiator@0.6.3:
@@ -29398,7 +29398,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  nc-lib-gui@0.258.10:
+  cv-lib-gui@0.258.10:
     dependencies:
       express: 4.19.2
     transitivePeerDependencies:

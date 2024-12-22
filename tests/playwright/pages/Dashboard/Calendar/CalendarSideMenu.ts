@@ -14,20 +14,20 @@ export class CalendarSideMenuPage extends BasePage {
     super(parent.rootPage);
     this.parent = parent;
 
-    this.new_record_btn = this.get().getByTestId('nc-calendar-side-menu-new-btn');
+    this.new_record_btn = this.get().getByTestId('cv-calendar-side-menu-new-btn');
 
-    this.next_btn = this.parent.toolbar.get().getByTestId('nc-calendar-next-btn');
-    this.prev_btn = this.parent.toolbar.get().getByTestId('nc-calendar-prev-btn');
+    this.next_btn = this.parent.toolbar.get().getByTestId('cv-calendar-next-btn');
+    this.prev_btn = this.parent.toolbar.get().getByTestId('cv-calendar-prev-btn');
 
-    this.searchToggleBtn = this.get().getByTestId('nc-calendar-sidebar-search-btn');
+    this.searchToggleBtn = this.get().getByTestId('cv-calendar-sidebar-search-btn');
   }
 
   get() {
-    return this.rootPage.getByTestId('nc-calendar-side-menu');
+    return this.rootPage.getByTestId('cv-calendar-side-menu');
   }
 
   async updateFilter({ filter }: { filter: string }) {
-    const filterInput = this.get().getByTestId('nc-calendar-sidebar-filter');
+    const filterInput = this.get().getByTestId('cv-calendar-sidebar-filter');
     await filterInput.click();
     await this.rootPage.locator('.rc-virtual-list-holder-inner > div').locator(`text="${filter}"`).click();
   }
@@ -36,7 +36,7 @@ export class CalendarSideMenuPage extends BasePage {
     if (await this.searchToggleBtn.isVisible()) {
       await this.searchToggleBtn.click();
     }
-    const searchInput = this.get().getByTestId('nc-calendar-sidebar-search');
+    const searchInput = this.get().getByTestId('cv-calendar-sidebar-search');
 
     await searchInput.fill(query);
   }
@@ -63,8 +63,8 @@ export class CalendarSideMenuPage extends BasePage {
     let attempts = 0;
     let sideBarRecords: Locator;
     while (attempts++ < 5) {
-      const sideBar = this.get().getByTestId('nc-calendar-side-menu-list');
-      sideBarRecords = sideBar.getByTestId('nc-sidebar-record-card');
+      const sideBar = this.get().getByTestId('cv-calendar-side-menu-list');
+      sideBarRecords = sideBar.getByTestId('cv-sidebar-record-card');
 
       if ((await sideBarRecords.count()) === records.length) break;
       // wait for records to load

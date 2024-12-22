@@ -10,22 +10,22 @@ export class ExpandTablePageObject extends BasePage {
   }
 
   async upsert() {
-    const expandTableModal = this.rootPage.getByTestId('nc-expand-table-modal');
+    const expandTableModal = this.rootPage.getByTestId('cv-expand-table-modal');
 
     await expandTableModal.isVisible();
 
-    await expandTableModal.getByTestId('nc-table-expand-yes').click();
+    await expandTableModal.getByTestId('cv-table-expand-yes').click();
 
-    await this.rootPage.getByTestId('nc-table-expand').click();
+    await this.rootPage.getByTestId('cv-table-expand').click();
   }
 
   async updateOnly() {
-    const expandTableModal = this.rootPage.getByTestId('nc-expand-table-modal');
+    const expandTableModal = this.rootPage.getByTestId('cv-expand-table-modal');
 
     await expandTableModal.isVisible();
 
-    await expandTableModal.getByTestId('nc-table-expand-no').click();
+    await expandTableModal.getByTestId('cv-table-expand-no').click();
 
-    await this.rootPage.getByTestId('nc-table-expand').click();
+    await this.rootPage.getByTestId('cv-table-expand').click();
   }
 }

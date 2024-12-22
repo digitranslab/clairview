@@ -1,7 +1,7 @@
 {
   "packages": [
-    "packages/nc-cli",
-    "packages/nc-gui",
+    "packages/cv-cli",
+    "packages/cv-gui",
     "packages/clairview",
     "packages/clairview-sdk"
   ],

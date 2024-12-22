@@ -11,11 +11,11 @@ export class TeamsPage extends BasePage {
     super(settings.rootPage);
     this.settings = settings;
     this.inviteTeamBtn = this.get().locator(`button:has-text("Invite Team")`);
-    this.inviteTeamModal = this.rootPage.locator('.nc-modal-share-collaborate');
+    this.inviteTeamModal = this.rootPage.locator('.cv-modal-share-collaborate');
   }
 
   get() {
-    return this.settings.get().getByTestId('nc-settings-subtab-Users Management');
+    return this.settings.get().getByTestId('cv-settings-subtab-Users Management');
   }
 
   // Prefixing to differentiate between emails created by the tests which are deleted after the test run
@@ -25,7 +25,7 @@ export class TeamsPage extends BasePage {
   }
 
   getSharedBaseSubModal() {
-    return this.rootPage.getByTestId('nc-share-base-sub-modal');
+    return this.rootPage.getByTestId('cv-share-base-sub-modal');
   }
 
   async clickInviteTeamBtn() {
@@ -37,9 +37,9 @@ export class TeamsPage extends BasePage {
     email = this.prefixEmail(email);
 
     await this.inviteTeamModal.getByTestId('docs-share-dlg-share-base-collaborate-emails').fill(email);
-    await this.inviteTeamModal.getByTestId('nc-share-invite-user-role-option-viewer').click();
-    const dropdown = this.rootPage.locator('.nc-dropdown-user-role');
-    await dropdown.locator(`.nc-role-option:has-text("${role}")`).click();
+    await this.inviteTeamModal.getByTestId('cv-share-invite-user-role-option-viewer').click();
+    const dropdown = this.rootPage.locator('.cv-dropdown-user-role');
+    await dropdown.locator(`.cv-role-option:has-text("${role}")`).click();
     await this.inviteTeamModal.getByTestId('docs-share-btn').click();
     await this.inviteTeamModal.getByTestId('docs-share-invitation-copy').waitFor({ state: 'visible', timeout: 2000 });
 
@@ -63,7 +63,7 @@ export class TeamsPage extends BasePage {
   }
 
   async toggleSharedBase({ toggle }: { toggle: boolean }) {
-    const toggleBtn = this.getSharedBaseSubModal().locator(`.nc-disable-shared-base`);
+    const toggleBtn = this.getSharedBaseSubModal().locator(`.cv-disable-shared-base`);
     const toggleBtnText = await toggleBtn.first().innerText();
 
     const disabledBase = toggleBtnText.includes('Disable');
@@ -72,21 +72,21 @@ export class TeamsPage extends BasePage {
       if (toggle) {
         // if share base was disabled && request was to enable
         await toggleBtn.click();
-        const modal = this.rootPage.locator(`.nc-dropdown-shared-base-toggle`);
+        const modal = this.rootPage.locator(`.cv-dropdown-shared-base-toggle`);
         await modal.locator(`.ant-dropdown-menu-title-content`).click();
       }
     } else {
       if (!toggle) {
         // if share base was enabled && request was to disable
         await toggleBtn.click();
-        const modal = this.rootPage.locator(`.nc-dropdown-shared-base-toggle`);
+        const modal = this.rootPage.locator(`.cv-dropdown-shared-base-toggle`);
         await modal.locator(`.ant-dropdown-menu-title-content`).click();
       }
     }
   }
 
   async getSharedBaseUrl() {
-    return await this.getSharedBaseSubModal().locator(`.nc-url:visible`).textContent();
+    return await this.getSharedBaseSubModal().locator(`.cv-url:visible`).textContent();
   }
 
   async getInvitationUrl() {
@@ -103,10 +103,10 @@ export class TeamsPage extends BasePage {
   async sharedBaseRole({ role }: { role: string }) {
     // editor | viewer
     // await this.getSharedBaseSubModal()
-    //   .locator(`.nc-shared-base-role`)
+    //   .locator(`.cv-shared-base-role`)
     //   .waitFor();
-    await this.getSharedBaseSubModal().locator(`.nc-shared-base-role:visible`).click();
-    const userRoleModal = this.rootPage.locator(`.nc-dropdown-share-base-role:visible`);
+    await this.getSharedBaseSubModal().locator(`.cv-shared-base-role:visible`).click();
+    const userRoleModal = this.rootPage.locator(`.cv-dropdown-share-base-role:visible`);
     await userRoleModal.locator(`.ant-select-item-option-content:has-text("${role}"):visible`).click();
   }
 }

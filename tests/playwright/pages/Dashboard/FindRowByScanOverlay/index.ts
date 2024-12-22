@@ -12,11 +12,11 @@ export class FindRowByScanOverlay extends BasePage {
     super(dashboard.rootPage);
     this.dashboard = dashboard;
     this.toolbar = dashboard.grid.toolbar;
-    this.selectColumnDropdown = this.dashboard.get().locator('.nc-dropdown-scanner-column-id');
+    this.selectColumnDropdown = this.dashboard.get().locator('.cv-dropdown-scanner-column-id');
   }
 
   get() {
-    return this.dashboard.get().locator(`.nc-overlay-find-row-by-scan`);
+    return this.dashboard.get().locator(`.cv-overlay-find-row-by-scan`);
   }
 
   async isVisible() {
@@ -24,7 +24,7 @@ export class FindRowByScanOverlay extends BasePage {
   }
 
   async scannerScreenIsVisible() {
-    return await this.get().locator(`.nc-scanner-screen`).isVisible();
+    return await this.get().locator(`.cv-scanner-screen`).isVisible();
   }
 
   async selectColumnToScan({ columnName }: { columnName: string }) {

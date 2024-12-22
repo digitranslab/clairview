@@ -51,7 +51,7 @@ const keydownListener = (e) => {
 }
 
 if (ExecutionEnvironment.canUseDOM) {
-  const { init, push: _push } = require('nc-analytics');
+  const { init, push: _push } = require('cv-analytics');
   push = _push;
   init();
 

@@ -3,7 +3,7 @@ import type Source from '~/models/Source';
 import {
   defaultConnectionConfig,
   defaultConnectionOptions,
-} from '~/utils/nc-config';
+} from '~/utils/cv-config';
 import SqlClientFactory from '~/db/sql-client/lib/SqlClientFactory';
 import { XKnex } from '~/db/CustomKnex';
 import Noco from '~/Noco';

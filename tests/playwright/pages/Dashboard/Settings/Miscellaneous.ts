@@ -11,7 +11,7 @@ export class MiscSettingsPage extends BasePage {
   }
 
   get() {
-    return this.settings.get().locator(`[data-testid="nc-settings-subtab-visibility"]`);
+    return this.settings.get().locator(`[data-testid="cv-settings-subtab-visibility"]`);
   }
 
   async selectTab(tab: 'snapshots-tab' | 'visibility-tab') {
@@ -23,7 +23,7 @@ export class MiscSettingsPage extends BasePage {
       await this.selectTab('visibility-tab');
     }
 
-    const clickAction = () => this.get().locator('.nc-settings-meta-misc-m2m').first().click();
+    const clickAction = () => this.get().locator('.cv-settings-meta-misc-m2m').first().click();
     await this.waitForResponse({
       uiAction: clickAction,
       requestUrlPathToMatch: 'tables?includeM2M',
@@ -37,7 +37,7 @@ export class MiscSettingsPage extends BasePage {
     }
 
     await this.waitForResponse({
-      uiAction: () => this.rootPage.locator('.nc-settings-show-null-and-empty-in-filter').first().click(),
+      uiAction: () => this.rootPage.locator('.cv-settings-show-null-and-empty-in-filter').first().click(),
       requestUrlPathToMatch: '/api/v1/db/meta/projects',
       httpMethodsToMatch: ['PATCH'],
     });

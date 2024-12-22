@@ -11,7 +11,7 @@ export class BarcodeOverlay extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`.nc-barcode-large`);
+    return this.rootPage.locator(`.cv-barcode-large`);
   }
 
   async verifyBarcodeSvgValue(expectedValue: string) {

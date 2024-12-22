@@ -3,8 +3,8 @@ import { WorkspacePage } from './';
 import { Locator } from '@playwright/test';
 
 /*
-  nc-workspace-settings
-    nc-collaborator-table-container
+  cv-workspace-settings
+    cv-collaborator-table-container
  */
 
 export class CollaborationPage extends BasePage {
@@ -14,11 +14,11 @@ export class CollaborationPage extends BasePage {
   constructor(workspace: WorkspacePage) {
     super(workspace.rootPage);
     this.workspace = workspace;
-    this.list_collaborators = this.get().locator('.nc-collaborators-list-table');
+    this.list_collaborators = this.get().locator('.cv-collaborators-list-table');
   }
 
   get() {
-    return this.workspace.get().locator('.nc-workspace-settings').locator('.nc-collaborator-table-container');
+    return this.workspace.get().locator('.cv-workspace-settings').locator('.cv-collaborator-table-container');
   }
 
   async waitFor({ state }) {
@@ -29,15 +29,15 @@ export class CollaborationPage extends BasePage {
     await this.waitFor({ state: 'visible' });
 
     // click add user button to open modal
-    await this.get().getByTestId('nc-add-member-btn').click();
+    await this.get().getByTestId('cv-add-member-btn').click();
 
-    const inviteModal = this.rootPage.locator('.nc-invite-dlg');
+    const inviteModal = this.rootPage.locator('.cv-invite-dlg');
 
     await inviteModal.waitFor({ state: 'visible' });
 
     const input_email = inviteModal.locator('input[id="email"]');
     const selector_role = inviteModal.locator('.ant-select-selector');
-    const button_addUser = inviteModal.locator('.nc-invite-btn');
+    const button_addUser = inviteModal.locator('.cv-invite-btn');
 
     // flaky test: wait for the input to be ready
     await this.rootPage.waitForTimeout(500);
@@ -47,8 +47,8 @@ export class CollaborationPage extends BasePage {
 
     // role
     await selector_role.first().click();
-    const menu = this.rootPage.locator('.nc-role-selector-dropdown:visible');
-    await menu.locator(`.nc-role-select-workspace-level-${role.toLowerCase()}:visible`).first().click();
+    const menu = this.rootPage.locator('.cv-role-selector-dropdown:visible');
+    await menu.locator(`.cv-role-select-workspace-level-${role.toLowerCase()}:visible`).first().click();
 
     // submit
 

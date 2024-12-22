@@ -24,18 +24,18 @@ export class AccountSettingsPage extends BasePage {
   }
 
   get() {
-    return this.accountPage.get().locator(`[data-testid="nc-app-settings"]`);
+    return this.accountPage.get().locator(`[data-testid="cv-app-settings"]`);
   }
 
   getInviteOnlyCheckbox() {
-    return this.get().locator(`.nc-invite-only-signup-checkbox`);
+    return this.get().locator(`.cv-invite-only-signup-checkbox`);
   }
 
   async getInviteOnlyCheckboxValue() {
     // allow time for the checkbox to be rendered
     await this.rootPage.waitForTimeout(1000);
 
-    return this.get().locator(`.nc-invite-only-signup-checkbox`).isChecked({ timeout: 1000 });
+    return this.get().locator(`.cv-invite-only-signup-checkbox`).isChecked({ timeout: 1000 });
   }
 
   async checkInviteOnlySignupCheckbox(value: boolean) {

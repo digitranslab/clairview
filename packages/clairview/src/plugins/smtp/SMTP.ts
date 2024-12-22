@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import type { IEmailAdapter } from '~/types/nc-plugin';
+import type { IEmailAdapter } from '~/types/cv-plugin';
 import type Mail from 'nodemailer/lib/mailer';
 import type { XcEmail } from '~/interface/IEmailAdapter';
 

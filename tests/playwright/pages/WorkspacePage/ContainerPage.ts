@@ -5,15 +5,15 @@ import { Locator } from '@playwright/test';
 import { getTextExcludeIconText } from '../../tests/utils/general';
 
 /*
-  nc-workspace-settings
-    nc-workspace-avatar
-    nc-workspace-title
+  cv-workspace-settings
+    cv-workspace-avatar
+    cv-workspace-title
     button:has-text("New Base")
       |> .ant-dropdown-menu-vertical
-          |> .ant-dropdown-menu-item : Database           nc-create-base-btn-db
-              nc-shortcut-label-wrapper.nc-shortcut-label
-          |> .ant-dropdown-menu-item : Documentation      nc-create-base-btn-docs
-              nc-shortcut-label-wrapper.nc-shortcut-label
+          |> .ant-dropdown-menu-item : Database           cv-create-base-btn-db
+              cv-shortcut-label-wrapper.cv-shortcut-label
+          |> .ant-dropdown-menu-item : Documentation      cv-create-base-btn-docs
+              cv-shortcut-label-wrapper.cv-shortcut-label
 
     ant-tabs-nav-list
       ant-tabs-tab : All Projects
@@ -21,15 +21,15 @@ import { getTextExcludeIconText } from '../../tests/utils/general';
 
     thead.ant-table-thead
       tr.ant-table-row
-        td.ant-table-cell (nc-base-title)
+        td.ant-table-cell (cv-base-title)
           material-symbols : database
           span : base title
-          nc-icon : favourites icon
+          cv-icon : favourites icon
         td.ant-table-cell (color)
         td.ant-table-cell (last accessed)
         td.ant-table-cell (my role)
         td.ant-table-cell (actions)
-          nc-icon (...) : click
+          cv-icon (...) : click
             |> .ant-dropdown-menu-item : Rename Base
             |> .ant-dropdown-menu-item : Move Base
             |> .ant-dropdown-menu-item : Delete Base
@@ -60,11 +60,11 @@ export class ContainerPage extends BasePage {
     this.settings = this.get().locator('.ant-tabs-tab:has-text("Settings")');
 
     // list
-    this.moreActions = this.get().locator('td.ant-table-cell >> .nc-workspace-menu');
+    this.moreActions = this.get().locator('td.ant-table-cell >> .cv-workspace-menu');
   }
 
   get() {
-    return this.workspace.get().locator('.nc-workspace-settings');
+    return this.workspace.get().locator('.cv-workspace-settings');
   }
 
   async waitFor({ state }) {
@@ -91,7 +91,7 @@ export class ContainerPage extends BasePage {
 
   async getProjectRowData({ index, skipWs = false }: { index: number; skipWs: boolean }) {
     const rows = this.get().locator('.ant-table-tbody > tr.ant-table-row');
-    const title = await getTextExcludeIconText(rows.nth(index).locator('.nc-base-title'));
+    const title = await getTextExcludeIconText(rows.nth(index).locator('.cv-base-title'));
     const role = await rows
       .nth(index)
       .locator('.ant-table-cell')
@@ -113,7 +113,7 @@ export class ContainerPage extends BasePage {
     const count = await rows.count();
 
     for (let i = 0; i < count; i++) {
-      titles.push(await getTextExcludeIconText(rows.nth(i).locator('.nc-base-title')));
+      titles.push(await getTextExcludeIconText(rows.nth(i).locator('.cv-base-title')));
     }
 
     return rows.nth(titles.indexOf(title));
@@ -127,7 +127,7 @@ export class ContainerPage extends BasePage {
   }
 
   async verifyDynamicElements({ title, lastAccessed, role }) {
-    expect(await this.get().locator('.nc-workspace-title').innerText()).toBe(`ws_${title}`);
+    expect(await this.get().locator('.cv-workspace-title').innerText()).toBe(`ws_${title}`);
     expect(await this.getProjectRowData({ index: 0, skipWs: false })).toEqual({ title, lastAccessed, role });
   }
 
@@ -135,10 +135,10 @@ export class ContainerPage extends BasePage {
   //
   async baseCreate({ title, type }: { title: string; type: 'db' | 'docs' }) {
     await this.newProjectButton.click();
-    await this.rootPage.locator(`.nc-create-base-btn-${type}`).click();
-    await this.rootPage.locator('.nc-metadb-base-name').fill(title);
+    await this.rootPage.locator(`.cv-create-base-btn-${type}`).click();
+    await this.rootPage.locator('.cv-metadb-base-name').fill(title);
     await this.waitForResponse({
-      uiAction: () => this.rootPage.locator('.nc-metadb-base-name').press('Enter'),
+      uiAction: () => this.rootPage.locator('.cv-metadb-base-name').press('Enter'),
       httpMethodsToMatch: ['POST'],
       requestUrlPathToMatch: `/api/v1/db/meta/projects`,
     });
@@ -148,7 +148,7 @@ export class ContainerPage extends BasePage {
   //
   async baseRename({ title, newTitle }: { title: string; newTitle: string }) {
     const row = await this.getProjectRow({ title });
-    await row.locator('td.ant-table-cell').nth(4).locator('.nc-icon').click();
+    await row.locator('td.ant-table-cell').nth(4).locator('.cv-icon').click();
     await this.rootPage.locator('.ant-dropdown-menu-item:has-text("Rename Base")').click();
     await row.locator('td.ant-table-cell').nth(0).locator('input').fill(newTitle);
     await this.waitForResponse({
@@ -162,7 +162,7 @@ export class ContainerPage extends BasePage {
   //
   async baseMove({ title, newWorkspace }: { title: string; newWorkspace: string }) {
     const row = await this.getProjectRow({ title });
-    await row.locator('td.ant-table-cell').nth(4).locator('.nc-icon').click();
+    await row.locator('td.ant-table-cell').nth(4).locator('.cv-icon').click();
     await this.rootPage.locator('.ant-dropdown-menu-item:has-text("Move Base")').click();
 
     await this.rootPage.locator('.ant-modal.active').locator('input').click();
@@ -180,7 +180,7 @@ export class ContainerPage extends BasePage {
   async baseDelete({ title }: { title: string }) {
     await this.rootPage.waitForTimeout(1000);
     const row = await this.getProjectRow({ title });
-    await row.locator('td.ant-table-cell').nth(3).locator('.nc-icon').click();
+    await row.locator('td.ant-table-cell').nth(3).locator('.cv-icon').click();
     await this.rootPage.locator('.ant-dropdown-menu-item:has-text("Delete")').click();
     await this.waitForResponse({
       uiAction: () => this.rootPage.locator('.ant-modal-content').locator('button:has-text("Delete")').click(),
@@ -199,7 +199,7 @@ export class ContainerPage extends BasePage {
 
   async baseAddToFavourites({ title }: { title: string }) {
     const row = await this.getProjectRow({ title });
-    await row.locator('td.ant-table-cell').nth(0).locator('.nc-icon').click({ force: true });
+    await row.locator('td.ant-table-cell').nth(0).locator('.cv-icon').click({ force: true });
   }
 
   async getMoreActionsSubMenuDetails() {

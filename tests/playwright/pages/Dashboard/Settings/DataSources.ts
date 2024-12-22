@@ -16,7 +16,7 @@ export class DataSourcesPage extends BasePage {
   }
 
   get() {
-    return this.settings.get().locator('[data-testid="nc-settings-datasources"]');
+    return this.settings.get().locator('[data-testid="cv-settings-datasources"]');
   }
 
   async openErd({ rowIndex }: { rowIndex: number }) {
@@ -24,7 +24,7 @@ export class DataSourcesPage extends BasePage {
       .locator('.ds-table-row')
       .nth(rowIndex + 1);
     await row.click();
-    await this.get().getByTestId('nc-erd-tab').click();
+    await this.get().getByTestId('cv-erd-tab').click();
   }
 
   async openAudit({ rowIndex }: { rowIndex: number }) {
@@ -32,7 +32,7 @@ export class DataSourcesPage extends BasePage {
       .locator('.ds-table-row')
       .nth(rowIndex + 1);
     await row.click();
-    await this.get().getByTestId('nc-audit-tab').click();
+    await this.get().getByTestId('cv-audit-tab').click();
   }
 
   async openMetaSync({ rowIndex }: { rowIndex: number }) {
@@ -41,6 +41,6 @@ export class DataSourcesPage extends BasePage {
       .locator('.ds-table-row')
       .nth(rowIndex + 1);
     await row.click();
-    await this.get().getByTestId('nc-meta-sync-tab').click();
+    await this.get().getByTestId('cv-meta-sync-tab').click();
   }
 }

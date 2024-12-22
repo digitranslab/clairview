@@ -21,22 +21,22 @@ export class SurveyFormPage extends BasePage {
   constructor(rootPage: Page) {
     super(rootPage);
     this.cell = new CellPageObject(this);
-    this.formHeading = this.get().locator('[data-testid="nc-survey-form__heading"]');
-    this.formSubHeading = this.get().locator('[data-testid="nc-survey-form__sub-heading"]');
-    this.fillFormButton = this.get().locator('[data-testid="nc-survey-form__fill-form-btn"]');
-    this.submitConfirmationButton = this.get().locator('[data-testid="nc-survey-form__btn-submit-confirm"]');
+    this.formHeading = this.get().locator('[data-testid="cv-survey-form__heading"]');
+    this.formSubHeading = this.get().locator('[data-testid="cv-survey-form__sub-heading"]');
+    this.fillFormButton = this.get().locator('[data-testid="cv-survey-form__fill-form-btn"]');
+    this.submitConfirmationButton = this.get().locator('[data-testid="cv-survey-form__btn-submit-confirm"]');
     this.submitButton = this.rootPage.locator(
-      '.nc-survery-form__confirmation_modal [data-testid="nc-survey-form__btn-submit"]'
+      '.cv-survery-form__confirmation_modal [data-testid="cv-survey-form__btn-submit"]'
     );
-    this.nextButton = this.get().locator('[data-testid="nc-survey-form__btn-next"]');
-    this.nextSlideButton = this.get().locator('[data-testid="nc-survey-form__icon-next"]');
-    this.prevSlideButton = this.get().locator('[data-testid="nc-survey-form__icon-prev"]');
-    this.darkModeButton = this.get().locator('[data-testid="nc-form-dark-mode"]');
-    this.formFooter = this.get().locator('[data-testid="nc-survey-form__footer"]');
+    this.nextButton = this.get().locator('[data-testid="cv-survey-form__btn-next"]');
+    this.nextSlideButton = this.get().locator('[data-testid="cv-survey-form__icon-next"]');
+    this.prevSlideButton = this.get().locator('[data-testid="cv-survey-form__icon-prev"]');
+    this.darkModeButton = this.get().locator('[data-testid="cv-form-dark-mode"]');
+    this.formFooter = this.get().locator('[data-testid="cv-survey-form__footer"]');
   }
 
   get() {
-    return this.rootPage.locator('html >> .nc-form-view');
+    return this.rootPage.locator('html >> .cv-form-view');
   }
 
   async validateHeaders({ heading, subHeading }: { heading: string; subHeading: string }) {
@@ -50,7 +50,7 @@ export class SurveyFormPage extends BasePage {
 
     await expect(this.formFooter).toHaveText(footer);
 
-    const locator = this.get().locator(`[data-testid="nc-form-column-label"]`);
+    const locator = this.get().locator(`[data-testid="cv-form-column-label"]`);
     let fieldText = await getTextExcludeIconText(locator);
 
     // replace whitespace with ' ' for fieldLabel & fieldText
@@ -75,39 +75,39 @@ export class SurveyFormPage extends BasePage {
   }
 
   async fill(param: { fieldLabel: string; type?: string; value?: string; skipNavigation?: boolean }) {
-    await this.get().locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"]`).click();
+    await this.get().locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"]`).click();
 
     if (param.type === 'SingleLineText') {
-      await this.get().locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> input`).fill(param.value);
+      await this.get().locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> input`).fill(param.value);
     } else if (param.type === 'DateTime') {
-      await this.get().locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> input`).first().click();
-      const modal = this.rootPage.locator('.nc-picker-datetime');
+      await this.get().locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> input`).first().click();
+      const modal = this.rootPage.locator('.cv-picker-datetime');
       await expect(modal).toBeVisible();
-      await modal.locator('.nc-date-picker-now-btn').click();
+      await modal.locator('.cv-date-picker-now-btn').click();
       await modal.waitFor({ state: 'hidden' });
     } else if (param.type === UITypes.LongText) {
       await this.get()
-        .locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> textarea`)
+        .locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> textarea`)
         .waitFor({ state: 'visible' });
-      await this.get().locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> textarea`).click();
+      await this.get().locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> textarea`).click();
 
       await this.get()
-        .locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> textarea`)
+        .locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> textarea`)
         .fill(param.value);
     } else {
       await this.get()
-        .locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> input`)
+        .locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> input`)
         .waitFor({ state: 'visible' });
 
-      await this.get().locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> input`).fill(param.value);
+      await this.get().locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> input`).fill(param.value);
 
       if ([UITypes.Date, UITypes.Time, UITypes.Year, UITypes.DateTime].includes(param.type)) {
         // press enter key
-        await this.get().locator(`[data-testid="nc-survey-form__input-${param.fieldLabel}"] >> input`).press('Enter');
+        await this.get().locator(`[data-testid="cv-survey-form__input-${param.fieldLabel}"] >> input`).press('Enter');
       }
     }
 
-    await this.get().locator(`[data-testid="nc-form-column-label"]`).click();
+    await this.get().locator(`[data-testid="cv-form-column-label"]`).click();
 
     if (!param.skipNavigation) {
       await this.nextButton.click();
@@ -117,18 +117,18 @@ export class SurveyFormPage extends BasePage {
   }
 
   async validateSuccessMessage(param: { message: string; showAnotherForm?: boolean; isCustomMsg?: boolean }) {
-    await this.get().locator('[data-testid="nc-survey-form__success-msg"]').waitFor({ state: 'visible' });
+    await this.get().locator('[data-testid="cv-survey-form__success-msg"]').waitFor({ state: 'visible' });
 
     if (param.isCustomMsg) {
       await this.get()
-        .locator('[data-testid="nc-survey-form__success-msg"]')
+        .locator('[data-testid="cv-survey-form__success-msg"]')
         .locator('.tiptap.ProseMirror')
         .waitFor({ state: 'visible' });
     }
 
     await this.rootPage.waitForTimeout(200);
     await expect(
-      this.get().locator(`[data-testid="nc-survey-form__success-msg"]:has-text("${param.message}")`)
+      this.get().locator(`[data-testid="cv-survey-form__success-msg"]:has-text("${param.message}")`)
     ).toBeVisible();
 
     if (param.showAnotherForm) {

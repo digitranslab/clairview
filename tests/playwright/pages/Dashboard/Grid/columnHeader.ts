@@ -12,12 +12,12 @@ export class ColumnHeaderPageObject extends BasePage {
     super(grid.rootPage);
     this.grid = grid;
 
-    this.btn_addColumn = this.get().locator(`.nc-grid-add-edit-column`);
-    this.btn_selectAll = this.get().locator(`[data-testid="nc-check-all"]`);
+    this.btn_addColumn = this.get().locator(`.cv-grid-add-edit-column`);
+    this.btn_selectAll = this.get().locator(`[data-testid="cv-check-all"]`);
   }
 
   get() {
-    return this.rootPage.locator('.nc-grid-header');
+    return this.rootPage.locator('.cv-grid-header');
   }
 
   async getColumnHeader({ title }: { title: string }) {
@@ -25,7 +25,7 @@ export class ColumnHeaderPageObject extends BasePage {
   }
 
   async getColumnHeaderContextMenu({ title }: { title: string }) {
-    return (await this.getColumnHeader({ title })).locator(`.nc-ui-dt-dropdown`);
+    return (await this.getColumnHeader({ title })).locator(`.cv-ui-dt-dropdown`);
   }
 
   async verifyLockMode() {
@@ -33,7 +33,7 @@ export class ColumnHeaderPageObject extends BasePage {
     await expect(this.btn_addColumn).toBeVisible({ visible: false });
 
     // column header context menu
-    expect(await this.get().locator('.nc-ui-dt-dropdown').count()).toBe(0);
+    expect(await this.get().locator('.cv-ui-dt-dropdown').count()).toBe(0);
   }
 
   async verifyPersonalMode() {
@@ -41,7 +41,7 @@ export class ColumnHeaderPageObject extends BasePage {
     await expect(this.btn_addColumn).toBeVisible({ visible: false });
 
     // column header context menu
-    expect(await this.get().locator('.nc-ui-dt-dropdown').count()).toBe(0);
+    expect(await this.get().locator('.cv-ui-dt-dropdown').count()).toBe(0);
   }
 
   async verifyCollaborativeMode() {
@@ -49,6 +49,6 @@ export class ColumnHeaderPageObject extends BasePage {
     await expect(this.btn_addColumn).toBeVisible({ visible: true });
 
     // column header context menu
-    expect(await this.get().locator('.nc-ui-dt-dropdown').count()).toBeGreaterThan(1);
+    expect(await this.get().locator('.cv-ui-dt-dropdown').count()).toBeGreaterThan(1);
   }
 }

@@ -100,7 +100,7 @@ if (ExecutionEnvironment.canUseDOM) {
     closeBtn.style.cursor = "pointer";
     closeBtn.style.color = "#1F293A";
     closeBtn.innerHTML =
-      '<svg class="nc-icon" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275z"></path></svg>';
+      '<svg class="cv-icon" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275z"></path></svg>';
     closeBtn.onclick = () => {
       divElem.style.display = "none";
       localStorage.setItem(

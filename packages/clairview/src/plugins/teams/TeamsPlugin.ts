@@ -1,6 +1,6 @@
 import Teams from './Teams';
-import type { IWebhookNotificationAdapter } from '~/types/nc-plugin';
-import { XcWebhookNotificationPlugin } from '~/types/nc-plugin';
+import type { IWebhookNotificationAdapter } from '~/types/cv-plugin';
+import { XcWebhookNotificationPlugin } from '~/types/cv-plugin';
 
 class TeamsPlugin extends XcWebhookNotificationPlugin {
   private static notificationAdapter: Teams;

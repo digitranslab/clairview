@@ -15,15 +15,15 @@ export class DocsHistoryPage extends BasePage {
   }
 
   historyButton() {
-    return this.get().getByTestId('nc-doc-page-history-button');
+    return this.get().getByTestId('cv-doc-page-history-button');
   }
 
   historyPane() {
-    return this.get().getByTestId('nc-doc-page-history-pane');
+    return this.get().getByTestId('cv-doc-page-history-pane');
   }
 
   historyPaneList() {
-    return this.historyPane().getByTestId('nc-doc-page-history-pane-list');
+    return this.historyPane().getByTestId('cv-doc-page-history-pane-list');
   }
 
   async clickHistoryButton() {
@@ -42,17 +42,17 @@ export class DocsHistoryPage extends BasePage {
     items?: { title: string; index: number; active?: boolean }[] | undefined;
   }) {
     if (count) {
-      await expect(this.historyPaneList().locator('.nc-doc-page-history-pane-list-item')).toHaveCount(count);
+      await expect(this.historyPaneList().locator('.cv-doc-page-history-pane-list-item')).toHaveCount(count);
     }
 
     if (items) {
       for (const item of items) {
-        await expect(this.historyPaneList().locator('.nc-doc-page-history-pane-list-item').nth(item.index)).toHaveText(
+        await expect(this.historyPaneList().locator('.cv-doc-page-history-pane-list-item').nth(item.index)).toHaveText(
           item.title
         );
         if (item.active) {
           await expect(
-            this.historyPaneList().locator('.nc-doc-page-history-pane-list-item').nth(item.index)
+            this.historyPaneList().locator('.cv-doc-page-history-pane-list-item').nth(item.index)
           ).toHaveAttribute('aria-selected', 'true');
         }
       }
@@ -60,14 +60,14 @@ export class DocsHistoryPage extends BasePage {
   }
 
   async clickHistoryItem({ index }: { index: number }) {
-    await this.historyPaneList().locator('.nc-doc-page-history-pane-list-item').nth(index).click();
+    await this.historyPaneList().locator('.cv-doc-page-history-pane-list-item').nth(index).click();
   }
 
   async clickRestoreButton() {
-    await this.get().getByTestId('nc-docs-history-restore-button').click();
+    await this.get().getByTestId('cv-docs-history-restore-button').click();
   }
 
   async clickRestoreModalConfirmButton() {
-    await this.rootPage.getByTestId('nc-docs-history-confirm-button').click();
+    await this.rootPage.getByTestId('cv-docs-history-confirm-button').click();
   }
 }

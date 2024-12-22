@@ -20,27 +20,27 @@ export class AccountAuthenticationPage extends BasePage {
   }
 
   get() {
-    return this.accountPage.get().locator(`[data-test-id="nc-authentication"]`);
+    return this.accountPage.get().locator(`[data-test-id="cv-authentication"]`);
   }
 
   async verifySAMLProviderCount({ count }: { count: number }) {
-    await expect.poll(async () => await this.get().locator('.nc-saml-provider').count()).toBe(count);
+    await expect.poll(async () => await this.get().locator('.cv-saml-provider').count()).toBe(count);
   }
 
   async verifyOIDCProviderCount({ count }: { count: number }) {
-    await expect.poll(async () => await this.get().locator('.nc-oidc-provider').count()).toBe(count);
+    await expect.poll(async () => await this.get().locator('.cv-oidc-provider').count()).toBe(count);
   }
 
   async getProvider(provider: 'saml' | 'oidc', title: string) {
-    return this.rootPage.locator(`[data-test-id="nc-${provider}-provider-${title}"]`);
+    return this.rootPage.locator(`[data-test-id="cv-${provider}-provider-${title}"]`);
   }
 
   async deleteProvider(provider: 'saml' | 'oidc' | 'google', title: string) {
     await this.rootPage
-      .locator(provider === 'google' ? '.nc-google-more-option' : `.nc-${provider}-${title}-more-option`)
+      .locator(provider === 'google' ? '.cv-google-more-option' : `.cv-${provider}-${title}-more-option`)
       .click();
     await this.waitForResponse({
-      uiAction: () => this.rootPage.locator(`[data-test-id="nc-${provider}-delete"]`).click(),
+      uiAction: () => this.rootPage.locator(`[data-test-id="cv-${provider}-delete"]`).click(),
       httpMethodsToMatch: ['DELETE'],
       requestUrlPathToMatch: /\/sso-client/,
     });
@@ -48,7 +48,7 @@ export class AccountAuthenticationPage extends BasePage {
 
   async toggleProvider(provider: 'saml' | 'oidc' | 'google', title: string) {
     await this.waitForResponse({
-      uiAction: () => this.get().locator(`.nc-${provider}-${title}-enable .nc-switch`).click(),
+      uiAction: () => this.get().locator(`.cv-${provider}-${title}-enable .cv-switch`).click(),
       httpMethodsToMatch: ['PATCH'],
       requestUrlPathToMatch: /\/\w+\/sso-client/,
     });
@@ -67,35 +67,35 @@ export class AccountAuthenticationPage extends BasePage {
     p: { title: string; url?: string; xml?: string },
     setupRedirectUrlCbk?: ({ redirectUrl: string, audience: string }) => Promise<void>
   ) {
-    const newSamlBtn = this.get().locator('[data-test-id="nc-new-saml-provider"]');
+    const newSamlBtn = this.get().locator('[data-test-id="cv-new-saml-provider"]');
 
     await newSamlBtn.click();
 
-    const samlModal = this.accountPage.rootPage.locator('.nc-saml-modal');
+    const samlModal = this.accountPage.rootPage.locator('.cv-saml-modal');
 
     // wait until redirect url is generated
-    await samlModal.locator('[data-test-id="nc-saml-redirect-url"]:has-text("http://")').waitFor();
+    await samlModal.locator('[data-test-id="cv-saml-redirect-url"]:has-text("http://")').waitFor();
 
     if (setupRedirectUrlCbk) {
       const redirectUrl = (
-        await samlModal.locator('[data-test-id="nc-saml-redirect-url"]:has-text("http://")').textContent()
+        await samlModal.locator('[data-test-id="cv-saml-redirect-url"]:has-text("http://")').textContent()
       ).trim();
       const audience = (
-        await samlModal.locator('[data-test-id="nc-saml-issuer-url"]:has-text("http://")').textContent()
+        await samlModal.locator('[data-test-id="cv-saml-issuer-url"]:has-text("http://")').textContent()
       ).trim();
       await setupRedirectUrlCbk({ redirectUrl, audience });
     }
 
-    await samlModal.locator('[data-test-id="nc-saml-title"]').fill(p.title);
+    await samlModal.locator('[data-test-id="cv-saml-title"]').fill(p.title);
     if (p.url) {
-      await samlModal.locator('[data-test-id="nc-saml-metadata-url"]').fill(p.url);
+      await samlModal.locator('[data-test-id="cv-saml-metadata-url"]').fill(p.url);
     }
     if (p.xml) {
-      await samlModal.locator('[data-test-id="nc-saml-xml"]').fill(p.xml);
+      await samlModal.locator('[data-test-id="cv-saml-xml"]').fill(p.xml);
     }
 
     await this.waitForResponse({
-      uiAction: () => samlModal.locator('[data-test-id="nc-saml-submit"]').click(),
+      uiAction: () => samlModal.locator('[data-test-id="cv-saml-submit"]').click(),
       httpMethodsToMatch: ['GET'],
       requestUrlPathToMatch: /\/sso-client/,
     });
@@ -116,66 +116,66 @@ export class AccountAuthenticationPage extends BasePage {
     },
     setupRedirectUrlCbk?: ({ redirectUrl: string }) => Promise<void>
   ) {
-    const newOIDCBtn = this.get().locator('[data-test-id="nc-new-oidc-provider"]');
+    const newOIDCBtn = this.get().locator('[data-test-id="cv-new-oidc-provider"]');
 
     await newOIDCBtn.click();
 
-    const oidcModal = this.accountPage.rootPage.locator('.nc-oidc-modal');
+    const oidcModal = this.accountPage.rootPage.locator('.cv-oidc-modal');
 
     // wait until redirect url is generated
-    await oidcModal.locator('[data-test-id="nc-openid-redirect-url"]:has-text("http://")').waitFor();
+    await oidcModal.locator('[data-test-id="cv-openid-redirect-url"]:has-text("http://")').waitFor();
 
     if (setupRedirectUrlCbk) {
       const redirectUrl = (
-        await oidcModal.locator('[data-test-id="nc-openid-redirect-url"]:has-text("http://")').textContent()
+        await oidcModal.locator('[data-test-id="cv-openid-redirect-url"]:has-text("http://")').textContent()
       ).trim();
       await setupRedirectUrlCbk({ redirectUrl });
     }
 
-    await oidcModal.locator('[data-test-id="nc-oidc-title"]').fill(p.title);
+    await oidcModal.locator('[data-test-id="cv-oidc-title"]').fill(p.title);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-issuer"]').fill(p.issuer);
+    await oidcModal.locator('[data-test-id="cv-oidc-issuer"]').fill(p.issuer);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-client-id"]').fill(p.clientId);
+    await oidcModal.locator('[data-test-id="cv-oidc-client-id"]').fill(p.clientId);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-client-secret"]').fill(p.clientSecret);
+    await oidcModal.locator('[data-test-id="cv-oidc-client-secret"]').fill(p.clientSecret);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-auth-url"]').fill(p.authUrl);
+    await oidcModal.locator('[data-test-id="cv-oidc-auth-url"]').fill(p.authUrl);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-token-url"]').fill(p.tokenUrl);
+    await oidcModal.locator('[data-test-id="cv-oidc-token-url"]').fill(p.tokenUrl);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-user-info-url"]').fill(p.userInfoUrl);
+    await oidcModal.locator('[data-test-id="cv-oidc-user-info-url"]').fill(p.userInfoUrl);
 
-    await oidcModal.locator('[data-test-id="nc-oidc-jwk-url"]').fill(p.jwkUrl);
+    await oidcModal.locator('[data-test-id="cv-oidc-jwk-url"]').fill(p.jwkUrl);
 
     await this.selectScope({
       type: p.scopes,
-      locator: oidcModal.locator('[data-test-id="nc-oidc-scope"]'),
+      locator: oidcModal.locator('[data-test-id="cv-oidc-scope"]'),
     });
 
-    await oidcModal.locator('[data-test-id="nc-oidc-user-attribute"]').fill(p.userAttributes);
+    await oidcModal.locator('[data-test-id="cv-oidc-user-attribute"]').fill(p.userAttributes);
 
     await this.waitForResponse({
-      uiAction: () => oidcModal.locator('[data-test-id="nc-oidc-save-btn"]').click(),
+      uiAction: () => oidcModal.locator('[data-test-id="cv-oidc-save-btn"]').click(),
       httpMethodsToMatch: ['GET'],
       requestUrlPathToMatch: /\/sso-client/,
     });
   }
 
   async createGoogleProvider(p: { clientId: string; clientSecret: string }) {
-    await this.rootPage.locator(`.nc-google-more-option`).click();
-    await this.rootPage.locator(`[data-test-id="nc-google-edit"]`).click();
+    await this.rootPage.locator(`.cv-google-more-option`).click();
+    await this.rootPage.locator(`[data-test-id="cv-google-edit"]`).click();
 
-    const googleModal = this.accountPage.rootPage.locator('.nc-google-modal');
+    const googleModal = this.accountPage.rootPage.locator('.cv-google-modal');
     // wait until redirect url is generated
-    await googleModal.locator('[data-test-id="nc-google-redirect-url"]:has-text("http://")').waitFor();
+    await googleModal.locator('[data-test-id="cv-google-redirect-url"]:has-text("http://")').waitFor();
 
-    await googleModal.locator('[data-test-id="nc-google-client-id"]').fill(p.clientId);
+    await googleModal.locator('[data-test-id="cv-google-client-id"]').fill(p.clientId);
 
-    await googleModal.locator('[data-test-id="nc-google-client-secret"]').fill(p.clientSecret);
+    await googleModal.locator('[data-test-id="cv-google-client-secret"]').fill(p.clientSecret);
 
     await this.waitForResponse({
-      uiAction: () => googleModal.locator('[data-test-id="nc-google-save-btn"]').click(),
+      uiAction: () => googleModal.locator('[data-test-id="cv-google-save-btn"]').click(),
       httpMethodsToMatch: ['GET'],
       requestUrlPathToMatch: /\/sso-client/,
     });

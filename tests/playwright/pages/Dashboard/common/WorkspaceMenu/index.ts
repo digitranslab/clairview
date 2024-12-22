@@ -10,17 +10,17 @@ export class WorkspaceMenuObject extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`.nc-dropdown-workspace-menu`);
+    return this.rootPage.locator(`.cv-dropdown-workspace-menu`);
   }
 
   async toggle() {
-    await this.rootPage.locator('[data-testid="nc-workspace-menu"]').click();
+    await this.rootPage.locator('[data-testid="cv-workspace-menu"]').click();
   }
 
   async switchWorkspace({ workspaceTitle }: { workspaceTitle: string }) {
     await this.toggle();
     await this.rootPage.waitForTimeout(2500);
-    await this.rootPage.locator('.ant-dropdown-menu').getByTestId('nc-workspace-list').getByText(workspaceTitle).click({
+    await this.rootPage.locator('.ant-dropdown-menu').getByTestId('cv-workspace-list').getByText(workspaceTitle).click({
       force: true,
     });
     await this.rootPage.keyboard.press('Escape');
@@ -28,12 +28,12 @@ export class WorkspaceMenuObject extends BasePage {
   }
 
   async click({ menu, subMenu }: { menu: string; subMenu: string }) {
-    const pMenu = this.rootPage.locator(`.nc-dropdown-workspace-menu:visible`);
-    await pMenu.locator(`div.nc-workspace-menu-item:has-text("${menu}"):visible`).click();
+    const pMenu = this.rootPage.locator(`.cv-dropdown-workspace-menu:visible`);
+    await pMenu.locator(`div.cv-workspace-menu-item:has-text("${menu}"):visible`).click();
     await this.rootPage.waitForTimeout(2000);
 
     if (subMenu) {
-      await this.rootPage.locator(`div.nc-workspace-menu-item:has-text("${subMenu}"):visible`).click();
+      await this.rootPage.locator(`div.cv-workspace-menu-item:has-text("${subMenu}"):visible`).click();
       await this.rootPage.waitForTimeout(1000);
     }
   }

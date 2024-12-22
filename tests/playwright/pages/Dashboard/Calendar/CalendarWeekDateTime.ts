@@ -10,11 +10,11 @@ export class CalendarWeekDateTimePage extends BasePage {
   }
 
   get() {
-    return this.rootPage.getByTestId('nc-calendar-week-view');
+    return this.rootPage.getByTestId('cv-calendar-week-view');
   }
 
   getRecordContainer() {
-    return this.get().getByTestId('nc-calendar-week-record-container');
+    return this.get().getByTestId('cv-calendar-week-record-container');
   }
 
   async dragAndDrop({
@@ -28,13 +28,13 @@ export class CalendarWeekDateTimePage extends BasePage {
     };
   }) {
     const recordContainer = this.getRecordContainer();
-    const recordCard = recordContainer.getByTestId(`nc-calendar-week-record-${record}`);
+    const recordCard = recordContainer.getByTestId(`cv-calendar-week-record-${record}`);
 
     await recordCard.scrollIntoViewIfNeeded();
     const toDay = this.get()
-      .getByTestId('nc-calendar-week-day')
+      .getByTestId('cv-calendar-week-day')
       .nth(to.dayIndex)
-      .getByTestId('nc-calendar-week-hour')
+      .getByTestId('cv-calendar-week-hour')
       .nth(to.hourIndex);
     const cord = await toDay.boundingBox();
 
@@ -50,9 +50,9 @@ export class CalendarWeekDateTimePage extends BasePage {
   }
 
   async selectHour({ hourIndex, dayIndex }: { dayIndex: number; hourIndex: number }) {
-    const day = this.get().getByTestId('nc-calendar-week-day').nth(dayIndex);
+    const day = this.get().getByTestId('cv-calendar-week-day').nth(dayIndex);
 
-    const hour = day.getByTestId('nc-calendar-week-hour').nth(hourIndex);
+    const hour = day.getByTestId('cv-calendar-week-hour').nth(hourIndex);
 
     await this.waitForResponse({
       uiAction: () =>

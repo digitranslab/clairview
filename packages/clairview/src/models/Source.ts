@@ -1,6 +1,6 @@
 import { UITypes } from 'clairview-sdk';
 import { v4 as uuidv4 } from 'uuid';
-import type { DriverClient } from '~/utils/nc-config';
+import type { DriverClient } from '~/utils/cv-config';
 import type { BoolType, SourceType } from 'clairview-sdk';
 import type { NcContext } from '~/interface/config';
 import { Base, Model, SyncSource } from '~/models';

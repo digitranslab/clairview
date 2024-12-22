@@ -28,7 +28,7 @@ export class ColumnPageObject extends BasePage {
   }
 
   async getColumnHeaderByIndex({ index }: { index: number }) {
-    return this.grid.get().locator(`.nc-grid-header > th`).nth(index);
+    return this.grid.get().locator(`.cv-grid-header > th`).nth(index);
   }
 
   async clickColumnHeader({ title }: { title: string }) {
@@ -36,7 +36,7 @@ export class ColumnPageObject extends BasePage {
   }
 
   defaultValueBtn() {
-    const showDefautlValueBtn = this.get().getByTestId('nc-show-default-value-btn');
+    const showDefautlValueBtn = this.get().getByTestId('cv-show-default-value-btn');
 
     return {
       locator: showDefautlValueBtn,
@@ -49,7 +49,7 @@ export class ColumnPageObject extends BasePage {
           await showDefautlValueBtn.click({ force: true });
 
           await showDefautlValueBtn.waitFor({ state: 'hidden' });
-          await this.get().locator('.nc-default-value-wrapper').waitFor({ state: 'visible' });
+          await this.get().locator('.cv-default-value-wrapper').waitFor({ state: 'visible' });
         }
       },
     };
@@ -103,7 +103,7 @@ export class ColumnPageObject extends BasePage {
   }) {
     if (insertBeforeColumnTitle) {
       await this.grid.get().locator(`th[data-title="${insertBeforeColumnTitle}"]`).scrollIntoViewIfNeeded();
-      await this.grid.get().locator(`th[data-title="${insertBeforeColumnTitle}"] .nc-ui-dt-dropdown`).click();
+      await this.grid.get().locator(`th[data-title="${insertBeforeColumnTitle}"] .cv-ui-dt-dropdown`).click();
       if (isDisplayValue) {
         await expect(this.rootPage.locator('li[role="menuitem"]:has-text("Insert left")')).toHaveCount(0);
         return;
@@ -111,10 +111,10 @@ export class ColumnPageObject extends BasePage {
       await this.rootPage.locator('li[role="menuitem"]:has-text("Insert left"):visible').click();
     } else if (insertAfterColumnTitle) {
       await this.grid.get().locator(`th[data-title="${insertAfterColumnTitle}"]`).scrollIntoViewIfNeeded();
-      await this.grid.get().locator(`th[data-title="${insertAfterColumnTitle}"] .nc-ui-dt-dropdown`).click();
+      await this.grid.get().locator(`th[data-title="${insertAfterColumnTitle}"] .cv-ui-dt-dropdown`).click();
       await this.rootPage.locator('li[role="menuitem"]:has-text("Insert right"):visible').click();
     } else {
-      await this.grid.get().locator('.nc-column-add').click();
+      await this.grid.get().locator('.cv-column-add').click();
     }
 
     await this.rootPage.waitForTimeout(500);
@@ -134,39 +134,39 @@ export class ColumnPageObject extends BasePage {
         }
         break;
       case 'Date':
-        await this.get().locator('.nc-date-select').click();
-        await this.rootPage.locator('.nc-date-select').pressSequentially(dateFormat);
+        await this.get().locator('.cv-date-select').click();
+        await this.rootPage.locator('.cv-date-select').pressSequentially(dateFormat);
         await this.rootPage.locator('.ant-select-item').locator(`text="${dateFormat}"`).click();
         break;
       case 'DateTime':
         // Date Format
-        await this.get().locator('.nc-date-select').click();
+        await this.get().locator('.cv-date-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${dateFormat}"`).click();
         // Time Format
-        await this.get().locator('.nc-time-select').click();
+        await this.get().locator('.cv-time-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${timeFormat}"`).click();
         break;
       case 'Formula':
         await this.get().locator('.inputarea').fill(formula);
         break;
       case 'Button':
-        await this.get().locator('.nc-button-type-select').click();
+        await this.get().locator('.cv-button-type-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${buttonType}"`).click();
 
-        await this.get().locator('.nc-button-webhook-select').click();
+        await this.get().locator('.cv-button-webhook-select').click();
 
-        await this.rootPage.waitForSelector('.nc-list-with-search', {
+        await this.rootPage.waitForSelector('.cv-list-with-search', {
           state: 'visible',
         });
 
-        await this.rootPage.locator(`.nc-unified-list-option-${webhookIndex}`).click();
+        await this.rootPage.locator(`.cv-unified-list-option-${webhookIndex}`).click();
 
         break;
       case 'QrCode':
         await this.get().locator('.ant-select-single').nth(1).click();
         await this.rootPage
           .locator(`.ant-select-item`)
-          .locator(`[data-testid="nc-qr-${qrCodeValueColumnTitle}"]`)
+          .locator(`[data-testid="cv-qr-${qrCodeValueColumnTitle}"]`)
           .click();
         break;
       case 'Barcode':
@@ -201,13 +201,13 @@ export class ColumnPageObject extends BasePage {
           .click();
         await this.get().locator('.ant-select-single').nth(2).click();
         await this.rootPage
-          .locator(`.nc-dropdown-relation-column >> .ant-select-item`, {
+          .locator(`.cv-dropdown-relation-column >> .ant-select-item`, {
             hasText: childColumn,
           })
           .click();
         await this.get().locator('.ant-select-single').nth(3).click();
         await this.rootPage
-          .locator(`.nc-dropdown-rollup-function >> .ant-select-item`, {
+          .locator(`.cv-dropdown-rollup-function >> .ant-select-item`, {
             hasText: rollupType,
           })
           .nth(0)
@@ -217,15 +217,15 @@ export class ColumnPageObject extends BasePage {
         // kludge, fix me
         await this.rootPage.waitForTimeout(2000);
 
-        await this.get().locator('.nc-ltar-relation-type').getByTestId(relationType).click();
+        await this.get().locator('.cv-ltar-relation-type').getByTestId(relationType).click();
         // await this.get()
-        //   .locator('.nc-ltar-relation-type >> .ant-radio')
+        //   .locator('.cv-ltar-relation-type >> .ant-radio')
         //   .nth(relationType === 'Has Many' ? 1 : 0)
         //   .click();
         await this.get().locator('.ant-select-single').nth(1).click();
-        await this.rootPage.locator(`.nc-ltar-child-table >> input[type="search"]`).fill(childTable);
+        await this.rootPage.locator(`.cv-ltar-child-table >> input[type="search"]`).fill(childTable);
         await this.rootPage
-          .locator(`.nc-dropdown-ltar-child-table >> .ant-select-item`, {
+          .locator(`.cv-dropdown-ltar-child-table >> .ant-select-item`, {
             hasText: childTable,
           })
           .nth(0)
@@ -241,8 +241,8 @@ export class ColumnPageObject extends BasePage {
 
         if (custom) {
           // enable advance options
-          await this.get().locator('.nc-ltar-relation-type >> .ant-radio').nth(1).dblclick();
-          await this.get().locator('.nc-ltar-relation-type >> .ant-radio').nth(2).dblclick();
+          await this.get().locator('.cv-ltar-relation-type >> .ant-radio').nth(1).dblclick();
+          await this.get().locator('.cv-ltar-relation-type >> .ant-radio').nth(2).dblclick();
 
           await this.get().locator(':has(:has-text("Advanced Link")) > button.ant-switch').click();
 
@@ -273,7 +273,7 @@ export class ColumnPageObject extends BasePage {
     await this.save();
 
     const headersText = [];
-    const locator = this.grid.get().locator('th.nc-grid-column-header');
+    const locator = this.grid.get().locator('th.cv-grid-column-header');
     await locator.first().waitFor({ state: 'visible' });
 
     const count = await locator.count();
@@ -295,20 +295,20 @@ export class ColumnPageObject extends BasePage {
   }
 
   async fillTitle({ title }: { title: string }) {
-    await this.get().locator('.nc-column-name-input').fill(title);
+    await this.get().locator('.cv-column-name-input').fill(title);
   }
 
   async selectType({ type, first, isCreateColumn }: { type: string; first?: boolean; isCreateColumn?: boolean }) {
-    if (isCreateColumn || (await this.get().getByTestId('nc-column-uitypes-options-list-wrapper').isVisible())) {
-      const searchInput = this.get().locator('.nc-column-type-search-input >> input');
+    if (isCreateColumn || (await this.get().getByTestId('cv-column-uitypes-options-list-wrapper').isVisible())) {
+      const searchInput = this.get().locator('.cv-column-type-search-input >> input');
       await searchInput.waitFor({ state: 'visible' });
       await searchInput.click();
       await searchInput.fill(type);
 
-      await this.get().locator('.nc-column-list-wrapper').getByTestId(type).waitFor();
-      await this.get().locator('.nc-column-list-wrapper').getByTestId(type).click();
+      await this.get().locator('.cv-column-list-wrapper').getByTestId(type).waitFor();
+      await this.get().locator('.cv-column-list-wrapper').getByTestId(type).click();
 
-      await this.get().locator('.nc-column-type-input').waitFor();
+      await this.get().locator('.cv-column-type-input').waitFor();
     } else {
       if (first) {
         await this.get().locator('.ant-select-selector > .ant-select-selection-item').first().click();
@@ -325,7 +325,7 @@ export class ColumnPageObject extends BasePage {
   }
 
   async changeReferencedColumnForQrCode({ titleOfReferencedColumn }: { titleOfReferencedColumn: string }) {
-    await this.get().locator('.nc-qr-code-value-column-select .ant-select-single').click();
+    await this.get().locator('.cv-qr-code-value-column-select .ant-select-single').click();
     await this.rootPage
       .locator(`.ant-select-item`, {
         hasText: titleOfReferencedColumn,
@@ -336,7 +336,7 @@ export class ColumnPageObject extends BasePage {
   }
 
   async changeReferencedColumnForBarcode({ titleOfReferencedColumn }: { titleOfReferencedColumn: string }) {
-    await this.get().locator('.nc-barcode-value-column-select .ant-select-single').click();
+    await this.get().locator('.cv-barcode-value-column-select .ant-select-single').click();
     await this.rootPage
       .locator(`.ant-select-item`, {
         hasText: titleOfReferencedColumn,
@@ -347,7 +347,7 @@ export class ColumnPageObject extends BasePage {
   }
 
   async changeBarcodeFormat({ barcodeFormatName }: { barcodeFormatName: string }) {
-    await this.get().locator('.nc-barcode-format-select .ant-select-single').click();
+    await this.get().locator('.cv-barcode-format-select .ant-select-single').click();
     await this.rootPage
       .locator(`.ant-select-item`, {
         hasText: barcodeFormatName,
@@ -358,7 +358,7 @@ export class ColumnPageObject extends BasePage {
   }
 
   async delete({ title }: { title: string }) {
-    await this.getColumnHeader(title).locator('div.ant-dropdown-trigger').locator('.nc-ui-dt-dropdown').click();
+    await this.getColumnHeader(title).locator('div.ant-dropdown-trigger').locator('.cv-ui-dt-dropdown').click();
     // await this.rootPage.locator('li[role="menuitem"]:has-text("Delete")').waitFor();
     await this.rootPage.locator('li[role="menuitem"]:has-text("Delete"):visible').click();
 
@@ -388,8 +388,8 @@ export class ColumnPageObject extends BasePage {
     selectType?: boolean;
   }) {
     // when clicked on the dropdown cell header
-    await this.getColumnHeader(title).locator('.nc-ui-dt-dropdown').scrollIntoViewIfNeeded();
-    await this.getColumnHeader(title).locator('.nc-ui-dt-dropdown').click();
+    await this.getColumnHeader(title).locator('.cv-ui-dt-dropdown').scrollIntoViewIfNeeded();
+    await this.getColumnHeader(title).locator('.cv-ui-dt-dropdown').click();
     await expect(await this.rootPage.locator('li[role="menuitem"]:has-text("Edit"):visible').last()).toBeVisible();
     await this.rootPage.locator('li[role="menuitem"]:has-text("Edit"):visible').last().click();
 
@@ -421,14 +421,14 @@ export class ColumnPageObject extends BasePage {
         break;
       case 'DateTime':
         // Date Format
-        await this.get().locator('.nc-date-select').click();
+        await this.get().locator('.cv-date-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${dateFormat}"`).click();
 
         // allow UI to update
         await this.rootPage.waitForTimeout(500);
 
         // Time Format
-        await this.get().locator('.nc-time-select').click();
+        await this.get().locator('.cv-time-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${timeFormat}"`).click();
 
         // allow UI to update
@@ -436,8 +436,8 @@ export class ColumnPageObject extends BasePage {
 
         break;
       case 'Date':
-        await this.get().locator('.nc-date-select').click();
-        await this.rootPage.locator('.nc-date-select').pressSequentially(dateFormat, { delay: 100 });
+        await this.get().locator('.cv-date-select').click();
+        await this.rootPage.locator('.cv-date-select').pressSequentially(dateFormat, { delay: 100 });
         await this.rootPage.locator('.ant-select-item').locator(`text="${dateFormat}"`).click();
 
         // allow UI to update
@@ -452,21 +452,21 @@ export class ColumnPageObject extends BasePage {
   // opening edit modal in table header  double click
 
   async editMenuShowMore() {
-    await this.rootPage.locator('.nc-more-options').click();
+    await this.rootPage.locator('.cv-more-options').click();
   }
 
   async duplicateColumn({ title, expectedTitle = `${title} copy` }: { title: string; expectedTitle?: string }) {
-    await this.grid.get().locator(`th[data-title="${title}"] .nc-ui-dt-dropdown`).click();
+    await this.grid.get().locator(`th[data-title="${title}"] .cv-ui-dt-dropdown`).click();
     await this.rootPage.locator('li[role="menuitem"]:has-text("Duplicate"):visible').click();
 
-    await this.rootPage.locator('.nc-modal-column-duplicate .nc-button:has-text("Confirm"):visible').click();
+    await this.rootPage.locator('.cv-modal-column-duplicate .cv-button:has-text("Confirm"):visible').click();
 
     // await this.verifyToast({ message: 'Column duplicated successfully' });
     await this.grid.get().locator(`th[data-title="${expectedTitle}"]`).waitFor({ state: 'visible', timeout: 10000 });
   }
 
   async hideColumn({ title, isDisplayValue = false }: { title: string; isDisplayValue?: boolean }) {
-    await this.grid.get().locator(`th[data-title="${title}"] .nc-ui-dt-dropdown`).click();
+    await this.grid.get().locator(`th[data-title="${title}"] .cv-ui-dt-dropdown`).click();
 
     if (isDisplayValue) {
       await expect(this.rootPage.locator('li[role="menuitem"]:has-text("Hide Field")')).toHaveCount(0);
@@ -532,34 +532,34 @@ export class ColumnPageObject extends BasePage {
   async verifyRoleAccess(param: { role: string }) {
     const role = param.role.toLowerCase();
     const count = role.toLowerCase() === 'creator' || role.toLowerCase() === 'owner' ? 1 : 0;
-    await expect(this.grid.get().locator('.nc-column-add:visible')).toHaveCount(count);
+    await expect(this.grid.get().locator('.cv-column-add:visible')).toHaveCount(count);
 
     // verify for first column, if edit dropdown exists
     const columnHdr = await this.getColumnHeaderByIndex({ index: 1 });
-    await expect(await columnHdr.locator('.nc-ui-dt-dropdown:visible')).toHaveCount(count);
+    await expect(await columnHdr.locator('.cv-ui-dt-dropdown:visible')).toHaveCount(count);
 
     if (role === 'creator' || role === 'owner') {
       // open edit dropdown menu
-      await columnHdr.locator('.nc-ui-dt-dropdown:visible').click();
-      await expect(this.rootPage.locator('.nc-dropdown-column-operations')).toHaveCount(1);
+      await columnHdr.locator('.cv-ui-dt-dropdown:visible').click();
+      await expect(this.rootPage.locator('.cv-dropdown-column-operations')).toHaveCount(1);
 
       // close edit dropdown menu
-      await columnHdr.locator('.nc-ui-dt-dropdown:visible').click();
+      await columnHdr.locator('.cv-ui-dt-dropdown:visible').click();
     }
 
     if (role === 'creator' || role === 'owner' || role === 'editor') {
       await this.grid.selectRow(0);
       await this.grid.selectRow(1);
       await this.grid.openAllRowContextMenu();
-      await this.rootPage.locator('.nc-dropdown-grid-context-menu').waitFor({ state: 'visible' });
-      await expect(this.rootPage.locator('.nc-dropdown-grid-context-menu')).toHaveCount(1);
+      await this.rootPage.locator('.cv-dropdown-grid-context-menu').waitFor({ state: 'visible' });
+      await expect(this.rootPage.locator('.cv-dropdown-grid-context-menu')).toHaveCount(1);
       await this.rootPage.keyboard.press('Escape');
       await (await this.getColumnHeaderByIndex({ index: 2 })).click();
     }
   }
 
   async sortColumn({ title, direction = 'asc' }: { title: string; direction: 'asc' | 'desc' }) {
-    await this.grid.get().locator(`th[data-title="${title}"] .nc-ui-dt-dropdown`).click();
+    await this.grid.get().locator(`th[data-title="${title}"] .cv-ui-dt-dropdown`).click();
     let menuOption: { (): Promise<void>; (): Promise<void> };
     if (direction === 'desc') {
       menuOption = () => this.rootPage.locator('li[role="menuitem"]:has-text("Sort Descending"):visible').click();
@@ -580,7 +580,7 @@ export class ColumnPageObject extends BasePage {
     await this.rootPage.locator(`.ant-select-selection-item:has-text("${title}")`).first().isVisible();
     await this.rootPage
       .locator(
-        `.nc-sort-dir-select:has-text("${direction === 'asc' ? '1 → 9' : '9 → 1'}"),.nc-sort-dir-select:has-text("${
+        `.cv-sort-dir-select:has-text("${direction === 'asc' ? '1 → 9' : '9 → 1'}"),.cv-sort-dir-select:has-text("${
           direction === 'asc' ? 'A → Z' : 'Z → A'
         }")`
       )

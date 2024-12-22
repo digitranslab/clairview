@@ -1,12 +1,12 @@
 // Webhook
-//  nc-view-sidebar-webhook
-//  nc-view-sidebar-webhook-label
-//  nc-view-sidebar-webhook-plus-icon
-//    nc-view-sidebar-webhook-context-menu
-//      nc-view-sidebar-webhook-menu-item
-//        data-testid="nc-view-sidebar-webhook-context-menu"
-//          data-testid="nc-view-sidebar-webhook-copy"
-//          data-testid="nc-view-sidebar-webhook-delete"
+//  cv-view-sidebar-webhook
+//  cv-view-sidebar-webhook-label
+//  cv-view-sidebar-webhook-plus-icon
+//    cv-view-sidebar-webhook-context-menu
+//      cv-view-sidebar-webhook-menu-item
+//        data-testid="cv-view-sidebar-webhook-context-menu"
+//          data-testid="cv-view-sidebar-webhook-copy"
+//          data-testid="cv-view-sidebar-webhook-delete"
 
 import BasePage from '../../Base';
 import { Locator } from '@playwright/test';
@@ -21,12 +21,12 @@ export class WebhookPage extends BasePage {
   constructor(details: DetailsPage) {
     super(details.rootPage);
     this.detailsPage = details;
-    this.addHookButton = this.get().locator('.nc-view-sidebar-webhook-plus-icon:visible');
-    this.webhookItems = this.get().locator('.nc-table-row');
+    this.addHookButton = this.get().locator('.cv-view-sidebar-webhook-plus-icon:visible');
+    this.webhookItems = this.get().locator('.cv-table-row');
   }
 
   get() {
-    return this.detailsPage.get().locator('.nc-table-wrapper');
+    return this.detailsPage.get().locator('.cv-table-wrapper');
   }
 
   async itemCount() {
@@ -44,20 +44,20 @@ export class WebhookPage extends BasePage {
   async copyHook({ index }: { index: number }) {
     const hookItem = await this.getItem({ index });
     await hookItem.hover();
-    await hookItem.locator('[data-testid="nc-view-sidebar-webhook-context-menu"]').click();
+    await hookItem.locator('[data-testid="cv-view-sidebar-webhook-context-menu"]').click();
     await this.rootPage
       .locator('.ant-dropdown:visible')
-      .locator('[data-testid="nc-view-sidebar-webhook-copy"]')
+      .locator('[data-testid="cv-view-sidebar-webhook-copy"]')
       .click();
   }
 
   async itemContextMenu({ index, operation }: { index: number; operation: 'edit' | 'duplicate' | 'delete' }) {
-    await (await this.getItem({ index })).getByTestId('nc-webhook-item-action').click();
+    await (await this.getItem({ index })).getByTestId('cv-webhook-item-action').click();
 
-    const contextMenu = this.rootPage.locator('.nc-webhook-item-action-dropdown:visible');
+    const contextMenu = this.rootPage.locator('.cv-webhook-item-action-dropdown:visible');
     await contextMenu.waitFor({ state: 'visible' });
 
-    await contextMenu.getByTestId(`nc-webhook-item-action-${operation}`).click();
+    await contextMenu.getByTestId(`cv-webhook-item-action-${operation}`).click();
 
     await contextMenu.waitFor({ state: 'hidden' });
   }

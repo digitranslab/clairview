@@ -84,9 +84,9 @@ export class PublicDatasExportController {
     const buf = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
 
     res.set({
-      'Access-Control-Expose-Headers': 'nc-export-offset',
-      'nc-export-offset': offset,
-      'nc-export-elapsed-time': elapsed,
+      'Access-Control-Expose-Headers': 'cv-export-offset',
+      'cv-export-offset': offset,
+      'cv-export-elapsed-time': elapsed,
       'Content-Disposition': `attachment; filename="${encodeURI(
         view.title,
       )}-export.xlsx"`,
@@ -159,9 +159,9 @@ export class PublicDatasExportController {
     );
 
     res.set({
-      'Access-Control-Expose-Headers': 'nc-export-offset',
-      'nc-export-offset': offset,
-      'nc-export-elapsed-time': elapsed,
+      'Access-Control-Expose-Headers': 'cv-export-offset',
+      'cv-export-offset': offset,
+      'cv-export-elapsed-time': elapsed,
       'Content-Disposition': `attachment; filename="${encodeURI(
         view.title,
       )}-export.csv"`,

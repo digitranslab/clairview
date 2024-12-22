@@ -1,5 +1,5 @@
 import { MetaService } from './meta/meta.service';
-import { NcConfig } from './utils/nc-config';
+import { NcConfig } from './utils/cv-config';
 import Noco from './Noco';
 
 // run upgrader

@@ -22,19 +22,19 @@ export class ViewSidebarPage extends BasePage {
     super(dashboard.rootPage);
     this.dashboard = dashboard;
 
-    this.createGalleryButton = this.get().locator('.nc-create-gallery-view:visible');
-    this.createGridButton = this.get().locator('.nc-create-grid-view:visible');
-    this.createFormButton = this.get().locator('.nc-create-form-view:visible');
-    this.createKanbanButton = this.get().locator('.nc-create-kanban-view:visible');
-    this.createCalendarButton = this.get().locator('.nc-create-calendar-view:visible');
+    this.createGalleryButton = this.get().locator('.cv-create-gallery-view:visible');
+    this.createGridButton = this.get().locator('.cv-create-grid-view:visible');
+    this.createFormButton = this.get().locator('.cv-create-form-view:visible');
+    this.createKanbanButton = this.get().locator('.cv-create-kanban-view:visible');
+    this.createCalendarButton = this.get().locator('.cv-create-calendar-view:visible');
 
-    this.erdButton = this.get().locator('.nc-view-sidebar-erd');
-    this.apiSnippet = this.get().locator('.nc-view-sidebar-api-snippet');
-    this.webhookButton = this.get().locator('.nc-view-sidebar-webhook');
+    this.erdButton = this.get().locator('.cv-view-sidebar-erd');
+    this.apiSnippet = this.get().locator('.cv-view-sidebar-api-snippet');
+    this.webhookButton = this.get().locator('.cv-view-sidebar-webhook');
   }
 
   get() {
-    return this.dashboard.get().locator('.nc-table-node-wrapper[data-active="true"]');
+    return this.dashboard.get().locator('.cv-table-node-wrapper[data-active="true"]');
   }
 
   async isVisible() {
@@ -104,13 +104,13 @@ export class ViewSidebarPage extends BasePage {
   }
 
   async verifyViewNotPresent({ title, index }: { title: string; index: number }) {
-    const viewList = this.get().locator(`.nc-views-menu`).locator('.ant-menu-title-content');
+    const viewList = this.get().locator(`.cv-views-menu`).locator('.ant-menu-title-content');
     if ((await viewList.count()) <= index) {
       return true;
     }
 
     return await expect(
-      this.get().locator(`.nc-views-menu`).locator('.ant-menu-title-content').nth(index)
+      this.get().locator(`.cv-views-menu`).locator('.ant-menu-title-content').nth(index)
     ).not.toHaveText(title);
   }
 
@@ -125,7 +125,7 @@ export class ViewSidebarPage extends BasePage {
     await this.get().locator(`[data-testid="view-sidebar-view-${title}"]`).hover();
     await this.get()
       .locator(`[data-testid="view-sidebar-view-${title}"]`)
-      .locator('.nc-sidebar-view-node-context-btn')
+      .locator('.cv-sidebar-view-node-context-btn')
       .click();
 
     await this.rootPage.waitForTimeout(750);
@@ -137,7 +137,7 @@ export class ViewSidebarPage extends BasePage {
         force: true,
       });
 
-    await this.rootPage.getByTestId('nc-delete-modal-delete-btn').click();
+    await this.rootPage.getByTestId('cv-delete-modal-delete-btn').click();
   }
 
   async renameView({ title, newTitle }: { title: string; newTitle: string }) {
@@ -151,11 +151,11 @@ export class ViewSidebarPage extends BasePage {
     await this.get().locator(`[data-testid="view-sidebar-view-${title}"]`).hover();
     await this.get()
       .locator(`[data-testid="view-sidebar-view-${title}"]`)
-      .locator('.nc-sidebar-view-node-context-btn')
+      .locator('.cv-sidebar-view-node-context-btn')
       .click();
 
     const copyViewAction = () =>
-      this.rootPage.locator(`[data-testid="view-sidebar-view-actions-${title}"]`).locator('.nc-view-copy-icon').click({
+      this.rootPage.locator(`[data-testid="view-sidebar-view-actions-${title}"]`).locator('.cv-view-copy-icon').click({
         force: true,
       });
 
@@ -171,7 +171,7 @@ export class ViewSidebarPage extends BasePage {
 
   async changeViewIcon({ title, icon, iconDisplay }: { title: string; icon: string; iconDisplay?: string }) {
     await this.rootPage.waitForTimeout(1000);
-    await this.get().locator(`[data-testid="view-sidebar-view-${title}"] .nc-view-icon`).click();
+    await this.get().locator(`[data-testid="view-sidebar-view-${title}"] .cv-view-icon`).click();
 
     await this.rootPage.locator('.emoji-mart-search').type(icon);
     const emojiList = this.rootPage.locator('[id="emoji-mart-list"]');
@@ -179,7 +179,7 @@ export class ViewSidebarPage extends BasePage {
     await expect(
       this.get()
         .locator(`[data-testid="view-sidebar-view-${title}"]`)
-        .locator(`.nc-table-icon:has-text("${iconDisplay}")`)
+        .locator(`.cv-table-icon:has-text("${iconDisplay}")`)
     ).toHaveCount(1);
   }
 
@@ -187,7 +187,7 @@ export class ViewSidebarPage extends BasePage {
     await new Promise(resolve => setTimeout(resolve, 1000));
     await expect(
       this.rootPage.locator(
-        `[data-testid="nc-tab-title"]:has-text("${title}") [data-testid="nc-tab-icon-emojione:${icon}"]`
+        `[data-testid="cv-tab-title"]:has-text("${title}") [data-testid="cv-tab-icon-emojione:${icon}"]`
       )
     ).toBeVisible();
   }
@@ -210,15 +210,15 @@ export class ViewSidebarPage extends BasePage {
   }
 
   // async openDeveloperTab({ option }: { option?: string }) {
-  //   await this.get().locator('.nc-tab').nth(1).click();
+  //   await this.get().locator('.cv-tab').nth(1).click();
   //   if (option === 'ERD') {
-  //     await this.get().locator('.nc-view-action-erd.button').click();
+  //     await this.get().locator('.cv-view-action-erd.button').click();
   //   } else if (option?.toLowerCase() === 'webhook') {
-  //     await this.get().locator('.nc-view-sidebar-webhook').click();
+  //     await this.get().locator('.cv-view-sidebar-webhook').click();
   //   }
   // }
   //
   // async openViewsTab() {
-  //   await this.get().locator(',nc-tab').nth(0).click();
+  //   await this.get().locator(',cv-tab').nth(0).click();
   // }
 }

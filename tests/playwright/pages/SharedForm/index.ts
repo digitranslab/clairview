@@ -25,7 +25,7 @@ export class SharedFormPage extends BasePage {
   }
 
   async verifySuccessMessage() {
-    await this.rootPage.locator('.nc-shared-form-success-msg').waitFor({ state: 'visible', timeout: 10000 });
+    await this.rootPage.locator('.cv-shared-form-success-msg').waitFor({ state: 'visible', timeout: 10000 });
     await expect(
       this.get().locator('.ant-alert-success', {
         hasText: 'Successfully submitted form data',
@@ -34,18 +34,18 @@ export class SharedFormPage extends BasePage {
   }
 
   async clickLinkToChildList() {
-    await this.get().locator('.nc-virtual-cell').hover();
-    await this.get().locator('.nc-action-icon').click({ force: true });
-    //await this.get().locator('button[data-testid="nc-child-list-button-link-to"]').click();
+    await this.get().locator('.cv-virtual-cell').hover();
+    await this.get().locator('.cv-action-icon').click({ force: true });
+    //await this.get().locator('button[data-testid="cv-child-list-button-link-to"]').click();
   }
 
   async closeLinkToChildList() {
-    // await this.get().locator('.nc-close-btn').click();
+    // await this.get().locator('.cv-close-btn').click();
     await this.rootPage.keyboard.press('Escape');
   }
 
   async verifyChildList(cardTitle?: string[]) {
-    await this.get().locator('.nc-modal-link-record').waitFor();
+    await this.get().locator('.cv-modal-link-record').waitFor();
     const linkRecord = this.get();
 
     // DOM element validation
@@ -58,7 +58,7 @@ export class SharedFormPage extends BasePage {
     expect(await linkRecord.locator(`button:has-text("Link more records")`).isVisible()).toBeFalsy();
 
     // placeholder: Filter query
-    expect(await linkRecord.locator('.nc-excluded-search').isVisible()).toBeTruthy();
+    expect(await linkRecord.locator('.cv-excluded-search').isVisible()).toBeTruthy();
 
     {
       const childList = linkRecord.locator(`.ant-card`);
@@ -72,18 +72,18 @@ export class SharedFormPage extends BasePage {
   async selectChildList(cardTitle: string) {
     await this.get()
       .locator(`.ant-card:has-text("${cardTitle}"):visible`)
-      .locator('.nc-list-item-link-unlink-btn')
+      .locator('.cv-list-item-link-unlink-btn')
       .click();
   }
 
   fieldLabel({ title }: { title: string }) {
     return this.get()
-      .getByTestId(`nc-shared-form-item-${title.replace(' ', '')}`)
-      .locator('.nc-form-column-label');
+      .getByTestId(`cv-shared-form-item-${title.replace(' ', '')}`)
+      .locator('.cv-form-column-label');
   }
 
   async getFormFieldErrors({ title }: { title: string }) {
-    const field = this.get().getByTestId(`nc-shared-form-item-${title.replace(' ', '')}`);
+    const field = this.get().getByTestId(`cv-shared-form-item-${title.replace(' ', '')}`);
     await field.scrollIntoViewIfNeeded();
     const fieldErrorEl = field.locator('.ant-form-item-explain');
     return {

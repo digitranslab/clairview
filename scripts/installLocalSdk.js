@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const path = require('path');
 const sdkPath = path.join(__dirname, '..', 'packages', 'clairview-sdk');
-const guiPath = path.join(__dirname, '..', 'packages', 'nc-gui');
+const guiPath = path.join(__dirname, '..', 'packages', 'cv-gui');
 const clairviewPath = path.join(__dirname, '..', 'packages', 'clairview');
 
 exec(`cd ${sdkPath} && pnpm i && npm run build`, (err, stdout, stderr) => {
@@ -15,9 +15,9 @@ exec(`cd ${sdkPath} && pnpm i && npm run build`, (err, stdout, stderr) => {
     const guiPromise = new Promise((resolve, reject) => {
       exec(`cd ${guiPath} && pnpm i ${sdkPath}`, (err, stdout, stderr) => {
         if (err) {
-          reject(`Error installing dependencies for nc-gui: ${err}`);
+          reject(`Error installing dependencies for cv-gui: ${err}`);
         } else {
-          resolve(`Dependencies installed for nc-gui: ${stdout}`);
+          resolve(`Dependencies installed for cv-gui: ${stdout}`);
         }
       });
     });

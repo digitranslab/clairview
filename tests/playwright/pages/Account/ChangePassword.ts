@@ -7,7 +7,7 @@ export class ChangePasswordPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.getByTestId('nc-user-settings-form');
+    return this.rootPage.getByTestId('cv-user-settings-form');
   }
 
   async changePassword({
@@ -21,9 +21,9 @@ export class ChangePasswordPage extends BasePage {
     repeatPass: string;
     networkValidation?: boolean;
   }) {
-    const currentPassword = this.get().locator('input[data-testid="nc-user-settings-form__current-password"]');
-    const newPassword = this.get().locator('input[data-testid="nc-user-settings-form__new-password"]');
-    const confirmPassword = this.get().locator('input[data-testid="nc-user-settings-form__new-password-repeat"]');
+    const currentPassword = this.get().locator('input[data-testid="cv-user-settings-form__current-password"]');
+    const newPassword = this.get().locator('input[data-testid="cv-user-settings-form__new-password"]');
+    const confirmPassword = this.get().locator('input[data-testid="cv-user-settings-form__new-password-repeat"]');
 
     await currentPassword.waitFor({ state: 'visible' });
     await newPassword.waitFor({ state: 'visible' });
@@ -38,7 +38,7 @@ export class ChangePasswordPage extends BasePage {
     await confirmPassword.fill(repeatPass);
 
     const submitChangePassword = () =>
-      this.get().locator('button[data-testid="nc-user-settings-form__submit"]').click();
+      this.get().locator('button[data-testid="cv-user-settings-form__submit"]').click();
     if (networkValidation) {
       await this.waitForResponse({
         uiAction: submitChangePassword,
@@ -51,7 +51,7 @@ export class ChangePasswordPage extends BasePage {
   }
 
   async verifyFormError({ error }: { error: string }) {
-    await expect(this.get().getByTestId('nc-user-settings-form__error')).toHaveText(error);
+    await expect(this.get().getByTestId('cv-user-settings-form__error')).toHaveText(error);
   }
 
   async verifyPasswordDontMatchError() {

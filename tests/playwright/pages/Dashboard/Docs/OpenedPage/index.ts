@@ -67,16 +67,16 @@ export class DocsOpenedPagePage extends BasePage {
   }
 
   async selectEmoji({ emoji }: { emoji: string }) {
-    await this.get().getByTestId('nc-doc-opened-page-icon-picker').hover();
-    await this.get().getByTestId('nc-doc-opened-page-icon-picker').click();
+    await this.get().getByTestId('cv-doc-opened-page-icon-picker').hover();
+    await this.get().getByTestId('cv-doc-opened-page-icon-picker').click();
 
-    await this.rootPage.getByTestId('nc-emoji-filter').last().type(emoji);
+    await this.rootPage.getByTestId('cv-emoji-filter').last().type(emoji);
 
     await this.rootPage.waitForTimeout(500);
 
     await this.waitForResponse({
       uiAction: () =>
-        this.rootPage.getByTestId('nc-emoji-container').last().locator(`.nc-emoji-item >> svg`).first().click(),
+        this.rootPage.getByTestId('cv-emoji-container').last().locator(`.cv-emoji-item >> svg`).first().click(),
       httpMethodsToMatch: ['PUT'],
       requestUrlPathToMatch: `api/v1/docs/page`,
     });
@@ -84,7 +84,7 @@ export class DocsOpenedPagePage extends BasePage {
 
   async verifyTitleEmoji({ emoji }: { emoji: string }) {
     await expect(
-      this.get().getByTestId('docs-page-title-wrapper').getByTestId(`nc-doc-page-icon-emojione:${emoji}`)
+      this.get().getByTestId('docs-page-title-wrapper').getByTestId(`cv-doc-page-icon-emojione:${emoji}`)
     ).toBeVisible();
   }
 
@@ -144,11 +144,11 @@ export class DocsOpenedPagePage extends BasePage {
   async verifyBreadcrumb({ pages }: { pages: { title: string; emoji?: string }[] }) {
     for (let index = 0; index < pages.length; index++) {
       const { title, emoji } = pages[index];
-      await expect(this.get().getByTestId(`nc-doc-page-breadcrumb-${index}`)).toHaveText(title);
+      await expect(this.get().getByTestId(`cv-doc-page-breadcrumb-${index}`)).toHaveText(title);
 
       if (emoji) {
         await expect(
-          this.get().getByTestId(`nc-doc-page-breadcrumb-${index}`).getByTestId(`nc-doc-page-icon-emojione:${emoji}`)
+          this.get().getByTestId(`cv-doc-page-breadcrumb-${index}`).getByTestId(`cv-doc-page-icon-emojione:${emoji}`)
         ).toBeVisible();
       }
     }

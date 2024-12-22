@@ -11,14 +11,14 @@ export class SidebarUserMenuObject extends BasePage {
   }
 
   get() {
-    return this.rootPage.getByTestId('nc-sidebar-userinfo');
+    return this.rootPage.getByTestId('cv-sidebar-userinfo');
   }
 
   async click() {
-    await this.rootPage.getByTestId('nc-sidebar-userinfo').click();
+    await this.rootPage.getByTestId('cv-sidebar-userinfo').click();
   }
 
   async clickLogout() {
-    await this.rootPage.getByTestId('nc-sidebar-user-logout').click();
+    await this.rootPage.getByTestId('cv-sidebar-user-logout').click();
   }
 }

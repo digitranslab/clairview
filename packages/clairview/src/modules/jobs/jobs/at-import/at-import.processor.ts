@@ -147,7 +147,7 @@ export class AtImportProcessor {
         return (await sMapEM.getRow('aTblId', aId, ['ncParent']))?.ncParent;
       },
 
-      // get nc-title from airtable ID
+      // get cv-title from airtable ID
       async getNcNameFromAtId(aId) {
         return (await sMapEM.getRow('aTblId', aId, ['ncName']))?.ncName;
       },
@@ -1387,7 +1387,7 @@ export class AtImportProcessor {
       }
     };
 
-    // retrieve nc-view column ID from corresponding nc-column ID
+    // retrieve cv-view column ID from corresponding cv-column ID
     const nc_getViewColumnId = async (viewId, viewType, ncColumnId) => {
       // retrieve view Info
       let viewDetails;
@@ -2344,7 +2344,7 @@ export class AtImportProcessor {
         recordPerfStats(_perfStart, 'dbView.gridColumnsList');
       }
 
-      // nc-specific columns; default hide.
+      // cv-specific columns; default hide.
       for (let j = 0; j < hiddenColumns.length; j++) {
         const ncColumnId = ncTbl.columns.find(
           (x) => x.title === hiddenColumns[j],

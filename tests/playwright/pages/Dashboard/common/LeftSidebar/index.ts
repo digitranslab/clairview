@@ -20,27 +20,27 @@ export class LeftSidebarPage extends BasePage {
     super(dashboard.rootPage);
     this.dashboard = dashboard;
 
-    this.btn_workspace = this.get().locator('.nc-workspace-menu');
-    this.btn_newProject = this.get().locator('[data-testid="nc-sidebar-create-base-btn"]');
-    // this.btn_cmdK = this.get().locator('[data-testid="nc-sidebar-search-btn"]');
-    this.btn_teamAndSettings = this.get().locator('[data-testid="nc-sidebar-team-settings-btn"]');
+    this.btn_workspace = this.get().locator('.cv-workspace-menu');
+    this.btn_newProject = this.get().locator('[data-testid="cv-sidebar-create-base-btn"]');
+    // this.btn_cmdK = this.get().locator('[data-testid="cv-sidebar-search-btn"]');
+    this.btn_teamAndSettings = this.get().locator('[data-testid="cv-sidebar-team-settings-btn"]');
 
-    this.modal_workspace = this.rootPage.locator('.nc-dropdown-workspace-menu');
+    this.modal_workspace = this.rootPage.locator('.cv-dropdown-workspace-menu');
   }
 
   get() {
-    return this.dashboard.get().locator('.nc-sidebar');
+    return this.dashboard.get().locator('.cv-sidebar');
   }
 
   async createProject({ title, context }: { title: string; context: NcContext }) {
-    title = isEE() ? title : `nc-${context.workerId}-${title}`;
+    title = isEE() ? title : `cv-${context.workerId}-${title}`;
     await this.btn_newProject.click();
 
     /*
     TODO uncomment when AI Features are enabled by default
 
-    await this.rootPage.locator('.nc-create-base').waitFor();
-    await this.rootPage.locator('.nc-create-base').click();
+    await this.rootPage.locator('.cv-create-base').waitFor();
+    await this.rootPage.locator('.cv-create-base').click();
     */
 
     await this.rootPage.locator('.ant-modal-content:has-text(" Create Base")').waitFor();
@@ -66,7 +66,7 @@ export class LeftSidebarPage extends BasePage {
   }
 
   async verifyWorkspaceName({ title }: { title: string }) {
-    await expect(this.btn_workspace.locator('.nc-workspace-title')).toHaveText(title);
+    await expect(this.btn_workspace.locator('.cv-workspace-title')).toHaveText(title);
   }
 
   async createWorkspace({ title }: { title: string }) {
@@ -85,13 +85,13 @@ export class LeftSidebarPage extends BasePage {
     await this.clickWorkspace();
 
     // TODO: THere is one extra html attribute
-    await expect(this.rootPage.getByTestId('nc-workspace-list')).toHaveCount(count + 1);
+    await expect(this.rootPage.getByTestId('cv-workspace-list')).toHaveCount(count + 1);
   }
 
   async getWorkspaceList() {
     const ws = [];
     await this.clickWorkspace();
-    const nodes = this.modal_workspace.locator('[data-testid="nc-workspace-list"]');
+    const nodes = this.modal_workspace.locator('[data-testid="cv-workspace-list"]');
 
     for (let i = 0; i < (await nodes.count()); i++) {
       ws.push(await getTextExcludeIconText(nodes.nth(i)));
@@ -105,7 +105,7 @@ export class LeftSidebarPage extends BasePage {
 
   async openWorkspace(param: { title: any }) {
     await this.clickWorkspace();
-    const nodes = this.modal_workspace.locator('[data-testid="nc-workspace-list"]');
+    const nodes = this.modal_workspace.locator('[data-testid="cv-workspace-list"]');
 
     await this.rootPage.waitForTimeout(2000);
 

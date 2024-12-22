@@ -1,6 +1,6 @@
 import { PluginCategory, XcActionType, XcType } from 'clairview-sdk';
 import S3Plugin from './S3Plugin';
-import type { XcPluginConfig } from '~/types/nc-plugin';
+import type { XcPluginConfig } from '~/types/cv-plugin';
 
 const config: XcPluginConfig = {
   builder: S3Plugin,

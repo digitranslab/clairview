@@ -43,9 +43,9 @@ export class DataAliasExportController {
     XLSX.utils.book_append_sheet(wb, data, targetView.title);
     const buf = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
     res.set({
-      'Access-Control-Expose-Headers': 'nc-export-offset',
-      'nc-export-offset': offset,
-      'nc-export-elapsed-time': elapsed,
+      'Access-Control-Expose-Headers': 'cv-export-offset',
+      'cv-export-offset': offset,
+      'cv-export-elapsed-time': elapsed,
       'Content-Disposition': `attachment; filename="${encodeURI(
         targetView.title,
       )}-export.xlsx"`,
@@ -79,9 +79,9 @@ export class DataAliasExportController {
     );
 
     res.set({
-      'Access-Control-Expose-Headers': 'nc-export-offset',
-      'nc-export-offset': offset,
-      'nc-export-elapsed-time': elapsed,
+      'Access-Control-Expose-Headers': 'cv-export-offset',
+      'cv-export-offset': offset,
+      'cv-export-elapsed-time': elapsed,
       'Content-Disposition': `attachment; filename="${encodeURI(
         targetView.title,
       )}-export.csv"`,

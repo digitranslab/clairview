@@ -14,20 +14,20 @@ export class GeoDataCellPageObject extends BasePage {
   }
 
   async openSetLocation({ index, columnHeader }: { index: number; columnHeader: string }) {
-    await this.cell.get({ index, columnHeader }).locator(`[data-testid="nc-geo-data-set-location-button"]`).click();
+    await this.cell.get({ index, columnHeader }).locator(`[data-testid="cv-geo-data-set-location-button"]`).click();
   }
 
   async openLatLngSet({ index, columnHeader }: { index: number; columnHeader: string }) {
-    await this.cell.get({ index, columnHeader }).locator(`[data-testid="nc-geo-data-lat-long-set"]`).click();
+    await this.cell.get({ index, columnHeader }).locator(`[data-testid="cv-geo-data-lat-long-set"]`).click();
   }
 
   async enterLatLong({ lat, long }: { lat: string; long: string }) {
-    await this.rootPage.locator(`[data-testid="nc-geo-data-latitude"]`).fill(lat);
-    await this.rootPage.locator(`[data-testid="nc-geo-data-longitude"]`).fill(long);
+    await this.rootPage.locator(`[data-testid="cv-geo-data-latitude"]`).fill(lat);
+    await this.rootPage.locator(`[data-testid="cv-geo-data-longitude"]`).fill(long);
   }
 
   async clickSave() {
-    await this.rootPage.locator(`[data-testid="nc-geo-data-save"]`).click();
+    await this.rootPage.locator(`[data-testid="cv-geo-data-save"]`).click();
   }
 
   async close() {

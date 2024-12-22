@@ -11,7 +11,7 @@ export class WorkspaceSettingsObject extends BasePage {
   }
 
   get() {
-    return this.dashboard.get().locator(`.nc-workspace-settings`);
+    return this.dashboard.get().locator(`.cv-workspace-settings`);
   }
 
   async open() {
@@ -19,12 +19,12 @@ export class WorkspaceSettingsObject extends BasePage {
   }
 
   async clickSettingsTab() {
-    await this.get().getByTestId('nc-workspace-settings-tab-settings').click();
+    await this.get().getByTestId('cv-workspace-settings-tab-settings').click();
   }
 
   async renameWorkspace({ newTitle }: { newTitle: string }) {
     await this.clickSettingsTab();
-    await this.get().getByTestId('nc-workspace-settings-settings-rename-input').fill(newTitle);
+    await this.get().getByTestId('cv-workspace-settings-settings-rename-input').fill(newTitle);
     const submitAction = () => this.rootPage.keyboard.press('Enter');
 
     await this.waitForResponse({

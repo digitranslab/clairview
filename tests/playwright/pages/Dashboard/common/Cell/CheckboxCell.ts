@@ -15,19 +15,19 @@ export class CheckboxCellPageObject extends BasePage {
   }
 
   async click({ index, columnHeader }: { index?: number; columnHeader: string }) {
-    await this.get({ index, columnHeader }).locator('.nc-cell').click();
+    await this.get({ index, columnHeader }).locator('.cv-cell').click();
     await this.rootPage.waitForTimeout(500);
   }
 
   // async isChecked({ index, columnHeader }: { index?: number; columnHeader: string }) {
-  //   return await this.get({ index, columnHeader }).locator('.nc-cell-hover-show').isVisible();
+  //   return await this.get({ index, columnHeader }).locator('.cv-cell-hover-show').isVisible();
   // }
 
   async verifyChecked({ index, columnHeader }: { index?: number; columnHeader: string }) {
-    await expect(this.get({ index, columnHeader }).locator('.nc-cell-hover-show')).not.toBeVisible();
+    await expect(this.get({ index, columnHeader }).locator('.cv-cell-hover-show')).not.toBeVisible();
   }
 
   async verifyUnchecked({ index, columnHeader }: { index?: number; columnHeader: string }) {
-    await expect(this.get({ index, columnHeader }).locator('.nc-cell-hover-show')).toBeVisible();
+    await expect(this.get({ index, columnHeader }).locator('.cv-cell-hover-show')).toBeVisible();
   }
 }

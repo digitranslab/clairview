@@ -17,7 +17,7 @@ export class TimeCellPageObject extends BasePage {
   async verify({ index, columnHeader, value }: { index: number; columnHeader: string; value: string }) {
     const cell = this.get({ index, columnHeader });
     await cell.scrollIntoViewIfNeeded();
-    await cell.locator(`.nc-time-picker[title="${value}"]`).waitFor({ state: 'visible' });
+    await cell.locator(`.cv-time-picker[title="${value}"]`).waitFor({ state: 'visible' });
     await expect(cell.locator(`[title="${value}"]`)).toBeVisible();
   }
 
@@ -37,10 +37,10 @@ export class TimeCellPageObject extends BasePage {
     locator: Locator;
     selectFromPicker?: boolean;
   }) {
-    const timeInput = locator.locator('.nc-time-input');
+    const timeInput = locator.locator('.cv-time-input');
     await timeInput.click();
 
-    const dropdown = this.rootPage.locator('.nc-picker-time.active');
+    const dropdown = this.rootPage.locator('.cv-picker-time.active');
     await dropdown.waitFor({ state: 'visible' });
 
     if (!selectFromPicker) {

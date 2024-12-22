@@ -22,7 +22,7 @@ export class GroupPageObject extends BasePage {
   get({ indexMap }: { indexMap: Array<number> }) {
     let query = '';
     for (const n of indexMap) {
-      query = query + `.nc-group:nth-child(${n + 1}) `;
+      query = query + `.cv-group:nth-child(${n + 1}) `;
     }
     return this.rootPage.locator(query);
   }
@@ -30,7 +30,7 @@ export class GroupPageObject extends BasePage {
   async openGroup({ indexMap }: { indexMap: number[] }) {
     await this.rootPage.waitForTimeout(500);
 
-    let root = this.rootPage.locator('.nc-group');
+    let root = this.rootPage.locator('.cv-group');
 
     for (const n of indexMap) {
       await root.nth(n).click({
@@ -39,7 +39,7 @@ export class GroupPageObject extends BasePage {
           y: 5,
         },
       });
-      root = root.nth(n).locator('.nc-group');
+      root = root.nth(n).locator('.cv-group');
       await this.rootPage.waitForTimeout(200);
     }
     await this.rootPage.waitForTimeout(500);
@@ -47,23 +47,23 @@ export class GroupPageObject extends BasePage {
 
   async verifyGroupHeader({ indexMap, count, title }: { indexMap: number[]; count: number; title: string }) {
     const groupWrapper = this.get({ indexMap });
-    // await expect(groupWrapper.locator('.nc-group-column-title')).toHaveText(title);
-    await expect(groupWrapper.locator('.nc-group-row-count')).toHaveText(`Count${count}`);
+    // await expect(groupWrapper.locator('.cv-group-column-title')).toHaveText(title);
+    await expect(groupWrapper.locator('.cv-group-row-count')).toHaveText(`Count${count}`);
   }
 
   async verifyPagination({ indexMap, count }: { indexMap: number[]; count: number }) {
     const groupWrapper = this.get({ indexMap });
-    await expect(groupWrapper.locator('.nc-grid-row-count').first()).toHaveText(`${count} record`);
+    await expect(groupWrapper.locator('.cv-grid-row-count').first()).toHaveText(`${count} record`);
   }
 
   async verifyGroup({ indexMap, value }: { indexMap: number[]; value: string }) {
     let query = '';
     for (const n of indexMap) {
-      query += ` .nc-group:nth-child(${n + 1})`;
+      query += ` .cv-group:nth-child(${n + 1})`;
     }
     const groupWrapper = this.get({ indexMap });
-    await expect(groupWrapper.locator('.nc-group-value').first()).toHaveText(value);
-    await expect(this.rootPage.locator(`${query} .nc-group-value`).first()).toHaveText(value);
+    await expect(groupWrapper.locator('.cv-group-value').first()).toHaveText(value);
+    await expect(this.rootPage.locator(`${query} .cv-group-value`).first()).toHaveText(value);
   }
 
   async verifyRow({ indexMap, rowIndex }: { indexMap: number[]; rowIndex: number }) {
@@ -86,15 +86,15 @@ export class GroupPageObject extends BasePage {
     const gridWrapper = this.get({ indexMap });
     await gridWrapper.scrollIntoViewIfNeeded();
 
-    await gridWrapper.locator('.nc-group-table').waitFor({ state: 'visible' });
+    await gridWrapper.locator('.cv-group-table').waitFor({ state: 'visible' });
 
-    await gridWrapper.locator(`.nc-group-table .nc-grid-row:nth-child(${rowIndex + 1})`).waitFor({ state: 'visible' });
+    await gridWrapper.locator(`.cv-group-table .cv-grid-row:nth-child(${rowIndex + 1})`).waitFor({ state: 'visible' });
 
     await gridWrapper
-      .locator(`.nc-group-table .nc-grid-row:nth-child(${rowIndex + 1}) [data-title="${columnHeader}"]`)
+      .locator(`.cv-group-table .cv-grid-row:nth-child(${rowIndex + 1}) [data-title="${columnHeader}"]`)
       .scrollIntoViewIfNeeded();
     await expect(
-      gridWrapper.locator(`.nc-group-table .nc-grid-row:nth-child(${rowIndex + 1}) [data-title="${columnHeader}"]`)
+      gridWrapper.locator(`.cv-group-table .cv-grid-row:nth-child(${rowIndex + 1}) [data-title="${columnHeader}"]`)
     ).toHaveText(value);
   }
 
@@ -111,9 +111,9 @@ export class GroupPageObject extends BasePage {
   }) {
     const rowValue = value ?? `Row ${index}`;
     // wait for render to complete before count
-    if (index !== 0) await this.get({ indexMap }).locator('.nc-grid-row').nth(0).waitFor({ state: 'attached' });
+    if (index !== 0) await this.get({ indexMap }).locator('.cv-grid-row').nth(0).waitFor({ state: 'attached' });
 
-    const addNewRowBtn = this.get({ indexMap }).locator('.nc-grid-add-new-row');
+    const addNewRowBtn = this.get({ indexMap }).locator('.cv-grid-add-new-row');
     await addNewRowBtn.scrollIntoViewIfNeeded();
     await (await addNewRowBtn.elementHandle()).waitForElementState('stable');
 
@@ -122,7 +122,7 @@ export class GroupPageObject extends BasePage {
     await this.rootPage.waitForTimeout(200);
     await this.rootPage.waitForLoadState('domcontentloaded');
 
-    await this.get({ indexMap }).locator('.nc-grid-add-new-row').click();
+    await this.get({ indexMap }).locator('.cv-grid-add-new-row').click();
 
     const rowCount = index + 1;
 
@@ -133,7 +133,7 @@ export class GroupPageObject extends BasePage {
     // fallback
     await this.rootPage.waitForTimeout(400);
 
-    await expect(this.get({ indexMap }).locator('.nc-grid-row')).toHaveCount(rowCount);
+    await expect(this.get({ indexMap }).locator('.cv-grid-row')).toHaveCount(rowCount);
 
     await this._fillRow({ indexMap, index, columnHeader, value: rowValue });
 
@@ -149,7 +149,7 @@ export class GroupPageObject extends BasePage {
     await this.rootPage.locator('.ant-dropdown-menu-item:has-text("Delete record")').click();
     // todo: improve selector
     await this.rootPage
-      .locator('span.ant-dropdown-menu-title-content > nc-base-menu-item')
+      .locator('span.ant-dropdown-menu-title-content > cv-base-menu-item')
       .waitFor({ state: 'hidden' });
 
     await this.rootPage.waitForTimeout(300);

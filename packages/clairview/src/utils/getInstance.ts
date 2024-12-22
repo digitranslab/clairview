@@ -31,7 +31,7 @@ export default async function (force = false, ncMeta = Noco.ncMeta) {
       const created = await ncMeta
         .knex(MetaTable.STORE)
         .select('created_at')
-        .where('key', 'nc_server_id')
+        .where('key', 'cv_server_id')
         .first()
         .then((c) => c.created_at);
       const files = await ncMeta

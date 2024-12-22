@@ -14,7 +14,7 @@ export class BaseSettingsPage extends BasePage {
   }
 
   get() {
-    return this.baseView.get().locator('.nc-base-settings');
+    return this.baseView.get().locator('.cv-base-settings');
   }
 
   async changeTab(tabName: 'snapshots' | 'visibility') {
@@ -37,7 +37,7 @@ export class BaseSettingsPage extends BasePage {
 
   async deleteSnapshot({ snapshotName }: { snapshotName: string }) {
     await this.rootPage.getByTestId(`snapshot-${snapshotName}`).getByTestId('delete-snapshot-btn').click();
-    await this.rootPage.getByTestId('nc-delete-modal-delete-btn').click();
+    await this.rootPage.getByTestId('cv-delete-modal-delete-btn').click();
     await this.rootPage.waitForTimeout(1000);
   }
 

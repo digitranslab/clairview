@@ -17,7 +17,7 @@ export class MapPage extends BasePage {
   }
 
   get() {
-    return this.dashboard.get().locator('[data-testid="nc-map-wrapper"]');
+    return this.dashboard.get().locator('[data-testid="cv-map-wrapper"]');
   }
 
   async marker(lat: string, long: string) {
@@ -27,7 +27,7 @@ export class MapPage extends BasePage {
   }
 
   async clickAddRowButton() {
-    await this.rootPage.locator('.nc-add-new-row-btn').click();
+    await this.rootPage.locator('.cv-add-new-row-btn').click();
   }
 
   async clickMarker(lat: string, long: string) {

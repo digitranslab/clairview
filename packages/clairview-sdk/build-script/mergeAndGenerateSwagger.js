@@ -24,4 +24,4 @@ const swagger = {
   },
 };
 
-writeFileSync('nc_swagger.json', JSON.stringify(swagger));
+writeFileSync('cv_swagger.json', JSON.stringify(swagger));

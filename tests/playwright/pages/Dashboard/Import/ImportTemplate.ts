@@ -10,11 +10,11 @@ export class ImportTemplatePage extends BasePage {
   constructor(dashboard: DashboardPage) {
     super(dashboard.rootPage);
     this.dashboard = dashboard;
-    this.importButton = dashboard.get().locator('.nc-btn-import');
+    this.importButton = dashboard.get().locator('.cv-btn-import');
   }
 
   get() {
-    return this.dashboard.get().locator(`.nc-modal-quick-import`);
+    return this.dashboard.get().locator(`.cv-modal-quick-import`);
   }
 
   async getImportTableList() {
@@ -36,7 +36,7 @@ export class ImportTemplatePage extends BasePage {
   async getImportColumnList() {
     // return an array
     const columnList: { type: string; name: string }[] = [];
-    const tr = this.get().locator(`tr.nc-table-row:visible`);
+    const tr = this.get().locator(`tr.cv-table-row:visible`);
     const rowCount = await tr.count();
     for (let i = 0; i < rowCount; i++) {
       // replace \n and \t from innerText

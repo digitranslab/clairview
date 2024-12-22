@@ -11,7 +11,7 @@ export class ToolbarFieldsPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`[data-testid="nc-fields-menu"]`);
+    return this.rootPage.locator(`[data-testid="cv-fields-menu"]`);
   }
 
   // todo: Click and toggle are similar method. Remove one of them
@@ -32,10 +32,10 @@ export class ToolbarFieldsPage extends BasePage {
     await this.rootPage.waitForTimeout(100);
 
     // toggle only if input checked value is not equal to given checked value
-    await this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('.nc-switch').scrollIntoViewIfNeeded();
+    await this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('.cv-switch').scrollIntoViewIfNeeded();
     const isChecked = await this.get()
-      .locator(`[data-testid="nc-fields-menu-${title}"]`)
-      .locator('.nc-switch')
+      .locator(`[data-testid="cv-fields-menu-${title}"]`)
+      .locator('.cv-switch')
       .isChecked();
     if (checked !== undefined) {
       if ((checked && isChecked) || (!checked && !isChecked)) {
@@ -50,7 +50,7 @@ export class ToolbarFieldsPage extends BasePage {
     }
 
     const toggleColumn = () =>
-      this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('.nc-switch').click();
+      this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('.cv-switch').click();
 
     if (validateResponse) {
       await this.waitForResponse({
@@ -67,7 +67,7 @@ export class ToolbarFieldsPage extends BasePage {
   }
 
   async verify({ title, checked }: { title: string; checked?: boolean }) {
-    const checkbox = this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('.nc-switch');
+    const checkbox = this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('.cv-switch');
 
     if (checked) {
       await expect(checkbox).toBeChecked();
@@ -79,18 +79,18 @@ export class ToolbarFieldsPage extends BasePage {
   async click({ title, isLocallySaved }: { title: string; isLocallySaved?: boolean }) {
     // hide field doesn't trigger an un-solicited update from backend
     // await this.waitForResponse({
-    //   uiAction: () => this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('.nc-switch').click(),
+    //   uiAction: () => this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('.cv-switch').click(),
     //   requestUrlPathToMatch: isLocallySaved ? '/api/v1/db/public/' : '/api/v1/db/data/noco/',
     //   httpMethodsToMatch: ['GET'],
     // });
-    await this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('.nc-switch').click();
+    await this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('.cv-switch').click();
     await this.toolbar.parent.waitLoading();
   }
 
   async toggleShowAllFields({ isLocallySaved }: { isLocallySaved?: boolean } = {}) {
     await this.toolbar.clickFields();
     await this.waitForResponse({
-      uiAction: () => this.get().locator(`.nc-fields-show-all-fields`).click(),
+      uiAction: () => this.get().locator(`.cv-fields-show-all-fields`).click(),
       requestUrlPathToMatch: isLocallySaved ? '/api/v1/db/public/' : '/api/v1/db/data/noco/',
       httpMethodsToMatch: ['GET'],
       timeout: 30000, // for Kanban, show all fields can take a long time
@@ -101,7 +101,7 @@ export class ToolbarFieldsPage extends BasePage {
   // async showAll({ isLocallySaved }: { isLocallySaved?: boolean } = {}) {
   //   await this.toolbar.clickFields();
   //   await this.waitForResponse({
-  //     uiAction: () => this.get().locator(`button.nc-switch`).first().click(),
+  //     uiAction: () => this.get().locator(`button.cv-switch`).first().click(),
   //     requestUrlPathToMatch: isLocallySaved ? '/api/v1/db/public/' : '/api/v1/db/data/noco/',
   //     httpMethodsToMatch: ['GET'],
   //   });
@@ -111,7 +111,7 @@ export class ToolbarFieldsPage extends BasePage {
   async toggleShowSystemFields({ isLocallySaved }: { isLocallySaved?: boolean } = {}) {
     await this.toolbar.clickFields();
     await this.waitForResponse({
-      uiAction: async () => await this.get().locator(`.nc-fields-show-system-fields`).click(),
+      uiAction: async () => await this.get().locator(`.cv-fields-show-system-fields`).click(),
       requestUrlPathToMatch: isLocallySaved ? '/api/v1/db/public/' : '/api/v1/db/data/noco/',
       httpMethodsToMatch: ['GET'],
     });
@@ -119,7 +119,7 @@ export class ToolbarFieldsPage extends BasePage {
   }
 
   async getFieldsTitles() {
-    const fields: string[] = await this.rootPage.locator(`.nc-grid-header .name`).allTextContents();
+    const fields: string[] = await this.rootPage.locator(`.cv-grid-header .name`).allTextContents();
     return fields;
   }
 

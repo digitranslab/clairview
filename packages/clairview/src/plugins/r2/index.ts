@@ -1,6 +1,6 @@
 import { XcActionType, XcType } from 'clairview-sdk';
 import R2Plugin from './R2Plugin';
-import type { XcPluginConfig } from '~/types/nc-plugin';
+import type { XcPluginConfig } from '~/types/cv-plugin';
 
 const config: XcPluginConfig = {
   builder: R2Plugin,

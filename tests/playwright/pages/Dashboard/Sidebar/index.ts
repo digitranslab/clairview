@@ -20,13 +20,13 @@ export class SidebarPage extends BasePage {
     this.dashboard = dashboard;
     this.docsSidebar = new DocsSidebarPage(this);
     this.userMenu = new SidebarUserMenuObject(this);
-    this.createProjectBtn = dashboard.get().getByTestId('nc-sidebar-create-base-btn');
+    this.createProjectBtn = dashboard.get().getByTestId('cv-sidebar-create-base-btn');
     this.baseNode = new SidebarProjectNodeObject(this);
     this.tableNode = new SidebarTableNodeObject(this);
   }
 
   get() {
-    return this.dashboard.get().locator('.nc-sidebar');
+    return this.dashboard.get().locator('.cv-sidebar');
   }
 
   async isVisible() {
@@ -42,13 +42,13 @@ export class SidebarPage extends BasePage {
   }
 
   // async verifyQuickActions({ isVisible }: { isVisible: boolean }) {
-  //   if (isVisible) await expect(this.get().getByTestId('nc-sidebar-search-btn')).toBeVisible();
-  //   else await expect(this.get().getByTestId('nc-sidebar-search-btn')).toHaveCount(0);
+  //   if (isVisible) await expect(this.get().getByTestId('cv-sidebar-search-btn')).toBeVisible();
+  //   else await expect(this.get().getByTestId('cv-sidebar-search-btn')).toHaveCount(0);
   // }
 
   async verifyTeamAndSettings({ isVisible }: { isVisible: boolean }) {
-    if (isVisible) await expect(this.get().getByTestId('nc-sidebar-team-settings-btn')).toBeVisible();
-    else await expect(this.get().getByTestId('nc-sidebar-team-settings-btn')).toHaveCount(0);
+    if (isVisible) await expect(this.get().getByTestId('cv-sidebar-team-settings-btn')).toBeVisible();
+    else await expect(this.get().getByTestId('cv-sidebar-team-settings-btn')).toHaveCount(0);
   }
 
   async verifyCreateProjectBtn({ isVisible }: { isVisible: boolean }) {
@@ -74,16 +74,16 @@ export class SidebarPage extends BasePage {
   }) {
     await this.createProjectBtn.click();
     if (type === ProjectTypes.DOCUMENTATION) {
-      await this.dashboard.get().locator('.nc-create-base-btn-docs').click();
+      await this.dashboard.get().locator('.cv-create-base-btn-docs').click();
     }
     /*
     TODO uncomment when AI Features are enabled by default
 
-    await this.rootPage.locator('.nc-create-base').waitFor();
-    await this.rootPage.locator('.nc-create-base').click();
+    await this.rootPage.locator('.cv-create-base').waitFor();
+    await this.rootPage.locator('.cv-create-base').click();
     */
-    await this.dashboard.get().locator('.nc-metadb-base-name').clear();
-    await this.dashboard.get().locator('.nc-metadb-base-name').fill(title);
+    await this.dashboard.get().locator('.cv-metadb-base-name').clear();
+    await this.dashboard.get().locator('.cv-metadb-base-name').fill(title);
 
     if (networkValidation) {
       await this.waitForResponse({
@@ -103,7 +103,7 @@ export class SidebarPage extends BasePage {
   async createView({ title, type }: { title: string; type: ViewTypes }) {
     const createViewButtonOfActiveProject = this.dashboard
       .get()
-      .locator('.nc-table-node-wrapper[data-active="true"] .nc-create-view-btn');
+      .locator('.cv-table-node-wrapper[data-active="true"] .cv-create-view-btn');
     await createViewButtonOfActiveProject.scrollIntoViewIfNeeded();
     await createViewButtonOfActiveProject.click();
 
@@ -152,7 +152,7 @@ export class SidebarPage extends BasePage {
   async verifyCreateViewButtonVisibility({ isVisible }: { isVisible: boolean }) {
     const createViewButtonOfActiveProject = this.dashboard
       .get()
-      .locator('.nc-table-node-wrapper[data-active="true"] .nc-create-view-btn');
+      .locator('.cv-table-node-wrapper[data-active="true"] .cv-create-view-btn');
 
     if (isVisible) {
       await expect(createViewButtonOfActiveProject).toBeVisible();

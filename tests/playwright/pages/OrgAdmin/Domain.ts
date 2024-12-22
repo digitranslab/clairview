@@ -10,15 +10,15 @@ export class Domain extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('[data-test-id="nc-org-domain"]');
+    return this.rootPage.locator('[data-test-id="cv-org-domain"]');
   }
 
   async addDomain(domainName: string) {
-    await this.get().locator('[data-test-id="nc-org-domain-add"]').click();
-    await this.rootPage.locator('[data-test-id="nc-org-domain-name"]').fill(domainName);
+    await this.get().locator('[data-test-id="cv-org-domain-add"]').click();
+    await this.rootPage.locator('[data-test-id="cv-org-domain-name"]').fill(domainName);
 
     await this.waitForResponse({
-      uiAction: () => this.rootPage.locator('[data-test-id="nc-org-domain-submit"]').click(),
+      uiAction: () => this.rootPage.locator('[data-test-id="cv-org-domain-submit"]').click(),
       httpMethodsToMatch: ['PATCH', 'POST'],
       requestUrlPathToMatch: /api\/v2\/domains\/\w+/,
     });
@@ -26,15 +26,15 @@ export class Domain extends BasePage {
 
   async openOptionMenu(domainName: string) {
     await this.rootPage
-      .locator(`[data-test-id="nc-domain-${domainName}"]`)
-      .locator('[data-test-id="nc-domain-more-option"]')
+      .locator(`[data-test-id="cv-domain-${domainName}"]`)
+      .locator('[data-test-id="cv-domain-more-option"]')
       .click();
   }
 
   async verifyDomain(domainName: string) {
     await this.openOptionMenu(domainName);
     await this.waitForResponse({
-      uiAction: () => this.rootPage.locator('[data-test-id="nc-domain-verify"]').click(),
+      uiAction: () => this.rootPage.locator('[data-test-id="cv-domain-verify"]').click(),
       httpMethodsToMatch: ['POST'],
       requestUrlPathToMatch: `/api/v2/org-domain/${domainName}`,
     });
@@ -43,7 +43,7 @@ export class Domain extends BasePage {
   async deleteDomain(domainName: string) {
     await this.openOptionMenu(domainName);
     await this.waitForResponse({
-      uiAction: () => this.rootPage.locator('[data-test-id="nc-domain-delete"]').click(),
+      uiAction: () => this.rootPage.locator('[data-test-id="cv-domain-delete"]').click(),
       httpMethodsToMatch: ['DELETE'],
       requestUrlPathToMatch: `/api/v2/org-domain/${domainName}`,
     });

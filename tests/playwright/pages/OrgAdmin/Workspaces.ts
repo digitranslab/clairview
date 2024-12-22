@@ -10,6 +10,6 @@ export class Workspaces extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('[data-test-id="nc-admin-workspaces"]');
+    return this.rootPage.locator('[data-test-id="cv-admin-workspaces"]');
   }
 }

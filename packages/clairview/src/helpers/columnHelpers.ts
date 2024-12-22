@@ -22,7 +22,7 @@ import { GridViewColumn } from '~/models';
 import validateParams from '~/helpers/validateParams';
 import { getUniqueColumnAliasName } from '~/helpers/getUniqueName';
 import Column from '~/models/Column';
-import { DriverClient } from '~/utils/nc-config';
+import { DriverClient } from '~/utils/cv-config';
 
 export const randomID = customAlphabet(
   '1234567890abcdefghijklmnopqrstuvwxyz_',

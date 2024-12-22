@@ -143,7 +143,7 @@ export const csvExportOffsetParam = {
   in: 'query',
   name: 'offset',
   description:
-    'Helps to start export from a certain index. You can get the next set of data offset from previous response header named `nc-export-offset`.',
+    'Helps to start export from a certain index. You can get the next set of data offset from previous response header named `cv-export-offset`.',
   example: 0,
 };
 

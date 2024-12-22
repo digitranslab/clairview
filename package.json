@@ -31,8 +31,8 @@
     ]
   },
   "scripts": {
-    "bootstrap": "pnpm --filter=clairview-sdk install && pnpm --filter=clairview-sdk run build && pnpm --filter=clairview --filter=nc-mail-templates --filter=nc-gui --filter=playwright install && pnpm run registerIntegrations",
-    "start:frontend": "pnpm --filter=nc-gui run dev",
+    "bootstrap": "pnpm --filter=clairview-sdk install && pnpm --filter=clairview-sdk run build && pnpm --filter=clairview --filter=cv-mail-templates --filter=cv-gui --filter=playwright install && pnpm run registerIntegrations",
+    "start:frontend": "pnpm --filter=cv-gui run dev",
     "start:backend": "pnpm --filter=clairview run start",
     "lint:staged:playwright": "cd ./tests/playwright; pnpm dlx lint-staged; cd -",
     "start:mysql": "docker-compose -f ./tests/playwright/scripts/docker-compose-mysql-playwright.yml up -d",

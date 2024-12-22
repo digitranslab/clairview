@@ -11,7 +11,7 @@ export class AuditSettingsPage extends BasePage {
   }
 
   get() {
-    return this.settings.get().locator(`[data-testid="nc-settings-subtab-Audit"]`);
+    return this.settings.get().locator(`[data-testid="cv-settings-subtab-Audit"]`);
   }
 
   async verifyRow({

@@ -9115,7 +9115,7 @@
               }
             },
             "headers": {
-              "nc-export-offset": {
+              "cv-export-offset": {
                 "schema": {
                   "type": "integer"
                 },

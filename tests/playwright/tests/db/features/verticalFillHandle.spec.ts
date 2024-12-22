@@ -26,7 +26,7 @@ async function dragDrop({
   );
 
   // get fill handle locator
-  const src = await params.dashboard.rootPage.locator(`.nc-fill-handle`);
+  const src = await params.dashboard.rootPage.locator(`.cv-fill-handle`);
   const dst = await params.dashboard.grid.cell.get({ index: 3, columnHeader: lastColumn });
 
   // drag and drop

@@ -10,10 +10,10 @@ export class RowHeight extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`[data-testid="nc-height-menu"]`);
+    return this.rootPage.locator(`[data-testid="cv-height-menu"]`);
   }
 
   click({ title }: { title: string }) {
-    return this.get().locator(`.nc-row-height-option:has-text("${title}")`).click();
+    return this.get().locator(`.cv-row-height-option:has-text("${title}")`).click();
   }
 }

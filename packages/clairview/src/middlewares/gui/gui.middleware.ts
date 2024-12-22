@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import NcToolGui from 'nc-lib-gui';
+import NcToolGui from 'cv-lib-gui';
 import { ConfigService } from '@nestjs/config';
 import type { NestMiddleware } from '@nestjs/common';
 import type { AppConfig } from '~/interface/config';

@@ -8,6 +8,6 @@ export class LTARFilterPage extends ToolbarFilterPage {
   }
 
   get() {
-    return this.rootPage.getByTestId(`nc-filter`);
+    return this.rootPage.getByTestId(`cv-filter`);
   }
 }

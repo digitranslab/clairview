@@ -10,7 +10,7 @@ export class RowPageObject extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('tr.nc-grid-row');
+    return this.rootPage.locator('tr.cv-grid-row');
   }
 
   getRecord(index: number) {

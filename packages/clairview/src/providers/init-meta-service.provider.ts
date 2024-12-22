@@ -10,7 +10,7 @@ import NocoCache from '~/cache/NocoCache';
 import getInstance from '~/utils/getInstance';
 import initAdminFromEnv from '~/helpers/initAdminFromEnv';
 import { User } from '~/models';
-import { NcConfig, prepareEnv } from '~/utils/nc-config';
+import { NcConfig, prepareEnv } from '~/utils/cv-config';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import { updateMigrationJobsState } from '~/helpers/migrationJobs';
 import { initBaseBehavior } from '~/helpers/initBaseBehaviour';

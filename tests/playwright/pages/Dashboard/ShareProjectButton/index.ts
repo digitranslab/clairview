@@ -26,7 +26,7 @@ export class ShareProjectButtonPage extends BasePage {
 
   async open() {
     await this.get().click();
-    await this.rootPage.locator('.nc-modal-share-collaborate').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-modal-share-collaborate').waitFor({ state: 'visible' });
   }
 
   async clickSharePage() {
@@ -55,20 +55,20 @@ export class ShareProjectButtonPage extends BasePage {
     nonEmailPrefixed?: boolean;
   }) {
     if (!nonEmailPrefixed) email = this.prefixEmail(email);
-    await this.rootPage.getByTestId(`nc-manage-users-${email}`).locator('.nc-dropdown-user-role-container').click();
-    await this.rootPage.getByTestId(`nc-manage-users-role-${role}`).last().click();
+    await this.rootPage.getByTestId(`cv-manage-users-${email}`).locator('.cv-dropdown-user-role-container').click();
+    await this.rootPage.getByTestId(`cv-manage-users-role-${role}`).last().click();
   }
 
   async submitManageAccess() {
     await this.waitForResponse({
-      uiAction: () => this.rootPage.getByTestId('nc-manage-users-submit').click(),
+      uiAction: () => this.rootPage.getByTestId('cv-manage-users-submit').click(),
       httpMethodsToMatch: ['PATCH', 'DELETE'],
       requestUrlPathToMatch: `/users/`,
     });
   }
 
   async verifyUserCount({ count }: { count: number }) {
-    await expect(this.rootPage.getByTestId('nc-manage-user-user-count')).toHaveText(`${count.toString()} users`);
+    await expect(this.rootPage.getByTestId('cv-manage-user-user-count')).toHaveText(`${count.toString()} users`);
   }
 
   async verifyUserInList({
@@ -81,9 +81,9 @@ export class ShareProjectButtonPage extends BasePage {
     isVisible?: boolean;
   }) {
     if (isVisible) {
-      await expect(this.rootPage.getByTestId(`nc-manage-users-${email}`)).toBeVisible();
+      await expect(this.rootPage.getByTestId(`cv-manage-users-${email}`)).toBeVisible();
     } else {
-      await expect(this.rootPage.getByTestId(`nc-manage-users-${email}`)).not.toBeVisible();
+      await expect(this.rootPage.getByTestId(`cv-manage-users-${email}`)).not.toBeVisible();
     }
   }
 
@@ -93,7 +93,7 @@ export class ShareProjectButtonPage extends BasePage {
 
   async selectInviteRole({ role }: { role: 'editor' | 'viewer' }) {
     await this.rootPage.getByTestId('docs-share-dlg-share-base-collaborate-role').click();
-    await this.rootPage.getByTestId(`nc-share-invite-user-role-option-${role}`).click();
+    await this.rootPage.getByTestId(`cv-share-invite-user-role-option-${role}`).click();
   }
 
   async clickShareButton() {
@@ -162,6 +162,6 @@ export class ShareProjectButtonPage extends BasePage {
     } else {
       await this.rootPage.getByRole('button', { name: 'Close' }).click();
     }
-    await this.rootPage.locator('.nc-modal-share-collaborate').waitFor({ state: 'hidden' });
+    await this.rootPage.locator('.cv-modal-share-collaborate').waitFor({ state: 'hidden' });
   }
 }

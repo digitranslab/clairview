@@ -15,7 +15,7 @@ export class DateTimeCellPageObject extends BasePage {
   }
 
   async open({ index, columnHeader }: { index: number; columnHeader: string }) {
-    await this.rootPage.locator('.nc-grid-add-new-cell').click();
+    await this.rootPage.locator('.cv-grid-add-new-cell').click();
     await this.rootPage.waitForTimeout(100);
     await this.cell.dblclick({
       index,
@@ -45,26 +45,26 @@ export class DateTimeCellPageObject extends BasePage {
     const [year, month, day] = date.split('-');
     const dateLocator = locator ? locator : this.get({ index, columnHeader });
     await dateLocator.click();
-    await dateLocator.locator('.nc-date-input').click();
+    await dateLocator.locator('.cv-date-input').click();
 
     // configure year
-    await this.rootPage.locator('.nc-year-picker-btn:visible').waitFor();
-    await this.rootPage.locator('.nc-year-picker-btn:visible').click();
+    await this.rootPage.locator('.cv-year-picker-btn:visible').waitFor();
+    await this.rootPage.locator('.cv-year-picker-btn:visible').click();
 
-    await this.rootPage.locator('.nc-year-picker-btn:visible').waitFor();
+    await this.rootPage.locator('.cv-year-picker-btn:visible').waitFor();
 
     let flag = true;
 
     while (flag) {
-      const firstVisibleYear = await this.rootPage.locator('.nc-year-item').first().textContent();
-      const lastVisibleYear = await this.rootPage.locator('.nc-year-item').last().textContent();
+      const firstVisibleYear = await this.rootPage.locator('.cv-year-item').first().textContent();
+      const lastVisibleYear = await this.rootPage.locator('.cv-year-item').last().textContent();
 
       if (+year >= +firstVisibleYear && +year <= +lastVisibleYear) {
         flag = false;
       } else if (+year < +firstVisibleYear) {
-        await this.rootPage.locator('.nc-prev-page-btn').click();
+        await this.rootPage.locator('.cv-prev-page-btn').click();
       } else if (+year > +lastVisibleYear) {
-        await this.rootPage.locator('.nc-next-page-btn').click();
+        await this.rootPage.locator('.cv-next-page-btn').click();
       }
     }
 
@@ -77,7 +77,7 @@ export class DateTimeCellPageObject extends BasePage {
     }
 
     // configure month
-    await this.rootPage.locator('.nc-month-picker-btn:visible').click();
+    await this.rootPage.locator('.cv-month-picker-btn:visible').click();
     await this.rootPage.locator(`span[title="${year}-${month}"]`).click();
 
     // configure day
@@ -109,10 +109,10 @@ export class DateTimeCellPageObject extends BasePage {
   }) {
     const timeLocator = locator ? locator : this.get({ index, columnHeader });
     await timeLocator.click();
-    const timeInput = timeLocator.locator('.nc-time-input');
+    const timeInput = timeLocator.locator('.cv-time-input');
     await timeInput.click();
 
-    const dropdown = this.rootPage.locator('.nc-picker-datetime.active');
+    const dropdown = this.rootPage.locator('.cv-picker-datetime.active');
     await dropdown.waitFor({ state: 'visible' });
 
     if (!selectFromPicker) {
@@ -143,10 +143,10 @@ export class DateTimeCellPageObject extends BasePage {
   }
 
   clickDateInput = async (locator: Locator) => {
-    await locator.locator('.nc-date-input').click();
+    await locator.locator('.cv-date-input').click();
   };
 
   clickTimeInput = async (locator: Locator) => {
-    await locator.locator('.nc-time-input').click();
+    await locator.locator('.cv-time-input').click();
   };
 }

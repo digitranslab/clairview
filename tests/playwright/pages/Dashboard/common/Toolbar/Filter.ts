@@ -13,23 +13,23 @@ export class ToolbarFilterPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`[data-testid="nc-filter-menu"]`);
+    return this.rootPage.locator(`[data-testid="cv-filter-menu"]`);
   }
 
   async verify({ index, column, operator, value }: { index: number; column: string; operator: string; value: string }) {
-    const fieldLocator = this.get().locator('.nc-filter-field-select').nth(index);
+    const fieldLocator = this.get().locator('.cv-filter-field-select').nth(index);
     const fieldText = await getTextExcludeIconText(fieldLocator);
     expect(fieldText).toBe(column);
 
-    await expect(this.get().locator('.nc-filter-operation-select').nth(index)).toHaveText(operator);
+    await expect(this.get().locator('.cv-filter-operation-select').nth(index)).toHaveText(operator);
     await expect
-      .poll(async () => await this.get().locator('.nc-filter-value-select > input').nth(index).inputValue())
+      .poll(async () => await this.get().locator('.cv-filter-value-select > input').nth(index).inputValue())
       .toBe(value);
   }
 
   async verifyFilter({ title }: { title: string }) {
     await expect(
-      this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('input[type="checkbox"]')
+      this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('input[type="checkbox"]')
     ).toBeChecked();
   }
 
@@ -66,21 +66,21 @@ export class ToolbarFilterPage extends BasePage {
     const filterDropdown = this.get().locator('.menu-filter-dropdown').nth(filterGroupIndex);
     await filterDropdown.waitFor({ state: 'visible' });
     const ADD_BUTTON_SELECTOR = `span:has-text("add")`;
-    const FILTER_GROUP_SUB_MENU_SELECTOR = `.nc-dropdown-filter-group-sub-menu`;
-    const ADD_FILTER_SELECTOR = `[data-testid="add-filter-menu"].nc-menu-item`;
+    const FILTER_GROUP_SUB_MENU_SELECTOR = `.cv-dropdown-filter-group-sub-menu`;
+    const ADD_FILTER_SELECTOR = `[data-testid="add-filter-menu"].cv-menu-item`;
 
     await filterDropdown.locator(ADD_BUTTON_SELECTOR).first().click();
     const filterGroupSubMenu = this.rootPage.locator(FILTER_GROUP_SUB_MENU_SELECTOR).last();
     await filterGroupSubMenu.waitFor({ state: 'visible' });
     await filterGroupSubMenu.locator(ADD_FILTER_SELECTOR).first().click();
-    const selectField = filterDropdown.locator('.nc-filter-field-select').last();
-    const selectOperation = filterDropdown.locator('.nc-filter-operation-select').last();
-    const selectValue = filterDropdown.locator('.nc-filter-value-select > input').last();
+    const selectField = filterDropdown.locator('.cv-filter-field-select').last();
+    const selectOperation = filterDropdown.locator('.cv-filter-operation-select').last();
+    const selectValue = filterDropdown.locator('.cv-filter-value-select > input').last();
 
     await selectField.waitFor({ state: 'visible' });
     await selectField.click();
     const fieldDropdown = this.rootPage
-      .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+      .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
       .last()
       .locator(`div[label="${title}"]:visible`);
     await fieldDropdown.waitFor({ state: 'visible' });
@@ -89,7 +89,7 @@ export class ToolbarFilterPage extends BasePage {
     await selectOperation.waitFor({ state: 'visible' });
     await selectOperation.click();
     const operationDropdown = this.rootPage
-      .locator('div.ant-select-dropdown.nc-dropdown-filter-comp-op')
+      .locator('div.ant-select-dropdown.cv-dropdown-filter-comp-op')
       .last()
       .locator(`.ant-select-item:has-text("${operation}")`);
     await operationDropdown.waitFor({ state: 'visible' });
@@ -100,11 +100,11 @@ export class ToolbarFilterPage extends BasePage {
 
     if (filterGroupIndex) {
       if (filterLogicalOperator === 'OR') {
-        const logicalButton = this.rootPage.locator('div.flex.nc-filter-logical-op').nth(filterGroupIndex - 1);
+        const logicalButton = this.rootPage.locator('div.flex.cv-filter-logical-op').nth(filterGroupIndex - 1);
         await logicalButton.waitFor({ state: 'visible' });
         await logicalButton.click();
 
-        const logicalDropdown = this.rootPage.locator('div.ant-select-dropdown.nc-dropdown-filter-logical-op-group');
+        const logicalDropdown = this.rootPage.locator('div.ant-select-dropdown.cv-dropdown-filter-logical-op-group');
         await logicalDropdown.waitFor({ state: 'visible' });
         await logicalDropdown.locator(`.ant-select-item:has-text("${filterLogicalOperator}")`).click();
       }
@@ -135,18 +135,18 @@ export class ToolbarFilterPage extends BasePage {
       await this.get().getByTestId('add-filter').first().click();
     }
 
-    const filterCount = await this.get().locator('.nc-filter-wrapper').count();
+    const filterCount = await this.get().locator('.cv-filter-wrapper').count();
 
     const selectedField = await getTextExcludeIconText(
-      this.rootPage.locator('.nc-filter-field-select .ant-select-selection-item').first()
+      this.rootPage.locator('.cv-filter-field-select .ant-select-selection-item').first()
     );
 
     if (selectedField !== title) {
-      await this.rootPage.locator('.nc-filter-field-select').last().click();
+      await this.rootPage.locator('.cv-filter-field-select').last().click();
 
       if (skipWaitingResponse || filterCount === 1) {
         await this.rootPage
-          .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+          .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
           .locator(`div[label="${title}"]:visible`)
           .click()
           .then(() => {});
@@ -155,7 +155,7 @@ export class ToolbarFilterPage extends BasePage {
         await this.waitForResponse({
           uiAction: async () =>
             await this.rootPage
-              .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+              .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
               .locator(`div[label="${title}"]:visible`)
               .click(),
           httpMethodsToMatch: ['GET'],
@@ -164,14 +164,14 @@ export class ToolbarFilterPage extends BasePage {
       }
     }
 
-    const selectedOpType = await getTextExcludeIconText(this.rootPage.locator('.nc-filter-operation-select').last());
+    const selectedOpType = await getTextExcludeIconText(this.rootPage.locator('.cv-filter-operation-select').last());
     if (selectedOpType !== operation) {
-      await this.rootPage.locator('.nc-filter-operation-select').last().click();
+      await this.rootPage.locator('.cv-filter-operation-select').last().click();
       // first() : filter list has >, >=
 
       if (skipWaitingResponse || filterCount === 1) {
         await this.rootPage
-          .locator('.nc-dropdown-filter-comp-op')
+          .locator('.cv-dropdown-filter-comp-op')
           .locator(`.ant-select-item:has-text("${operation}")`)
           .first()
           .click()
@@ -181,7 +181,7 @@ export class ToolbarFilterPage extends BasePage {
         await this.waitForResponse({
           uiAction: async () =>
             await this.rootPage
-              .locator('.nc-dropdown-filter-comp-op')
+              .locator('.cv-dropdown-filter-comp-op')
               .locator(`.ant-select-item:has-text("${operation}")`)
               .first()
               .click(),
@@ -193,14 +193,14 @@ export class ToolbarFilterPage extends BasePage {
 
     // subtype for date
     if (dataType === UITypes.Date && subOperation) {
-      const selectedSubType = await getTextExcludeIconText(this.rootPage.locator('.nc-filter-sub_operation-select'));
+      const selectedSubType = await getTextExcludeIconText(this.rootPage.locator('.cv-filter-sub_operation-select'));
       if (selectedSubType !== subOperation) {
-        await this.rootPage.locator('.nc-filter-sub_operation-select').click();
+        await this.rootPage.locator('.cv-filter-sub_operation-select').click();
         // first() : filter list has >, >=
 
         if (skipWaitingResponse || filterCount === 1) {
           await this.rootPage
-            .locator('.nc-dropdown-filter-comp-sub-op')
+            .locator('.cv-dropdown-filter-comp-sub-op')
             .locator(`.ant-select-item:has-text("${subOperation}")`)
             .first()
             .click();
@@ -209,7 +209,7 @@ export class ToolbarFilterPage extends BasePage {
           await this.waitForResponse({
             uiAction: async () =>
               await this.rootPage
-                .locator('.nc-dropdown-filter-comp-sub-op')
+                .locator('.cv-dropdown-filter-comp-sub-op')
                 .locator(`.ant-select-item:has-text("${subOperation}")`)
                 .first()
                 .click(),
@@ -225,19 +225,19 @@ export class ToolbarFilterPage extends BasePage {
       let fillFilter: any = null;
       switch (dataType) {
         case UITypes.Year:
-          await this.get().locator('.nc-filter-value-select').click();
-          await this.rootPage.locator(`.nc-picker-year:visible`).waitFor();
-          await this.rootPage.locator('.nc-year-picker-btn:visible').waitFor();
+          await this.get().locator('.cv-filter-value-select').click();
+          await this.rootPage.locator(`.cv-picker-year:visible`).waitFor();
+          await this.rootPage.locator('.cv-year-picker-btn:visible').waitFor();
 
-          await this.get().locator('.nc-filter-value-select .nc-year-input').fill(value);
+          await this.get().locator('.cv-filter-value-select .cv-year-input').fill(value);
           await this.rootPage.keyboard.press('Enter');
           break;
         case UITypes.Time:
           // eslint-disable-next-line no-case-declarations
-          const timeInput = this.get().locator('.nc-filter-value-select').locator('.nc-time-input');
+          const timeInput = this.get().locator('.cv-filter-value-select').locator('.cv-time-input');
           await timeInput.click();
           // eslint-disable-next-line no-case-declarations
-          const dropdown = this.rootPage.locator('.nc-picker-time.active');
+          const dropdown = this.rootPage.locator('.cv-picker-time.active');
           await dropdown.waitFor({ state: 'visible' });
 
           await timeInput.fill(value);
@@ -248,10 +248,10 @@ export class ToolbarFilterPage extends BasePage {
           break;
         case UITypes.Date:
           if (subOperation === 'exact date') {
-            await this.get().locator('.nc-filter-value-select .nc-date-input').click();
-            const dropdown = this.rootPage.locator(`.nc-picker-date.active`);
+            await this.get().locator('.cv-filter-value-select .cv-date-input').click();
+            const dropdown = this.rootPage.locator(`.cv-picker-date.active`);
             await dropdown.waitFor({ state: 'visible' });
-            const dateItem = dropdown.locator('.nc-date-item').getByText(value);
+            const dateItem = dropdown.locator('.cv-date-item').getByText(value);
             await dateItem.waitFor();
             await dateItem.scrollIntoViewIfNeeded();
             await dateItem.hover();
@@ -271,7 +271,7 @@ export class ToolbarFilterPage extends BasePage {
               });
             }
           } else {
-            fillFilter = () => this.rootPage.locator('.nc-filter-value-select > input').last().fill(value);
+            fillFilter = () => this.rootPage.locator('.cv-filter-value-select > input').last().fill(value);
             if (skipWaitingResponse) {
               await fillFilter();
               await this.rootPage.waitForTimeout(350);
@@ -288,12 +288,12 @@ export class ToolbarFilterPage extends BasePage {
           break;
         case UITypes.Duration:
           if (skipWaitingResponse) {
-            await this.get().locator('.nc-filter-value-select').locator('input').fill(value);
-            await this.get().locator('.nc-filter-value-select').locator('input').press('Enter');
+            await this.get().locator('.cv-filter-value-select').locator('input').fill(value);
+            await this.get().locator('.cv-filter-value-select').locator('input').press('Enter');
             await this.rootPage.waitForTimeout(350);
           } else {
             await this.waitForResponse({
-              uiAction: async () => await this.get().locator('.nc-filter-value-select').locator('input').fill(value),
+              uiAction: async () => await this.get().locator('.cv-filter-value-select').locator('input').fill(value),
               httpMethodsToMatch: ['GET'],
               requestUrlPathToMatch: locallySaved ? `/api/v1/db/public/` : `/api/v1/db/data/noco/`,
             });
@@ -306,21 +306,21 @@ export class ToolbarFilterPage extends BasePage {
             .click();
           break;
         case UITypes.MultiSelect:
-          await this.get().locator('.nc-filter-value-select').locator('.ant-select-arrow').click({ force: true });
+          await this.get().locator('.cv-filter-value-select').locator('.ant-select-arrow').click({ force: true });
           // eslint-disable-next-line no-case-declarations
           const v = value.split(',');
           for (let i = 0; i < v.length; i++) {
             if (skipWaitingResponse) {
               await this.rootPage
-                .locator(`.nc-dropdown-multi-select-cell`)
-                .locator(`[data-testid="select-option-MultiSelect-filter"].nc-select-option-MultiSelect-${v[i]}`)
+                .locator(`.cv-dropdown-multi-select-cell`)
+                .locator(`[data-testid="select-option-MultiSelect-filter"].cv-select-option-MultiSelect-${v[i]}`)
                 .click();
             } else {
               await this.waitForResponse({
                 uiAction: async () =>
                   await this.rootPage
-                    .locator(`.nc-dropdown-multi-select-cell`)
-                    .locator(`[data-testid="select-option-MultiSelect-filter"].nc-select-option-MultiSelect-${v[i]}`)
+                    .locator(`.cv-dropdown-multi-select-cell`)
+                    .locator(`[data-testid="select-option-MultiSelect-filter"].cv-select-option-MultiSelect-${v[i]}`)
                     .click(),
                 httpMethodsToMatch: ['GET'],
                 requestUrlPathToMatch: `/api/v1/db/data/noco/`,
@@ -330,10 +330,10 @@ export class ToolbarFilterPage extends BasePage {
           break;
         case UITypes.SingleSelect:
           // for single select field, the drop select arrow is visible only for some operations
-          if ((await this.get().locator('.nc-filter-value-select').locator('.ant-select-arrow').count()) > 0) {
-            await this.get().locator('.nc-filter-value-select').locator('.ant-select-arrow').click({ force: true });
+          if ((await this.get().locator('.cv-filter-value-select').locator('.ant-select-arrow').count()) > 0) {
+            await this.get().locator('.cv-filter-value-select').locator('.ant-select-arrow').click({ force: true });
           } else {
-            await this.get().locator('.nc-filter-value-select').click({ force: true });
+            await this.get().locator('.cv-filter-value-select').click({ force: true });
           }
           // check if value was an array
           // eslint-disable-next-line no-case-declarations
@@ -342,15 +342,15 @@ export class ToolbarFilterPage extends BasePage {
             for (let i = 0; i < val.length; i++) {
               if (skipWaitingResponse) {
                 await this.rootPage
-                  .locator(`.nc-dropdown-multi-select-cell`)
-                  .locator(`.nc-select-option-SingleSelect-${val[i]}`)
+                  .locator(`.cv-dropdown-multi-select-cell`)
+                  .locator(`.cv-select-option-SingleSelect-${val[i]}`)
                   .click();
               } else {
                 await this.waitForResponse({
                   uiAction: async () =>
                     await this.rootPage
-                      .locator(`.nc-dropdown-multi-select-cell`)
-                      .locator(`.nc-select-option-SingleSelect-${val[i]}`)
+                      .locator(`.cv-dropdown-multi-select-cell`)
+                      .locator(`.cv-select-option-SingleSelect-${val[i]}`)
                       .click(),
                   httpMethodsToMatch: ['GET'],
                   requestUrlPathToMatch: `/api/v1/db/data/noco/`,
@@ -360,15 +360,15 @@ export class ToolbarFilterPage extends BasePage {
           } else {
             if (skipWaitingResponse) {
               await this.rootPage
-                .locator(`.nc-dropdown-single-select-cell`)
-                .locator(`.nc-select-option-${title}-${value}`)
+                .locator(`.cv-dropdown-single-select-cell`)
+                .locator(`.cv-select-option-${title}-${value}`)
                 .click();
             } else {
               await this.waitForResponse({
                 uiAction: async () =>
                   await this.rootPage
-                    .locator(`.nc-dropdown-single-select-cell`)
-                    .locator(`.nc-select-option-${title}-${value}`)
+                    .locator(`.cv-dropdown-single-select-cell`)
+                    .locator(`.cv-select-option-${title}-${value}`)
                     .click(),
                 httpMethodsToMatch: ['GET'],
                 requestUrlPathToMatch: `/api/v1/db/data/noco/`,
@@ -378,13 +378,13 @@ export class ToolbarFilterPage extends BasePage {
           break;
         case UITypes.User:
           if (!['is blank', 'is not blank'].includes(operation)) {
-            await this.get().locator('.nc-filter-value-select').locator('.ant-select-arrow').click({ force: true });
+            await this.get().locator('.cv-filter-value-select').locator('.ant-select-arrow').click({ force: true });
 
             const v = value.split(',');
             for (let i = 0; i < v.length; i++) {
               const selectUser = () =>
                 this.rootPage
-                  .locator(`.nc-dropdown-user-select-cell`)
+                  .locator(`.cv-dropdown-user-select-cell`)
                   .getByTestId('select-option-User-filter')
                   .getByText(v[i])
                   .click({ force: true });
@@ -399,8 +399,8 @@ export class ToolbarFilterPage extends BasePage {
 
         default:
           fillFilter = async () => {
-            await this.get().locator('.nc-filter-value-select > input').last().clear({ force: true });
-            return this.get().locator('.nc-filter-value-select > input').last().fill(value);
+            await this.get().locator('.cv-filter-value-select > input').last().clear({ force: true });
+            return this.get().locator('.cv-filter-value-select > input').last().fill(value);
           };
           if (!skipWaitingResponse) {
             await this.waitForResponse({
@@ -422,12 +422,12 @@ export class ToolbarFilterPage extends BasePage {
     await this.toolbar.clickFilter();
     if (networkValidation) {
       await this.waitForResponse({
-        uiAction: async () => await this.get().locator('.nc-filter-item-remove-btn').click(),
+        uiAction: async () => await this.get().locator('.cv-filter-item-remove-btn').click(),
         httpMethodsToMatch: ['DELETE'],
         requestUrlPathToMatch: '/api/v1/db/meta/filters/',
       });
     } else {
-      await this.get().locator('.nc-filter-item-remove-btn').click();
+      await this.get().locator('.cv-filter-item-remove-btn').click();
     }
     // TODO: Filter reset await not working all the time
 
@@ -438,30 +438,30 @@ export class ToolbarFilterPage extends BasePage {
   async remove({ networkValidation = true }: { networkValidation?: boolean } = {}) {
     if (networkValidation) {
       await this.waitForResponse({
-        uiAction: async () => await this.get().locator('.nc-filter-item-remove-btn').click(),
+        uiAction: async () => await this.get().locator('.cv-filter-item-remove-btn').click(),
         httpMethodsToMatch: ['DELETE'],
         requestUrlPathToMatch: '/api/v1/db/meta/filters/',
       });
     } else {
-      await this.get().locator('.nc-filter-item-remove-btn').click();
+      await this.get().locator('.cv-filter-item-remove-btn').click();
     }
   }
 
   async columnOperatorList(param: { columnTitle: string }) {
     await this.get().getByTestId('add-filter').first().click();
 
-    const selectedField = await this.rootPage.locator('.nc-filter-field-select').textContent();
+    const selectedField = await this.rootPage.locator('.cv-filter-field-select').textContent();
     if (selectedField !== param.columnTitle) {
-      await this.rootPage.locator('.nc-filter-field-select').last().click();
+      await this.rootPage.locator('.cv-filter-field-select').last().click();
       await this.rootPage
-        .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+        .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
         .locator(`div[label="${param.columnTitle}"]:visible`)
         .click();
     }
 
-    await this.rootPage.locator('.nc-filter-operation-select').click();
+    await this.rootPage.locator('.cv-filter-operation-select').click();
     const opList = this.rootPage
-      .locator('.nc-dropdown-filter-comp-op')
+      .locator('.cv-dropdown-filter-comp-op')
       .locator(`.ant-select-item > .ant-select-item-option-content`);
 
     // extract text from each element & put them in an array

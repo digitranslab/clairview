@@ -40,13 +40,13 @@ export class AttachmentCellPageObject extends BasePage {
 
     await this.get({ index, columnHeader }).locator('[data-testid="attachment-cell-file-picker-button"]').click();
 
-    await this.rootPage.locator('.nc-modal-attachment-create').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-modal-attachment-create').waitFor({ state: 'visible' });
 
     const attachFileAction = this.rootPage.getByTestId('attachment-drop-zone').click({ force: true });
 
     await this.attachFile({ filePickUIAction: attachFileAction, filePath });
 
-    await this.rootPage.getByTestId('nc-upload-file').click();
+    await this.rootPage.getByTestId('cv-upload-file').click();
 
     // wait for file to be uploaded
     await this.rootPage.waitForTimeout(750);
@@ -69,21 +69,21 @@ export class AttachmentCellPageObject extends BasePage {
       await this.get({ index, columnHeader }).click({ position: { x: 1, y: 1 } });
     }
 
-    await this.get({ index, columnHeader }).locator('.nc-attachment-item').nth(attIndex).hover();
+    await this.get({ index, columnHeader }).locator('.cv-attachment-item').nth(attIndex).hover();
     await this.get({ index, columnHeader })
-      .locator('.nc-attachment-item')
+      .locator('.cv-attachment-item')
       .nth(attIndex)
-      .locator('.nc-attachment-remove')
+      .locator('.cv-attachment-remove')
       .click();
 
     await this.rootPage.locator('.ant-modal.active').waitFor({ state: 'visible' });
-    await this.rootPage.locator('.ant-modal.active').getByTestId('nc-delete-modal-delete-btn').click();
+    await this.rootPage.locator('.ant-modal.active').getByTestId('cv-delete-modal-delete-btn').click();
     await this.rootPage.locator('.ant-modal.active').waitFor({ state: 'hidden' });
   }
 
   async expandModalAddFile({ filePath }: { filePath: string[] }) {
     const attachFileAction = this.rootPage
-      .locator('.ant-modal.nc-attachment-modal.active')
+      .locator('.ant-modal.cv-attachment-modal.active')
       .locator('[data-testid="attachment-expand-file-picker-button"]')
       .click();
     return await this.attachFile({ filePickUIAction: attachFileAction, filePath });
@@ -91,22 +91,22 @@ export class AttachmentCellPageObject extends BasePage {
 
   async expandModalOpen({ index, columnHeader }: { index?: number; columnHeader: string }) {
     return this.get({ index, columnHeader })
-      .locator('.nc-cell > .nc-attachment-cell > .group.cursor-pointer')
+      .locator('.cv-cell > .cv-attachment-cell > .group.cursor-pointer')
       .last()
       .click();
   }
 
   async verifyFile({ index, columnHeader }: { index: number; columnHeader: string }) {
-    await expect(this.get({ index, columnHeader }).locator('.nc-attachment')).toBeVisible();
+    await expect(this.get({ index, columnHeader }).locator('.cv-attachment')).toBeVisible();
   }
 
   async verifyFileCount({ index, columnHeader, count }: { index: number; columnHeader: string; count: number }) {
     // retry below logic for 5 times, with 1 second delay
-    const attachments = this.get({ index, columnHeader }).locator('.nc-attachment');
+    const attachments = this.get({ index, columnHeader }).locator('.cv-attachment');
     await expect(attachments).toHaveCount(count);
   }
 
   async expandModalClose() {
-    return this.rootPage.locator('.ant-modal.nc-attachment-modal.active').press('Escape');
+    return this.rootPage.locator('.ant-modal.cv-attachment-modal.active').press('Escape');
   }
 }

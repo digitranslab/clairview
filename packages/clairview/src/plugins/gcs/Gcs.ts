@@ -5,7 +5,7 @@ import { Storage } from '@google-cloud/storage';
 import axios from 'axios';
 import { useAgent } from 'request-filtering-agent';
 import type { GetSignedUrlConfig, StorageOptions } from '@google-cloud/storage';
-import type { IStorageAdapterV2, XcFile } from '~/types/nc-plugin';
+import type { IStorageAdapterV2, XcFile } from '~/types/cv-plugin';
 import { generateTempFilePath, waitForStreamClose } from '~/utils/pluginUtils';
 
 interface GoogleCloudStorageInput {
@@ -64,7 +64,7 @@ export default class Gcs implements IStorageAdapterV2 {
       const tempFile = generateTempFilePath();
       const createStream = fs.createWriteStream(tempFile);
       await waitForStreamClose(createStream);
-      await this.fileCreate('nc-test-file.txt', {
+      await this.fileCreate('cv-test-file.txt', {
         path: tempFile,
         mimetype: 'text/plain',
         originalname: 'temp.txt',

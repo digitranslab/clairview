@@ -3,21 +3,21 @@ import { WorkspacePage } from './';
 import { expect, Locator } from '@playwright/test';
 
 /*
-  nc-left-sidebar
-    nc-workspace-group
+  cv-left-sidebar
+    cv-workspace-group
       > Recent
       > Shared with me
       > Favourites
 
     All Workspaces
-      data-testid="nc-create-workspace"
+      data-testid="cv-create-workspace"
 
-    ul.nc-workspace-list
-      nc-workspace-title
+    ul.cv-workspace-list
+      cv-workspace-title
         span:nth-child(0) : workspace title
         span:nth-child(1) : workspace owner : displayed on hover
-      nc-workspace-drag-icon
-      nc-icon.nc-workspace-menu (...) : click
+      cv-workspace-drag-icon
+      cv-icon.cv-workspace-menu (...) : click
         |> .ant-dropdown-menu-vertical
             |> .ant-dropdown-menu-item : Rename Workspace
             |> .ant-dropdown-menu-item : Delete Workspace
@@ -25,7 +25,7 @@ import { expect, Locator } from '@playwright/test';
 
   Workspace create modal
   ----------------------
-  nc-modal-workspace-create
+  cv-modal-workspace-create
     input[data-testid="create-workspace-ws-name"]
     input[data-testid="create-workspace-ws-description"]
       ant-modal-close-x
@@ -45,15 +45,15 @@ export class LeftSideBarPage extends BasePage {
   constructor(workspace: WorkspacePage) {
     super(workspace.rootPage);
     this.workspace = workspace;
-    this.recentWorkspaces = this.get().locator('.nc-workspace-group').locator('span:has-text("Recent")');
-    this.sharedWithMeWorkspaces = this.get().locator('.nc-workspace-group').locator('span:has-text("Shared with me")');
-    this.favouriteWorkspaces = this.get().locator('.nc-workspace-group').locator('span:has-text("Favourites")');
-    this.createWorkspace = this.get().locator('[data-testid="nc-create-workspace"]');
-    this.workspaceItems = this.get().locator('.nc-workspace-title');
+    this.recentWorkspaces = this.get().locator('.cv-workspace-group').locator('span:has-text("Recent")');
+    this.sharedWithMeWorkspaces = this.get().locator('.cv-workspace-group').locator('span:has-text("Shared with me")');
+    this.favouriteWorkspaces = this.get().locator('.cv-workspace-group').locator('span:has-text("Favourites")');
+    this.createWorkspace = this.get().locator('[data-testid="cv-create-workspace"]');
+    this.workspaceItems = this.get().locator('.cv-workspace-title');
   }
 
   get() {
-    return this.workspace.get().locator('.nc-left-sidebar');
+    return this.workspace.get().locator('.cv-left-sidebar');
   }
 
   async waitFor({ state }) {
@@ -65,7 +65,7 @@ export class LeftSideBarPage extends BasePage {
   }
 
   async verifyStaticElements() {
-    // await this.get().locator('.nc-workspace-group').waitFor({ state: 'visible' });
+    // await this.get().locator('.cv-workspace-group').waitFor({ state: 'visible' });
     // await this.recentWorkspaces.waitFor({ state: 'visible' });
     // await this.sharedWithMeWorkspaces.waitFor({ state: 'visible' });
     // await this.favouriteWorkspaces.waitFor({ state: 'visible' });
@@ -88,7 +88,7 @@ export class LeftSideBarPage extends BasePage {
   async workspaceGetLocator(title: string) {
     // get workspace id
     // return this.get().locator('[data-id="' + wsId + '"]');
-    const list = this.get().locator(`.nc-workspace-list-item`);
+    const list = this.get().locator(`.cv-workspace-list-item`);
     for (let i = 0; i < (await list.count()); i++) {
       const ws = list.nth(i);
       const wsTitle = (await ws.innerText()).split('\n')[1];
@@ -126,8 +126,8 @@ export class LeftSideBarPage extends BasePage {
   async workspaceRename({ title, newTitle }: { title: string; newTitle: string }) {
     const ws = await this.workspaceGetLocator(title);
     await ws.click();
-    await ws.locator('.nc-workspace-menu').waitFor({ state: 'visible' });
-    await ws.locator('.nc-workspace-menu').click();
+    await ws.locator('.cv-workspace-menu').waitFor({ state: 'visible' });
+    await ws.locator('.cv-workspace-menu').click();
     await this.rootPage
       .locator('.ant-dropdown-menu-vertical:visible')
       .locator('.ant-dropdown-menu-item:has-text("Rename Workspace")')
@@ -146,8 +146,8 @@ export class LeftSideBarPage extends BasePage {
   async workspaceDelete({ title }: { title: string }) {
     const ws = await this.workspaceGetLocator(title);
     await ws.click();
-    await ws.locator('.nc-icon.nc-workspace-menu').waitFor({ state: 'visible' });
-    await ws.locator('.nc-icon.nc-workspace-menu').click();
+    await ws.locator('.cv-icon.cv-workspace-menu').waitFor({ state: 'visible' });
+    await ws.locator('.cv-icon.cv-workspace-menu').click();
     await this.rootPage
       .locator('.ant-dropdown-menu-vertical:visible')
       .locator('.ant-dropdown-menu-item:has-text("Delete Workspace")')
@@ -169,7 +169,7 @@ export class LeftSideBarPage extends BasePage {
   }
 
   async openQuickAccess(menu: 'Recent' | 'Shared with me' | 'Favourites') {
-    await this.get().locator('.nc-workspace-group').locator(`span:has-text("${menu}")`).click();
+    await this.get().locator('.cv-workspace-group').locator(`span:has-text("${menu}")`).click();
 
     const URL = {
       Recent: `http://localhost:3000/#/?page=recent`,

@@ -10,6 +10,6 @@ export class Bases extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('[data-test-id="nc-admin-bases"]');
+    return this.rootPage.locator('[data-test-id="cv-admin-bases"]');
   }
 }

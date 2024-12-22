@@ -40,7 +40,7 @@ export class GridPage extends BasePage {
   constructor(dashboardPage: DashboardPage) {
     super(dashboardPage.rootPage);
     this.dashboard = dashboardPage;
-    this.addNewTableButton = dashboardPage.get().locator('.nc-add-new-table');
+    this.addNewTableButton = dashboardPage.get().locator('.cv-add-new-table');
     this.qrCodeOverlay = new QrCodeOverlay(this);
     this.barcodeOverlay = new BarcodeOverlay(this);
     this.column = new ColumnPageObject(this);
@@ -56,7 +56,7 @@ export class GridPage extends BasePage {
     this.aggregationBar = new AggregaionBarPage(this);
     this.expandTableOverlay = new ExpandTablePageObject(this);
 
-    this.btn_addNewRow = this.get().locator('.nc-grid-add-new-cell');
+    this.btn_addNewRow = this.get().locator('.cv-grid-add-new-cell');
   }
 
   async verifyLockMode() {
@@ -88,7 +88,7 @@ export class GridPage extends BasePage {
   }
 
   get() {
-    return this.dashboard.get().locator('[data-testid="nc-grid-wrapper"]');
+    return this.dashboard.get().locator('[data-testid="cv-grid-wrapper"]');
   }
 
   row(index: number) {
@@ -97,7 +97,7 @@ export class GridPage extends BasePage {
 
   async renderColumn(columnHeader: string) {
     // we have virtual grid, so we need to make sure the column is rendered
-    const headerRow = this.get().locator('.nc-grid-header').first();
+    const headerRow = this.get().locator('.cv-grid-header').first();
     let column = headerRow.locator(`[data-title="${columnHeader}"]`);
     let lastScrolledColumn: Locator = null;
     let direction = 'right';
@@ -110,8 +110,8 @@ export class GridPage extends BasePage {
 
       const lastColumn =
         direction === 'right'
-          ? headerRow.locator('th.nc-grid-column-header').last()
-          : headerRow.locator('th.nc-grid-column-header').nth(1);
+          ? headerRow.locator('th.cv-grid-column-header').last()
+          : headerRow.locator('th.cv-grid-column-header').nth(1);
 
       if (lastScrolledColumn) {
         if ((await lastScrolledColumn.innerText()) === (await lastColumn.innerText())) {
@@ -133,11 +133,11 @@ export class GridPage extends BasePage {
   }
 
   async rowCount() {
-    return await this.get().locator('.nc-grid-row').count();
+    return await this.get().locator('.cv-grid-row').count();
   }
 
   async verifyRowCount({ count }: { count: number }) {
-    return await expect(this.get().locator('.nc-grid-row')).toHaveCount(count);
+    return await expect(this.get().locator('.cv-grid-row')).toHaveCount(count);
   }
 
   private async _fillRow({ index, columnHeader, value }: { index: number; columnHeader: string; value: string }) {
@@ -166,16 +166,16 @@ export class GridPage extends BasePage {
   } = {}) {
     const rowValue = value ?? `Row ${index}`;
     // wait for render to complete before count
-    if (index !== 0) await this.get().locator('.nc-grid-row').nth(0).waitFor({ state: 'attached' });
+    if (index !== 0) await this.get().locator('.cv-grid-row').nth(0).waitFor({ state: 'attached' });
 
-    await (await this.get().locator('.nc-grid-add-new-cell').elementHandle())?.waitForElementState('stable');
+    await (await this.get().locator('.cv-grid-add-new-cell').elementHandle())?.waitForElementState('stable');
 
     await this.rootPage.waitForTimeout(200);
     await this.rootPage.waitForLoadState('networkidle');
     await this.rootPage.waitForTimeout(200);
     await this.rootPage.waitForLoadState('domcontentloaded');
 
-    await this.get().locator('.nc-grid-add-new-cell').click();
+    await this.get().locator('.cv-grid-add-new-cell').click();
 
     const rowCount = index + 1;
 
@@ -282,7 +282,7 @@ export class GridPage extends BasePage {
 
     // todo: improve selector
     await this.rootPage
-      .locator('span.ant-dropdown-menu-title-content > nc-base-menu-item')
+      .locator('span.ant-dropdown-menu-title-content > cv-base-menu-item')
       .waitFor({ state: 'hidden' });
 
     await this.rootPage.waitForTimeout(300);
@@ -290,7 +290,7 @@ export class GridPage extends BasePage {
   }
 
   async addRowRightClickMenu(index: number, columnHeader = 'Title') {
-    const rowCount = await this.get().locator('.nc-grid-row').count();
+    const rowCount = await this.get().locator('.cv-grid-row').count();
 
     const cell = this.get().locator(`td[data-testid="cell-${columnHeader}-${index}"]`).last();
     await cell.click();
@@ -298,12 +298,12 @@ export class GridPage extends BasePage {
 
     // Click text=Insert New Row
     await this.rootPage.locator('.insert-row').click();
-    await expect(this.get().locator('.nc-grid-row')).toHaveCount(rowCount + 1);
+    await expect(this.get().locator('.cv-grid-row')).toHaveCount(rowCount + 1);
   }
 
   async openExpandedRow({ index }: { index: number }) {
     await this.row(index).locator(`td[data-testid="cell-Id-${index}"]`).hover();
-    await this.row(index).locator(`div[data-testid="nc-expand-${index}"]`).click();
+    await this.row(index).locator(`div[data-testid="cv-expand-${index}"]`).click();
   }
 
   async selectRow(index: number) {
@@ -313,9 +313,9 @@ export class GridPage extends BasePage {
   }
 
   async selectAll() {
-    await this.get().locator('[data-testid="nc-check-all"]').hover();
+    await this.get().locator('[data-testid="cv-check-all"]').hover();
 
-    await this.get().locator('[data-testid="nc-check-all"]').locator('input[type="checkbox"]').check({
+    await this.get().locator('[data-testid="cv-check-all"]').locator('input[type="checkbox"]').check({
       force: true,
     });
 
@@ -329,16 +329,16 @@ export class GridPage extends BasePage {
   }
 
   async openAllRowContextMenu() {
-    await this.get().locator('[data-testid="nc-check-all"]').nth(0).click({
+    await this.get().locator('[data-testid="cv-check-all"]').nth(0).click({
       button: 'right',
     });
   }
 
   async deleteSelectedRows() {
-    await this.get().locator('[data-testid="nc-check-all"]').nth(0).click({
+    await this.get().locator('[data-testid="cv-check-all"]').nth(0).click({
       button: 'right',
     });
-    await this.rootPage.locator('[data-testid="nc-delete-row"]').click();
+    await this.rootPage.locator('[data-testid="cv-delete-row"]').click();
     await this.dashboard.waitForLoaderToDisappear();
   }
 
@@ -348,10 +348,10 @@ export class GridPage extends BasePage {
   }
 
   async updateSelectedRows() {
-    await this.get().locator('[data-testid="nc-check-all"]').nth(0).click({
+    await this.get().locator('[data-testid="cv-check-all"]').nth(0).click({
       button: 'right',
     });
-    await this.rootPage.locator('.nc-menu-item:has-text("Update Selected Records")').click();
+    await this.rootPage.locator('.cv-menu-item:has-text("Update Selected Records")').click();
     await this.dashboard.waitForLoaderToDisappear();
   }
 
@@ -363,12 +363,12 @@ export class GridPage extends BasePage {
   async verifyTotalRowCount({ count }: { count: number }) {
     // wait for 100 ms and try again : 5 times
     let i = 0;
-    await this.get().locator(`.nc-pagination-skeleton`).waitFor({ state: 'hidden' });
+    await this.get().locator(`.cv-pagination-skeleton`).waitFor({ state: 'hidden' });
     let records = await this.get().locator(`[data-testid="grid-pagination"]`).allInnerTexts();
     let recordCnt = records[0].split(' ')[0];
 
     while (parseInt(recordCnt) !== count && i < 5) {
-      await this.get().locator(`.nc-pagination-skeleton`).waitFor({ state: 'hidden' });
+      await this.get().locator(`.cv-pagination-skeleton`).waitFor({ state: 'hidden' });
       records = await this.get().locator(`[data-testid="grid-pagination"]`).allInnerTexts();
       recordCnt = (records[0] ?? '').split(' ')[0];
 
@@ -380,12 +380,12 @@ export class GridPage extends BasePage {
   }
 
   async verifyPaginationCount({ count }: { count: string }) {
-    if (await this.get().locator('.nc-pagination').isHidden()) {
+    if (await this.get().locator('.cv-pagination').isHidden()) {
       expect(1).toBe(+count);
       return;
     }
 
-    await expect(this.get().locator(`.nc-pagination .total`)).toHaveText(count);
+    await expect(this.get().locator(`.cv-pagination .total`)).toHaveText(count);
   }
 
   async clickPagination(_params: { type: 'first-page' | 'last-page' | 'next-page' | 'prev-page'; skipWait?: boolean }) {
@@ -419,13 +419,13 @@ export class GridPage extends BasePage {
     // in cell-add
     await this.cell.get({ index: 0, columnHeader: 'Cities' }).hover();
     await expect(
-      this.cell.get({ index: 0, columnHeader: 'Cities' }).locator('.nc-action-icon.nc-plus')
+      this.cell.get({ index: 0, columnHeader: 'Cities' }).locator('.cv-action-icon.cv-plus')
     ).not.toBeVisible();
 
     // expand row
     await this.cell.get({ index: 0, columnHeader: 'Cities' }).hover();
     await expect(
-      this.cell.get({ index: 0, columnHeader: 'Cities' }).locator('.nc-action-icon >> nth=0')
+      this.cell.get({ index: 0, columnHeader: 'Cities' }).locator('.cv-action-icon >> nth=0')
     ).not.toBeVisible();
   }
 
@@ -449,7 +449,7 @@ export class GridPage extends BasePage {
 
     // in cell-add
     await this.cell.get({ index: 0, columnHeader: 'Cities' }).hover();
-    await expect(this.cell.get({ index: 0, columnHeader: 'Cities' }).locator('.nc-action-icon.nc-plus')).toBeVisible();
+    await expect(this.cell.get({ index: 0, columnHeader: 'Cities' }).locator('.cv-action-icon.cv-plus')).toBeVisible();
   }
 
   async verifyRoleAccess(param: { role: string }) {

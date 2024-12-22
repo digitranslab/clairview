@@ -150,7 +150,7 @@ test.describe('Multi Field Editor', () => {
   const verifyGridColumnHeaders = async ({ fields = [] }: { fields: string[] }) => {
     await dashboard.grid.topbar.openDataTab();
 
-    const locator = dashboard.grid.get().locator('th.nc-grid-column-header');
+    const locator = dashboard.grid.get().locator('th.cv-grid-column-header');
 
     await locator.first().waitFor({ state: 'visible' });
 

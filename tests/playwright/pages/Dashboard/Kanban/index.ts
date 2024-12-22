@@ -17,7 +17,7 @@ export class KanbanPage extends BasePage {
   }
 
   get() {
-    return this.dashboard.get().locator('[data-testid="nc-kanban-wrapper"]');
+    return this.dashboard.get().locator('[data-testid="cv-kanban-wrapper"]');
   }
 
   card(index: number) {
@@ -34,10 +34,10 @@ export class KanbanPage extends BasePage {
 
   async dragDropCard(param: { from: { stack: number; card: number }; to: { stack: number; card: number } }) {
     const { from, to } = param;
-    const srcStack = this.get().locator(`.nc-kanban-stack`).nth(from.stack);
-    const dstStack = this.get().locator(`.nc-kanban-stack`).nth(to.stack);
-    const fromCard = srcStack.locator(`.nc-kanban-item`).nth(from.card);
-    const toCard = dstStack.locator(`.nc-kanban-item`).nth(to.card);
+    const srcStack = this.get().locator(`.cv-kanban-stack`).nth(from.stack);
+    const dstStack = this.get().locator(`.cv-kanban-stack`).nth(to.stack);
+    const fromCard = srcStack.locator(`.cv-kanban-item`).nth(from.card);
+    const toCard = dstStack.locator(`.cv-kanban-item`).nth(to.card);
 
     console.log(await fromCard.allTextContents());
     console.log(await toCard.allTextContents());
@@ -52,26 +52,26 @@ export class KanbanPage extends BasePage {
   async dragDropStack(param: { from: number; to: number }) {
     const { from, to } = param;
     const [fromStack, toStack] = await Promise.all([
-      this.rootPage.locator(`.nc-kanban-stack-head >> .nc-kanban-stack-drag-handler`).nth(from),
-      this.rootPage.locator(`.nc-kanban-stack-head >> .nc-kanban-stack-drag-handler`).nth(to),
+      this.rootPage.locator(`.cv-kanban-stack-head >> .cv-kanban-stack-drag-handler`).nth(from),
+      this.rootPage.locator(`.cv-kanban-stack-head >> .cv-kanban-stack-drag-handler`).nth(to),
     ]);
     await fromStack.dragTo(toStack);
   }
 
   async verifyStackCount(param: { count: number }) {
     const { count } = param;
-    await expect(this.get().locator(`.nc-kanban-stack`)).toHaveCount(count);
+    await expect(this.get().locator(`.cv-kanban-stack`)).toHaveCount(count);
   }
 
   async verifyStackOrder(param: { order: string[] }) {
     await this.rootPage.waitForTimeout(1000);
     const { order } = param;
-    const stacks = await this.get().locator(`.nc-kanban-stack`).count();
+    const stacks = await this.get().locator(`.cv-kanban-stack`).count();
     for (let i = 0; i < stacks; i++) {
-      const stack = this.get().locator(`.nc-kanban-stack`).nth(i);
+      const stack = this.get().locator(`.cv-kanban-stack`).nth(i);
       await stack.scrollIntoViewIfNeeded();
       // Since otherwise stack title will be repeated as title is in two divs, with one having hidden class
-      const stackTitle = stack.locator(`.nc-kanban-stack-head >> [data-testid="nc-kanban-stack-title"]`);
+      const stackTitle = stack.locator(`.cv-kanban-stack-head >> [data-testid="cv-kanban-stack-title"]`);
       await stackTitle.waitFor({ state: 'visible' });
       await expect(stackTitle).toHaveText(order[i], { ignoreCase: true });
     }
@@ -79,22 +79,22 @@ export class KanbanPage extends BasePage {
 
   async verifyStackFooter(param: { count: number[] }) {
     const { count } = param;
-    const stacks = await this.get().locator(`.nc-kanban-stack`).count();
+    const stacks = await this.get().locator(`.cv-kanban-stack`).count();
     for (let i = 0; i < stacks; i++) {
-      const stack = this.get().locator(`.nc-kanban-stack`).nth(i);
+      const stack = this.get().locator(`.cv-kanban-stack`).nth(i);
       await stack.scrollIntoViewIfNeeded();
-      const stackFooter = await stack.locator(`.nc-kanban-data-count`).innerText();
+      const stackFooter = await stack.locator(`.cv-kanban-data-count`).innerText();
       expect(stackFooter).toContain(`${count[i]} record${count[i] !== 1 ? 's' : ''}`);
     }
   }
 
   async verifyCardCount(param: { count: number[] }) {
     const { count } = param;
-    const stacks = await this.get().locator(`.nc-kanban-stack`).count();
+    const stacks = await this.get().locator(`.cv-kanban-stack`).count();
     for (let i = 0; i < stacks; i++) {
-      const stack = this.get().locator(`.nc-kanban-stack`).nth(i);
+      const stack = this.get().locator(`.cv-kanban-stack`).nth(i);
       await stack.scrollIntoViewIfNeeded();
-      const stackCards = stack.locator(`.nc-kanban-item`);
+      const stackCards = stack.locator(`.cv-kanban-item`);
       await expect(stackCards).toHaveCount(count[i]);
     }
   }
@@ -102,14 +102,14 @@ export class KanbanPage extends BasePage {
   async verifyCardOrder(param: { order: string[]; stackIndex: number }) {
     const { order, stackIndex } = param;
 
-    const stack = this.get().locator(`.nc-kanban-stack`).nth(stackIndex);
+    const stack = this.get().locator(`.cv-kanban-stack`).nth(stackIndex);
     for (let i = 0; i < order.length; i++) {
-      const card = stack.locator(`.nc-kanban-item`).nth(i);
+      const card = stack.locator(`.cv-kanban-item`).nth(i);
 
       await (await card.elementHandle())?.waitForElementState('stable');
 
       await card.scrollIntoViewIfNeeded();
-      const cardTitle = card.locator(`.nc-cell`);
+      const cardTitle = card.locator(`.cv-cell`);
       await expect(cardTitle).toHaveText(order[i]);
     }
   }
@@ -120,29 +120,29 @@ export class KanbanPage extends BasePage {
   }
 
   async addNewStack(param: { title: string }) {
-    const addNewStack = this.get().locator('.nc-kanban-add-new-stack');
+    const addNewStack = this.get().locator('.cv-kanban-add-new-stack');
     await addNewStack.scrollIntoViewIfNeeded();
 
     const addNewStackBtn = addNewStack.locator('.add-new-stack-btn');
     await addNewStackBtn.waitFor({ state: 'visible' });
     await addNewStackBtn.click();
 
-    const stackTitleInput = addNewStack.getByTestId('nc-kanban-stack-title-input');
+    const stackTitleInput = addNewStack.getByTestId('cv-kanban-stack-title-input');
     await stackTitleInput.waitFor({ state: 'visible' });
     await stackTitleInput.fill(param.title);
 
     await this.rootPage.keyboard.press('Enter');
 
-    await this.get().getByTestId(`nc-kanban-stack-${param.title}`).waitFor({ state: 'visible' });
+    await this.get().getByTestId(`cv-kanban-stack-${param.title}`).waitFor({ state: 'visible' });
   }
 
   async renameStack(param: { index: number; title: string }) {
-    const stackHead = this.get().locator(`.nc-kanban-stack-head`).nth(param.index);
+    const stackHead = this.get().locator(`.cv-kanban-stack-head`).nth(param.index);
     await stackHead.scrollIntoViewIfNeeded();
 
     await this.stackContextMenu({ index: param.index, operation: 'rename-stack' });
 
-    const stackTitleInput = stackHead.getByTestId('nc-kanban-stack-title-input');
+    const stackTitleInput = stackHead.getByTestId('cv-kanban-stack-title-input');
     await stackTitleInput.waitFor({ state: 'visible' });
     await stackTitleInput.fill(param.title);
 
@@ -150,7 +150,7 @@ export class KanbanPage extends BasePage {
     await stackTitleInput.waitFor({ state: 'hidden' });
 
     await stackHead.locator('.stack-rename-loader').waitFor({ state: 'hidden' });
-    await this.get().getByTestId(`nc-kanban-stack-${param.title}`).waitFor({ state: 'visible' });
+    await this.get().getByTestId(`cv-kanban-stack-${param.title}`).waitFor({ state: 'visible' });
   }
 
   async stackContextMenu({
@@ -166,12 +166,12 @@ export class KanbanPage extends BasePage {
       | 'expand-all-stack'
       | 'delete-stack';
   }) {
-    await this.get().locator(`.nc-kanban-stack-head`).nth(index).getByTestId('nc-kanban-stack-context-menu').click();
+    await this.get().locator(`.cv-kanban-stack-head`).nth(index).getByTestId('cv-kanban-stack-context-menu').click();
 
-    const contextMenu = this.rootPage.locator('.nc-dropdown-kanban-stack-context-menu');
+    const contextMenu = this.rootPage.locator('.cv-dropdown-kanban-stack-context-menu');
     await contextMenu.waitFor({ state: 'visible' });
 
-    await contextMenu.getByTestId(`nc-kanban-context-menu-${operation}`).click();
+    await contextMenu.getByTestId(`cv-kanban-context-menu-${operation}`).click();
 
     await contextMenu.waitFor({ state: 'hidden' });
   }
@@ -185,7 +185,7 @@ export class KanbanPage extends BasePage {
   }
 
   async expandStack(param: { index: number }) {
-    await this.rootPage.locator(`.nc-kanban-collapsed-stack`).nth(param.index).click();
+    await this.rootPage.locator(`.cv-kanban-collapsed-stack`).nth(param.index).click();
   }
 
   async expandAllStack({ index }: { index: number }) {
@@ -193,7 +193,7 @@ export class KanbanPage extends BasePage {
   }
 
   async verifyCollapseStackCount(param: { count: number }) {
-    await expect(this.rootPage.locator('.nc-kanban-collapsed-stack')).toHaveCount(param.count);
+    await expect(this.rootPage.locator('.cv-kanban-collapsed-stack')).toHaveCount(param.count);
   }
 
   async addCard(param: { stackIndex: number }) {

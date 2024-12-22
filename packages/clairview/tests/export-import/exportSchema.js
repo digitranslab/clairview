@@ -146,7 +146,7 @@ function addViewDetails(v) {
     // skip hm & mm columns
     view.columns = view.columns
       ?.filter(a => a.title?.includes('_nc_m2m_') === false)
-      .filter(a => a.title?.includes('nc_') === false);
+      .filter(a => a.title?.includes('cv_') === false);
   }
 
   // filter & sort configurations

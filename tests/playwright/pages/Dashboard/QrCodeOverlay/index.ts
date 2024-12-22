@@ -11,12 +11,12 @@ export class QrCodeOverlay extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`.nc-qr-code-large`);
+    return this.rootPage.locator(`.cv-qr-code-large`);
   }
 
   async verifyQrValueLabel(expectedValue: string) {
     const foundQrValueLabelText = await this.get()
-      .locator('[data-testid="nc-qr-code-large-value-label"]')
+      .locator('[data-testid="cv-qr-code-large-value-label"]')
       .textContent();
     expect(foundQrValueLabelText).toContain(expectedValue);
   }

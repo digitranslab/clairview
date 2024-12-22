@@ -70,7 +70,7 @@ function isLinkCreated(pId, cId) {
   return true;
 }
 
-// retrieve nc-view column ID from corresponding nc-column ID
+// retrieve cv-view column ID from corresponding cv-column ID
 async function nc_getViewColumnId(viewId, viewType, ncColumnId) {
   // retrieve view Info
   let viewDetails;

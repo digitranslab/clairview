@@ -38,10 +38,10 @@ export class DocsSidebarPage extends BasePage {
   }
 
   async createPage({ baseTitle, title, content }: { baseTitle: string; title?: string; content?: string }) {
-    await this.get({ baseTitle }).getByTestId('nc-docs-sidebar-add-page').hover();
+    await this.get({ baseTitle }).getByTestId('cv-docs-sidebar-add-page').hover();
 
     await this.waitForResponse({
-      uiAction: () => this.get({ baseTitle }).getByTestId('nc-docs-sidebar-add-page').click(),
+      uiAction: () => this.get({ baseTitle }).getByTestId('cv-docs-sidebar-add-page').click(),
       httpMethodsToMatch: ['POST'],
       requestUrlPathToMatch: `api/v1/docs/page`,
     });
@@ -73,11 +73,11 @@ export class DocsSidebarPage extends BasePage {
 
     await this.get({ baseTitle })
       .getByTestId(`docs-sidebar-page-${baseTitle}-${parentTitle}`)
-      .locator('.nc-docs-sidebar-page-title')
+      .locator('.cv-docs-sidebar-page-title')
       .hover();
     const createChildPageButton = this.get({ baseTitle })
       .getByTestId(`docs-sidebar-page-${baseTitle}-${parentTitle}`)
-      .locator('.nc-docs-add-child-page');
+      .locator('.cv-docs-add-child-page');
     await createChildPageButton.hover();
     await createChildPageButton.waitFor({ state: 'visible' });
 
@@ -151,7 +151,7 @@ export class DocsSidebarPage extends BasePage {
       uiAction: () =>
         this.get({ baseTitle })
           .getByTestId(`docs-sidebar-page-${baseTitle}-${title}`)
-          .locator('.nc-docs-sidebar-page-title')
+          .locator('.cv-docs-sidebar-page-title')
           .click(),
       httpMethodsToMatch: ['GET'],
       requestUrlPathToMatch: `api/v1/docs/page`,
@@ -176,13 +176,13 @@ export class DocsSidebarPage extends BasePage {
       .getByTestId('docs-sidebar-emoji-selector')
       .click();
 
-    await this.rootPage.getByTestId('nc-emoji-filter').last().type(emoji);
+    await this.rootPage.getByTestId('cv-emoji-filter').last().type(emoji);
 
     await this.rootPage.waitForTimeout(500);
 
     await this.waitForResponse({
       uiAction: () =>
-        this.rootPage.getByTestId('nc-emoji-container').last().locator(`.nc-emoji-item >> svg`).first().click(),
+        this.rootPage.getByTestId('cv-emoji-container').last().locator(`.cv-emoji-item >> svg`).first().click(),
       httpMethodsToMatch: ['PUT'],
       requestUrlPathToMatch: `api/v1/docs/page`,
     });
@@ -204,7 +204,7 @@ export class DocsSidebarPage extends BasePage {
         baseTitle,
         title,
         isPublic,
-      }).getByTestId(`nc-doc-page-icon-emojione:${emoji}`)
+      }).getByTestId(`cv-doc-page-icon-emojione:${emoji}`)
     ).toBeVisible();
   }
 
@@ -252,7 +252,7 @@ export class DocsSidebarPage extends BasePage {
 
     return await this.get({ baseTitle, isPublic })
       .locator('.ant-tree-node-selected')
-      .locator('.nc-docs-sidebar-page-title')
+      .locator('.cv-docs-sidebar-page-title')
       .textContent();
   }
 
@@ -282,9 +282,9 @@ export class DocsSidebarPage extends BasePage {
 
   async verifyCreatePageButtonVisibility({ baseTitle, isVisible }: { baseTitle: string; isVisible: boolean }) {
     if (isVisible) {
-      await expect(this.get({ baseTitle }).getByTestId('nc-docs-sidebar-add-page')).toBeVisible();
+      await expect(this.get({ baseTitle }).getByTestId('cv-docs-sidebar-add-page')).toBeVisible();
     } else {
-      await expect(this.get({ baseTitle }).getByTestId('nc-docs-sidebar-add-page')).toBeHidden();
+      await expect(this.get({ baseTitle }).getByTestId('cv-docs-sidebar-add-page')).toBeHidden();
     }
   }
 

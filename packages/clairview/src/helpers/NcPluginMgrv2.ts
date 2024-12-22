@@ -8,7 +8,7 @@ import type {
   // XcPlugin,
   // XcStoragePlugin,
   // XcWebhookNotificationPlugin
-} from '~/types/nc-plugin';
+} from '~/types/cv-plugin';
 import BackblazePluginConfig from '~/plugins/backblaze';
 import DiscordPluginConfig from '~/plugins/discord';
 import GcsPluginConfig from '~/plugins/gcs';
@@ -80,7 +80,7 @@ class NcPluginMgrv2 {
       );
     }
 
-    /* Populate rows into nc_plugins table if not present */
+    /* Populate rows into cv_plugins table if not present */
     for (const plugin of defaultPlugins) {
       const pluginConfig = await ncMeta.metaGet(
         RootScopes.ROOT,

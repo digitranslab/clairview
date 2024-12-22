@@ -17,7 +17,7 @@ export class TablesViewPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('.nc-all-tables-view');
+    return this.rootPage.locator('.cv-all-tables-view');
   }
 
   async verifyAccess(role: string) {

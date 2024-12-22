@@ -14,12 +14,12 @@ export class AccountSetupConfigPage extends BasePage {
   }
 
   get() {
-    return this.setupPage.get().getByTestId('nc-setup-config');
+    return this.setupPage.get().getByTestId('cv-setup-config');
   }
 
   async fillForm(data: any) {
     for (const key in data) {
-      const fieldWrapper = this.get().getByTestId(`nc-form-input-${key}`);
+      const fieldWrapper = this.get().getByTestId(`cv-form-input-${key}`);
       // if switch then toggle
       if (await fieldWrapper.locator('.ant-switch').isVisible()) {
         if (data[key]) {
@@ -32,10 +32,10 @@ export class AccountSetupConfigPage extends BasePage {
     }
   }
   async test() {
-    await this.get().getByTestId('nc-setup-config-action-test').click();
+    await this.get().getByTestId('cv-setup-config-action-test').click();
   }
 
   async save() {
-    await this.get().getByTestId('nc-setup-config-action-save').click();
+    await this.get().getByTestId('cv-setup-config-action-save').click();
   }
 }

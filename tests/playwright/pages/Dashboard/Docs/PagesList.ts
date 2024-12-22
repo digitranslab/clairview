@@ -27,7 +27,7 @@ export class DocsPageListPage extends BasePage {
   }
 
   async openTab({ tab }: { tab: 'all' | 'allByTitle' | 'shared' }) {
-    await this.rootPage.getByTestId(`nc-docs-pagelist-tab-button-${tab}`).click();
+    await this.rootPage.getByTestId(`cv-docs-pagelist-tab-button-${tab}`).click();
   }
 
   async verifyPageInList({

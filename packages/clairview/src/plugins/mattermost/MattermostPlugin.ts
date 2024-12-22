@@ -1,6 +1,6 @@
 import Mattermost from './Mattermost';
-import type { IWebhookNotificationAdapter } from '~/types/nc-plugin';
-import { XcWebhookNotificationPlugin } from '~/types/nc-plugin';
+import type { IWebhookNotificationAdapter } from '~/types/cv-plugin';
+import { XcWebhookNotificationPlugin } from '~/types/cv-plugin';
 
 class MattermostPlugin extends XcWebhookNotificationPlugin {
   private static notificationAdapter: Mattermost;

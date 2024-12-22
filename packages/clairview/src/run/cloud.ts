@@ -13,7 +13,7 @@ server.enable('trust proxy');
 server.use(cors());
 server.use(
   process.env.NC_DASHBOARD_URL ?? '/dashboard',
-  express.static(path.join(__dirname, 'nc-gui')),
+  express.static(path.join(__dirname, 'cv-gui')),
 );
 
 // if NC_DASHBOARD_URL is not set to /dashboard, then redirect '/dashboard'

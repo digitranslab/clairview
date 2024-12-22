@@ -94,7 +94,7 @@ jobs:
         run: |
           pnpm run watch:run:playwright:pg &> ${{ inputs.db }}_${{ inputs.shard }}_test_backend.log &
       - name: download ui build from artf server
-        working-directory: ./packages/nc-gui/
+        working-directory: ./packages/cv-gui/
         run: |
           # expects the variables to be available in runner context.
           rm -rf .output.zip .output
@@ -113,7 +113,7 @@ jobs:
           #   exit 1
           # fi
       - name: start frontend
-        working-directory: ./packages/nc-gui/
+        working-directory: ./packages/cv-gui/
         run: |
           pnpm run ci:start
       - name: Install Playwright Browsers

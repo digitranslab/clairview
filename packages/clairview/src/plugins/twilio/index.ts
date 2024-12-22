@@ -1,6 +1,6 @@
 import { XcActionType, XcType } from 'clairview-sdk';
 import TwilioPlugin from './TwilioPlugin';
-import type { XcPluginConfig } from '~/types/nc-plugin';
+import type { XcPluginConfig } from '~/types/cv-plugin';
 
 const config: XcPluginConfig = {
   builder: TwilioPlugin,

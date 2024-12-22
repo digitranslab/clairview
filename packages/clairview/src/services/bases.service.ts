@@ -23,7 +23,7 @@ import { extractPropsAndSanitize } from '~/helpers/extractProps';
 import syncMigration from '~/helpers/syncMigration';
 import { Base, BaseUser, Integration } from '~/models';
 import Noco from '~/Noco';
-import { getToolDir } from '~/utils/nc-config';
+import { getToolDir } from '~/utils/cv-config';
 import { MetaService } from '~/meta/meta.service';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import { TablesService } from '~/services/tables.service';
@@ -191,7 +191,7 @@ export class BasesService {
         process.env.NC_MINIMAL_DBS === 'true'
       ) {
         // if env variable NC_MINIMAL_DBS is set, then create a SQLite file/connection for each base
-        // each file will be named as nc_<random_id>.db
+        // each file will be named as cv_<random_id>.db
         const fs = require('fs');
         const toolDir = getToolDir();
         const nanoidv2 = customAlphabet(

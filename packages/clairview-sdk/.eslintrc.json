@@ -11,7 +11,7 @@
     "build",
     "coverage",
     "dist",
-    "nc"
+    "cv"
   ],
   "plugins": [
     "import",

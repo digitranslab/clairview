@@ -28,16 +28,16 @@ export class DetailsPage extends BasePage {
     this.relations = new ErdPage(this);
     this.fields = new FieldsPage(this);
 
-    this.tab_webhooks = this.get().locator(`[data-testid="nc-webhooks-tab"]`);
-    this.tab_apiSnippet = this.get().locator(`[data-testid="nc-apis-tab"]`);
-    this.tab_fields = this.get().locator(`[data-testid="nc-fields-tab"]`);
-    this.tab_relations = this.get().locator(`[data-testid="nc-relations-tab"]`);
+    this.tab_webhooks = this.get().locator(`[data-testid="cv-webhooks-tab"]`);
+    this.tab_apiSnippet = this.get().locator(`[data-testid="cv-apis-tab"]`);
+    this.tab_fields = this.get().locator(`[data-testid="cv-fields-tab"]`);
+    this.tab_relations = this.get().locator(`[data-testid="cv-relations-tab"]`);
 
-    this.btn_addWebhook = this.get().locator(`.nc-button:has-text("New Webhook")`).first();
+    this.btn_addWebhook = this.get().locator(`.cv-button:has-text("New Webhook")`).first();
   }
 
   get() {
-    return this.dashboard.get().locator('[data-testid="nc-details-wrapper"]');
+    return this.dashboard.get().locator('[data-testid="cv-details-wrapper"]');
   }
 
   async clickWebhooksTab() {

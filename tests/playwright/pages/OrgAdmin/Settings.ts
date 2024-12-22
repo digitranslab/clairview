@@ -10,6 +10,6 @@ export class Settings extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('[data-test-id="nc-admin-settings"]');
+    return this.rootPage.locator('[data-test-id="cv-admin-settings"]');
   }
 }

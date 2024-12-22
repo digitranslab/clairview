@@ -10,6 +10,6 @@ export class Dashboard extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('[data-test-id="nc-admin-dashboard"]');
+    return this.rootPage.locator('[data-test-id="cv-admin-dashboard"]');
   }
 }

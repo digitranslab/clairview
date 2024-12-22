@@ -1,6 +1,6 @@
 import { XcActionType, XcType } from 'clairview-sdk';
 import SMTPPlugin from './SMTPPlugin';
-import type { XcPluginConfig } from '~/types/nc-plugin';
+import type { XcPluginConfig } from '~/types/cv-plugin';
 
 // @author <dean@deanlofts.xyz>
 

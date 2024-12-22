@@ -1,7 +1,7 @@
 packages:
   - "packages/clairview-sdk"
-  - "packages/nc-gui"
-  - "packages/nc-mail-templates"
+  - "packages/cv-gui"
+  - "packages/cv-mail-templates"
   - "packages/clairview"
   - "tests/playwright"
-  - "packages/nc-secret-mgr"
+  - "packages/cv-secret-mgr"

@@ -18,13 +18,13 @@ export class WebhookFormPage extends BasePage {
     this.dashboard = dashboard;
     this.toolbar = dashboard.grid.toolbar;
     this.topbar = dashboard.grid.topbar;
-    this.addNewButton = this.dashboard.get().locator('.nc-btn-create-webhook');
-    this.saveButton = this.get().getByTestId('nc-save-webhook');
+    this.addNewButton = this.dashboard.get().locator('.cv-btn-create-webhook');
+    this.saveButton = this.get().getByTestId('cv-save-webhook');
     this.testButton = this.get().locator('button:has-text("Test Webhook")');
   }
 
   get() {
-    return this.rootPage.locator(`.nc-modal-webhook-create-edit`);
+    return this.rootPage.locator(`.cv-modal-webhook-create-edit`);
   }
 
   async create({ title, event, url = 'http://localhost:9090/hook' }: { title: string; event: string; url?: string }) {
@@ -46,15 +46,15 @@ export class WebhookFormPage extends BasePage {
 
   async configureWebhook({ title, event, url }: { title?: string; event?: string; url?: string }) {
     if (title) {
-      await this.get().locator(`.nc-text-field-hook-title`).fill(title);
+      await this.get().locator(`.cv-text-field-hook-title`).fill(title);
     }
     if (event) {
-      await this.get().locator(`.nc-text-field-hook-event`).click();
-      const modal = this.rootPage.locator(`.nc-dropdown-webhook-event`);
+      await this.get().locator(`.cv-text-field-hook-event`).click();
+      const modal = this.rootPage.locator(`.cv-dropdown-webhook-event`);
       await modal.locator(`.ant-select-item:has-text("${event}")`).click();
     }
     if (url) {
-      await this.get().locator(`.nc-text-field-hook-url-path`).fill(url);
+      await this.get().locator(`.cv-text-field-hook-url-path`).fill(url);
     }
   }
 
@@ -69,22 +69,22 @@ export class WebhookFormPage extends BasePage {
     value: string;
     save: boolean;
   }) {
-    await this.get().locator(`.nc-check-box-hook-condition`).click();
+    await this.get().locator(`.cv-check-box-hook-condition`).click();
     const modal = this.get().locator(`.menu-filter-dropdown`).last();
 
     await modal.locator(`button:has-text("Add Filter")`).first().click();
 
-    await modal.locator('.nc-filter-field-select').waitFor({ state: 'visible', timeout: 4000 });
-    await modal.locator('.nc-filter-field-select').click();
-    const modalField = this.dashboard.rootPage.locator('.nc-dropdown-toolbar-field-list:visible');
+    await modal.locator('.cv-filter-field-select').waitFor({ state: 'visible', timeout: 4000 });
+    await modal.locator('.cv-filter-field-select').click();
+    const modalField = this.dashboard.rootPage.locator('.cv-dropdown-toolbar-field-list:visible');
     await modalField.locator(`.ant-select-item:has-text("${column}")`).click();
 
-    await modal.locator('.nc-filter-operation-select').click();
-    const modalOp = this.dashboard.rootPage.locator('.nc-dropdown-filter-comp-op:visible');
+    await modal.locator('.cv-filter-operation-select').click();
+    const modalOp = this.dashboard.rootPage.locator('.cv-dropdown-filter-comp-op:visible');
     await modalOp.locator(`.ant-select-item:has-text("${operator}")`).click();
 
     if (operator != 'is null' && operator != 'is not null') {
-      await modal.locator('.nc-filter-value-select > input').fill(value);
+      await modal.locator('.cv-filter-value-select > input').fill(value);
     }
 
     if (save) {
@@ -94,7 +94,7 @@ export class WebhookFormPage extends BasePage {
   }
 
   async deleteCondition(p: { save: boolean }) {
-    await this.get().locator(`.nc-filter-item-remove-btn`).click();
+    await this.get().locator(`.cv-filter-item-remove-btn`).click();
     if (p.save) {
       await this.save();
       await this.close();
@@ -148,11 +148,11 @@ export class WebhookFormPage extends BasePage {
   }
 
   async openForm({ index }: { index: number }) {
-    await this.dashboard.get().locator(`.nc-hook`).nth(index).click();
+    await this.dashboard.get().locator(`.cv-hook`).nth(index).click();
   }
 
   async click({ index }: { index: number }) {
-    await this.dashboard.get().locator(`.nc-hook`).nth(index).click();
+    await this.dashboard.get().locator(`.cv-hook`).nth(index).click();
   }
 
   async configureHeader({ key, value }: { key: string; value: string }) {
@@ -160,11 +160,11 @@ export class WebhookFormPage extends BasePage {
     await this.get().locator(`.ant-tabs-tab-btn:has-text("Headers")`).click();
     await this.rootPage.waitForTimeout(500);
 
-    await this.get().locator('.nc-input-hook-header-key input').click();
+    await this.get().locator('.cv-input-hook-header-key input').click();
     await this.rootPage.waitForTimeout(500);
 
     // kludge, as the dropdown is not visible even after scroll into view
-    await this.rootPage.locator('.nc-input-hook-header-key input').pressSequentially(key);
+    await this.rootPage.locator('.cv-input-hook-header-key input').pressSequentially(key);
     await this.rootPage
       .locator('.ant-select-dropdown:visible')
       .locator(`.ant-select-item:has-text("${key}")`)
@@ -174,16 +174,16 @@ export class WebhookFormPage extends BasePage {
       .locator(`.ant-select-item:has-text("${key}")`)
       .click({ force: true });
 
-    await this.get().locator('.nc-webhook-header-value-input').clear();
-    await this.get().locator('.nc-webhook-header-value-input').type(value);
+    await this.get().locator('.cv-webhook-header-value-input').clear();
+    await this.get().locator('.cv-webhook-header-value-input').type(value);
     await this.get().press('Enter');
 
     // find out if the checkbox is already checked
     const isChecked = await this.get()
-      .locator('.nc-hook-header-checkbox')
+      .locator('.cv-hook-header-checkbox')
       .locator('input.ant-checkbox-input')
       .isChecked();
-    if (!isChecked) await this.get().locator('.nc-hook-header-checkbox').locator('input.ant-checkbox-input').click();
+    if (!isChecked) await this.get().locator('.cv-hook-header-checkbox').locator('input.ant-checkbox-input').click();
   }
 
   async verifyForm({
@@ -201,17 +201,17 @@ export class WebhookFormPage extends BasePage {
     urlMethod: string;
     condition: boolean;
   }) {
-    await expect.poll(async () => await this.get().locator('input.nc-text-field-hook-title').inputValue()).toBe(title);
-    await expect(this.get().locator('.nc-text-field-hook-event >> .ant-select-selection-item')).toHaveText(hookEvent);
+    await expect.poll(async () => await this.get().locator('input.cv-text-field-hook-title').inputValue()).toBe(title);
+    await expect(this.get().locator('.cv-text-field-hook-event >> .ant-select-selection-item')).toHaveText(hookEvent);
 
-    const locator = this.get().locator('.nc-select-hook-notification-type >> .ant-select-selection-item');
+    const locator = this.get().locator('.cv-select-hook-notification-type >> .ant-select-selection-item');
     const text = await getTextExcludeIconText(locator);
     expect(text).toBe(notificationType);
 
-    await expect(this.get().locator('.nc-select-hook-url-method >> .ant-select-selection-item')).toHaveText(urlMethod);
-    await expect.poll(async () => await this.get().locator('input.nc-text-field-hook-url-path').inputValue()).toBe(url);
+    await expect(this.get().locator('.cv-select-hook-url-method >> .ant-select-selection-item')).toHaveText(urlMethod);
+    await expect.poll(async () => await this.get().locator('input.cv-text-field-hook-url-path').inputValue()).toBe(url);
 
-    const conditionCheckbox = this.get().locator('label.nc-check-box-hook-condition >> input[type="checkbox"]');
+    const conditionCheckbox = this.get().locator('label.cv-check-box-hook-condition >> input[type="checkbox"]');
     if (condition) {
       await expect(conditionCheckbox).toBeChecked();
     } else {
@@ -220,6 +220,6 @@ export class WebhookFormPage extends BasePage {
   }
 
   async goBackFromForm() {
-    await this.get().locator('svg.nc-icon-hook-navigate-left').click();
+    await this.get().locator('svg.cv-icon-hook-navigate-left').click();
   }
 }

@@ -65,7 +65,7 @@ export default async function ({ ncMeta }: NcUpgraderCtx) {
 
   const encryptionKeyFromMeta = (
     await ncMeta.metaGet(RootScopes.ROOT, RootScopes.ROOT, MetaTable.STORE, {
-      key: 'nc_auth_jwt_secret',
+      key: 'cv_auth_jwt_secret',
     })
   )?.value;
 

@@ -33,7 +33,7 @@ export class SettingsPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('.nc-base-settings');
+    return this.rootPage.locator('.cv-base-settings');
   }
 
   async selectTab({ tab, subTab }: { tab: SettingTab; subTab?: SettingsSubTab }) {

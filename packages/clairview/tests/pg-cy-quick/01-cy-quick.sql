@@ -59,10 +59,10 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: nc_acl; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_acl; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_acl (
+CREATE TABLE public.cv_acl (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255) DEFAULT 'db'::character varying,
@@ -74,13 +74,13 @@ CREATE TABLE public.nc_acl (
 );
 
 
-ALTER TABLE public.nc_acl OWNER TO postgres;
+ALTER TABLE public.cv_acl OWNER TO postgres;
 
 --
--- Name: nc_acl_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_acl_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_acl_id_seq
+CREATE SEQUENCE public.cv_acl_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -88,13 +88,13 @@ CREATE SEQUENCE public.nc_acl_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_acl_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_acl_id_seq OWNER TO postgres;
 
 --
--- Name: nc_acl_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_acl_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_acl_id_seq OWNED BY public.nc_acl.id;
+ALTER SEQUENCE public.cv_acl_id_seq OWNED BY public.cv_acl.id;
 
 
 --
@@ -759,10 +759,10 @@ CREATE TABLE public.nc_hblt___nc_m2m__9oevq0x2z (
 ALTER TABLE public.nc_hblt___nc_m2m__9oevq0x2z OWNER TO postgres;
 
 --
--- Name: nc_hook_logs_v2; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_hook_logs_v2; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_hook_logs_v2 (
+CREATE TABLE public.cv_hook_logs_v2 (
     id character varying(20) NOT NULL,
     base_id character varying(20),
     project_id character varying(128),
@@ -785,13 +785,13 @@ CREATE TABLE public.nc_hook_logs_v2 (
 );
 
 
-ALTER TABLE public.nc_hook_logs_v2 OWNER TO postgres;
+ALTER TABLE public.cv_hook_logs_v2 OWNER TO postgres;
 
 --
--- Name: nc_hooks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_hooks; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_hooks (
+CREATE TABLE public.cv_hooks (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255) DEFAULT 'db'::character varying,
@@ -817,13 +817,13 @@ CREATE TABLE public.nc_hooks (
 );
 
 
-ALTER TABLE public.nc_hooks OWNER TO postgres;
+ALTER TABLE public.cv_hooks OWNER TO postgres;
 
 --
--- Name: nc_hooks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_hooks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_hooks_id_seq
+CREATE SEQUENCE public.cv_hooks_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -831,20 +831,20 @@ CREATE SEQUENCE public.nc_hooks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_hooks_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_hooks_id_seq OWNER TO postgres;
 
 --
--- Name: nc_hooks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_hooks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_hooks_id_seq OWNED BY public.nc_hooks.id;
+ALTER SEQUENCE public.cv_hooks_id_seq OWNED BY public.cv_hooks.id;
 
 
 --
--- Name: nc_hooks_v2; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_hooks_v2; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_hooks_v2 (
+CREATE TABLE public.cv_hooks_v2 (
     id character varying(20) NOT NULL,
     base_id character varying(20),
     project_id character varying(128),
@@ -870,7 +870,7 @@ CREATE TABLE public.nc_hooks_v2 (
 );
 
 
-ALTER TABLE public.nc_hooks_v2 OWNER TO postgres;
+ALTER TABLE public.cv_hooks_v2 OWNER TO postgres;
 
 --
 -- Name: nc_kanban_view_columns_v2; Type: TABLE; Schema: public; Owner: postgres
@@ -959,10 +959,10 @@ ALTER SEQUENCE public.nc_loaders_id_seq OWNED BY public.nc_loaders.id;
 
 
 --
--- Name: nc_migrations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_migrations; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_migrations (
+CREATE TABLE public.cv_migrations (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255),
@@ -979,13 +979,13 @@ CREATE TABLE public.nc_migrations (
 );
 
 
-ALTER TABLE public.nc_migrations OWNER TO postgres;
+ALTER TABLE public.cv_migrations OWNER TO postgres;
 
 --
--- Name: nc_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_migrations_id_seq
+CREATE SEQUENCE public.cv_migrations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -993,20 +993,20 @@ CREATE SEQUENCE public.nc_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_migrations_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_migrations_id_seq OWNER TO postgres;
 
 --
--- Name: nc_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_migrations_id_seq OWNED BY public.nc_migrations.id;
+ALTER SEQUENCE public.cv_migrations_id_seq OWNED BY public.cv_migrations.id;
 
 
 --
--- Name: nc_models; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_models; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_models (
+CREATE TABLE public.cv_models (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255) DEFAULT 'db'::character varying,
@@ -1034,13 +1034,13 @@ CREATE TABLE public.nc_models (
 );
 
 
-ALTER TABLE public.nc_models OWNER TO postgres;
+ALTER TABLE public.cv_models OWNER TO postgres;
 
 --
--- Name: nc_models_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_models_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_models_id_seq
+CREATE SEQUENCE public.cv_models_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1048,20 +1048,20 @@ CREATE SEQUENCE public.nc_models_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_models_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_models_id_seq OWNER TO postgres;
 
 --
--- Name: nc_models_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_models_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_models_id_seq OWNED BY public.nc_models.id;
+ALTER SEQUENCE public.cv_models_id_seq OWNED BY public.cv_models.id;
 
 
 --
--- Name: nc_models_v2; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_models_v2; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_models_v2 (
+CREATE TABLE public.cv_models_v2 (
     id character varying(20) NOT NULL,
     base_id character varying(20),
     project_id character varying(128),
@@ -1081,7 +1081,7 @@ CREATE TABLE public.nc_models_v2 (
 );
 
 
-ALTER TABLE public.nc_models_v2 OWNER TO postgres;
+ALTER TABLE public.cv_models_v2 OWNER TO postgres;
 
 --
 -- Name: nc_orgs_v2; Type: TABLE; Schema: public; Owner: postgres
@@ -1098,10 +1098,10 @@ CREATE TABLE public.nc_orgs_v2 (
 ALTER TABLE public.nc_orgs_v2 OWNER TO postgres;
 
 --
--- Name: nc_plugins; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_plugins; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_plugins (
+CREATE TABLE public.cv_plugins (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255),
@@ -1127,13 +1127,13 @@ CREATE TABLE public.nc_plugins (
 );
 
 
-ALTER TABLE public.nc_plugins OWNER TO postgres;
+ALTER TABLE public.cv_plugins OWNER TO postgres;
 
 --
--- Name: nc_plugins_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_plugins_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_plugins_id_seq
+CREATE SEQUENCE public.cv_plugins_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1141,20 +1141,20 @@ CREATE SEQUENCE public.nc_plugins_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_plugins_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_plugins_id_seq OWNER TO postgres;
 
 --
--- Name: nc_plugins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_plugins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_plugins_id_seq OWNED BY public.nc_plugins.id;
+ALTER SEQUENCE public.cv_plugins_id_seq OWNED BY public.cv_plugins.id;
 
 
 --
--- Name: nc_plugins_v2; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_plugins_v2; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_plugins_v2 (
+CREATE TABLE public.cv_plugins_v2 (
     id character varying(20) NOT NULL,
     title character varying(45),
     description text,
@@ -1178,7 +1178,7 @@ CREATE TABLE public.nc_plugins_v2 (
 );
 
 
-ALTER TABLE public.nc_plugins_v2 OWNER TO postgres;
+ALTER TABLE public.cv_plugins_v2 OWNER TO postgres;
 
 --
 -- Name: nc_project_users_v2; Type: TABLE; Schema: public; Owner: postgres
@@ -1488,10 +1488,10 @@ ALTER SEQUENCE public.nc_rpc_id_seq OWNED BY public.nc_rpc.id;
 
 
 --
--- Name: nc_shared_bases; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_shared_bases; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_shared_bases (
+CREATE TABLE public.cv_shared_bases (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255),
@@ -1504,13 +1504,13 @@ CREATE TABLE public.nc_shared_bases (
 );
 
 
-ALTER TABLE public.nc_shared_bases OWNER TO postgres;
+ALTER TABLE public.cv_shared_bases OWNER TO postgres;
 
 --
--- Name: nc_shared_bases_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_shared_bases_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_shared_bases_id_seq
+CREATE SEQUENCE public.cv_shared_bases_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1518,20 +1518,20 @@ CREATE SEQUENCE public.nc_shared_bases_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_shared_bases_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_shared_bases_id_seq OWNER TO postgres;
 
 --
--- Name: nc_shared_bases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_shared_bases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_shared_bases_id_seq OWNED BY public.nc_shared_bases.id;
+ALTER SEQUENCE public.cv_shared_bases_id_seq OWNED BY public.cv_shared_bases.id;
 
 
 --
--- Name: nc_shared_views; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_shared_views; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_shared_views (
+CREATE TABLE public.cv_shared_views (
     id integer NOT NULL,
     project_id character varying(255),
     db_alias character varying(255),
@@ -1549,13 +1549,13 @@ CREATE TABLE public.nc_shared_views (
 );
 
 
-ALTER TABLE public.nc_shared_views OWNER TO postgres;
+ALTER TABLE public.cv_shared_views OWNER TO postgres;
 
 --
--- Name: nc_shared_views_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cv_shared_views_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.nc_shared_views_id_seq
+CREATE SEQUENCE public.cv_shared_views_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1563,20 +1563,20 @@ CREATE SEQUENCE public.nc_shared_views_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.nc_shared_views_id_seq OWNER TO postgres;
+ALTER TABLE public.cv_shared_views_id_seq OWNER TO postgres;
 
 --
--- Name: nc_shared_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cv_shared_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.nc_shared_views_id_seq OWNED BY public.nc_shared_views.id;
+ALTER SEQUENCE public.cv_shared_views_id_seq OWNED BY public.cv_shared_views.id;
 
 
 --
--- Name: nc_shared_views_v2; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cv_shared_views_v2; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.nc_shared_views_v2 (
+CREATE TABLE public.cv_shared_views_v2 (
     id character varying(20) NOT NULL,
     fk_view_id character varying(20),
     meta text,
@@ -1592,7 +1592,7 @@ CREATE TABLE public.nc_shared_views_v2 (
 );
 
 
-ALTER TABLE public.nc_shared_views_v2 OWNER TO postgres;
+ALTER TABLE public.cv_shared_views_v2 OWNER TO postgres;
 
 --
 -- Name: nc_sort_v2; Type: TABLE; Schema: public; Owner: postgres
@@ -1911,10 +1911,10 @@ ALTER SEQUENCE public.xc_knex_migrationsv2_lock_index_seq OWNED BY public.xc_kne
 
 
 --
--- Name: nc_acl id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cv_acl id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_acl ALTER COLUMN id SET DEFAULT nextval('public.nc_acl_id_seq'::regclass);
+ALTER TABLE ONLY public.cv_acl ALTER COLUMN id SET DEFAULT nextval('public.cv_acl_id_seq'::regclass);
 
 
 --
@@ -1953,10 +1953,10 @@ ALTER TABLE ONLY public.nc_evolutions ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Name: nc_hooks id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cv_hooks id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_hooks ALTER COLUMN id SET DEFAULT nextval('public.nc_hooks_id_seq'::regclass);
+ALTER TABLE ONLY public.cv_hooks ALTER COLUMN id SET DEFAULT nextval('public.cv_hooks_id_seq'::regclass);
 
 
 --
@@ -1967,24 +1967,24 @@ ALTER TABLE ONLY public.nc_loaders ALTER COLUMN id SET DEFAULT nextval('public.n
 
 
 --
--- Name: nc_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cv_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_migrations ALTER COLUMN id SET DEFAULT nextval('public.nc_migrations_id_seq'::regclass);
-
-
---
--- Name: nc_models id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.nc_models ALTER COLUMN id SET DEFAULT nextval('public.nc_models_id_seq'::regclass);
+ALTER TABLE ONLY public.cv_migrations ALTER COLUMN id SET DEFAULT nextval('public.cv_migrations_id_seq'::regclass);
 
 
 --
--- Name: nc_plugins id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cv_models id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_plugins ALTER COLUMN id SET DEFAULT nextval('public.nc_plugins_id_seq'::regclass);
+ALTER TABLE ONLY public.cv_models ALTER COLUMN id SET DEFAULT nextval('public.cv_models_id_seq'::regclass);
+
+
+--
+-- Name: cv_plugins id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cv_plugins ALTER COLUMN id SET DEFAULT nextval('public.cv_plugins_id_seq'::regclass);
 
 
 --
@@ -2023,17 +2023,17 @@ ALTER TABLE ONLY public.nc_rpc ALTER COLUMN id SET DEFAULT nextval('public.nc_rp
 
 
 --
--- Name: nc_shared_bases id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cv_shared_bases id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_shared_bases ALTER COLUMN id SET DEFAULT nextval('public.nc_shared_bases_id_seq'::regclass);
+ALTER TABLE ONLY public.cv_shared_bases ALTER COLUMN id SET DEFAULT nextval('public.cv_shared_bases_id_seq'::regclass);
 
 
 --
--- Name: nc_shared_views id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cv_shared_views id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_shared_views ALTER COLUMN id SET DEFAULT nextval('public.nc_shared_views_id_seq'::regclass);
+ALTER TABLE ONLY public.cv_shared_views ALTER COLUMN id SET DEFAULT nextval('public.cv_shared_views_id_seq'::regclass);
 
 
 --
@@ -2072,18 +2072,18 @@ ALTER TABLE ONLY public.xc_knex_migrationsv2_lock ALTER COLUMN index SET DEFAULT
 
 
 --
--- Data for Name: nc_acl; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_acl; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_acl (id, project_id, db_alias, tn, acl, type, created_at, updated_at) FROM stdin;
+COPY public.cv_acl (id, project_id, db_alias, tn, acl, type, created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Name: nc_acl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_acl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_acl_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cv_acl_id_seq', 1, false);
 
 
 --
@@ -3156,34 +3156,34 @@ rec49QGAIoBcKGnYR	recxxtP9pVtsCoGzo
 
 
 --
--- Data for Name: nc_hook_logs_v2; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_hook_logs_v2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_hook_logs_v2 (id, base_id, project_id, fk_hook_id, type, event, operation, test_call, payload, conditions, notification, error_code, error_message, error, execution_time, response, triggered_by, created_at, updated_at) FROM stdin;
+COPY public.cv_hook_logs_v2 (id, base_id, project_id, fk_hook_id, type, event, operation, test_call, payload, conditions, notification, error_code, error_message, error, execution_time, response, triggered_by, created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Data for Name: nc_hooks; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_hooks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_hooks (id, project_id, db_alias, title, description, env, tn, type, event, operation, async, payload, url, headers, condition, notification, retries, retry_interval, timeout, active, created_at, updated_at) FROM stdin;
+COPY public.cv_hooks (id, project_id, db_alias, title, description, env, tn, type, event, operation, async, payload, url, headers, condition, notification, retries, retry_interval, timeout, active, created_at, updated_at) FROM stdin;
 1	\N	db	\N	\N	all	\N	AUTH_MIDDLEWARE	\N	\N	f	t	\N	\N	\N	\N	0	60000	60000	t	\N	\N
 \.
 
 
 --
--- Name: nc_hooks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_hooks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_hooks_id_seq', 1, true);
+SELECT pg_catalog.setval('public.cv_hooks_id_seq', 1, true);
 
 
 --
--- Data for Name: nc_hooks_v2; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_hooks_v2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_hooks_v2 (id, base_id, project_id, fk_model_id, title, description, env, type, event, operation, async, payload, url, headers, condition, notification, retries, retry_interval, timeout, active, created_at, updated_at) FROM stdin;
+COPY public.cv_hooks_v2 (id, base_id, project_id, fk_model_id, title, description, env, type, event, operation, async, payload, url, headers, condition, notification, retries, retry_interval, timeout, active, created_at, updated_at) FROM stdin;
 hk_cbdg91nbcvl3yp	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	md_lh3bakzk8scz7r	Webhook-1	\N	all	\N	after	insert	f	f	\N	\N	f	{"type":"URL","payload":{"method":"POST","body":"{{ json data }}","path":"http://localhost:9090/hook"}}	0	60000	60000	t	2022-06-13 07:19:02.703457+00	2022-06-13 07:19:02.703457+00
 hk_ehmnjeaqlau31j	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	md_lh3bakzk8scz7r	Webhook-2	\N	all	\N	after	update	f	f	\N	\N	f	{"type":"URL","payload":{"method":"POST","body":"{{ json data }}","path":"http://localhost:9090/hook"}}	0	60000	60000	t	2022-06-13 07:19:14.716389+00	2022-06-13 07:19:14.716389+00
 hk_cr03i3db3y94t9	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	md_lh3bakzk8scz7r	Webhook-3	\N	all	\N	after	delete	f	f	\N	\N	f	{"type":"URL","payload":{"method":"POST","body":"{{ json data }}","path":"http://localhost:9090/hook"}}	0	60000	60000	t	2022-06-13 07:19:25.520937+00	2022-06-13 07:19:25.520937+00
@@ -3222,40 +3222,40 @@ SELECT pg_catalog.setval('public.nc_loaders_id_seq', 1, false);
 
 
 --
--- Data for Name: nc_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_migrations (id, project_id, db_alias, up, down, title, title_down, description, batch, checksum, status, created_at, updated_at) FROM stdin;
+COPY public.cv_migrations (id, project_id, db_alias, up, down, title, title_down, description, batch, checksum, status, created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Name: nc_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_migrations_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cv_migrations_id_seq', 1, false);
 
 
 --
--- Data for Name: nc_models; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_models; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_models (id, project_id, db_alias, title, alias, type, meta, schema, schema_previous, services, messages, enabled, parent_model_title, show_as, query_params, list_idx, tags, pinned, created_at, updated_at, mm, m_to_m_meta, "order", view_order) FROM stdin;
+COPY public.cv_models (id, project_id, db_alias, title, alias, type, meta, schema, schema_previous, services, messages, enabled, parent_model_title, show_as, query_params, list_idx, tags, pinned, created_at, updated_at, mm, m_to_m_meta, "order", view_order) FROM stdin;
 \.
 
 
 --
--- Name: nc_models_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_models_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_models_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cv_models_id_seq', 1, false);
 
 
 --
--- Data for Name: nc_models_v2; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_models_v2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_models_v2 (id, base_id, project_id, table_name, title, type, meta, schema, enabled, mm, tags, pinned, deleted, "order", created_at, updated_at) FROM stdin;
+COPY public.cv_models_v2 (id, base_id, project_id, table_name, title, type, meta, schema, enabled, mm, tags, pinned, deleted, "order", created_at, updated_at) FROM stdin;
 md_w4bsfg7gtmqque	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	nc_hblt___Film	Film	table	\N	\N	t	f	\N	\N	\N	1	2022-06-13 07:00:46.465781+00	2022-06-13 07:00:46.465781+00
 md_lh3bakzk8scz7r	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	nc_hblt___Actor	Actor	table	\N	\N	t	f	\N	\N	\N	2	2022-06-13 07:00:46.757762+00	2022-06-13 07:00:46.757762+00
 md_ud292ppq36mp14	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	nc_hblt___Producer	Producer	table	\N	\N	t	f	\N	\N	\N	3	2022-06-13 07:00:46.878627+00	2022-06-13 07:00:46.878627+00
@@ -3272,27 +3272,27 @@ COPY public.nc_orgs_v2 (id, title, created_at, updated_at) FROM stdin;
 
 
 --
--- Data for Name: nc_plugins; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_plugins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_plugins (id, project_id, db_alias, title, description, active, rating, version, docs, status, status_details, logo, icon, tags, category, input_schema, input, creator, creator_website, price, created_at, updated_at) FROM stdin;
+COPY public.cv_plugins (id, project_id, db_alias, title, description, active, rating, version, docs, status, status_details, logo, icon, tags, category, input_schema, input, creator, creator_website, price, created_at, updated_at) FROM stdin;
 1	\N	\N	Google	Google OAuth2 login.	f	\N	0.0.1	\N	install	\N	plugins/google.png	\N	Authentication	Google	{"title":"Configure Google Auth","items":[{"key":"client_id","label":"Client ID","placeholder":"Client ID","type":"SingleLineText","required":true},{"key":"client_secret","label":"Client Secret","placeholder":"Client Secret","type":"Password","required":true},{"key":"redirect_url","label":"Redirect URL","placeholder":"Redirect URL","type":"SingleLineText","required":true}],"actions":[{"label":"Test","placeholder":"Test","key":"test","actionType":"TEST","type":"Button"},{"label":"Save","placeholder":"Save","key":"save","actionType":"SUBMIT","type":"Button"}],"msgOnInstall":"Successfully installed and configured Google Authentication, restart ClairView","msgOnUninstall":""}	\N	\N	\N	Free	\N	\N
 3	\N	\N	Metadata LRU Cache	A cache object that deletes the least-recently-used items.	t	\N	0.0.1	\N	install	\N	plugins/xgene.png	\N	Cache	Cache	{"title":"Configure Metadata LRU Cache","items":[{"key":"max","label":"Maximum Size","placeholder":"Maximum Size","type":"SingleLineText","required":true},{"key":"maxAge","label":"Maximum Age(in ms)","placeholder":"Maximum Age(in ms)","type":"SingleLineText","required":true}],"actions":[{"label":"Test","placeholder":"Test","key":"test","actionType":"TEST","type":"Button"},{"label":"Save","placeholder":"Save","key":"save","actionType":"SUBMIT","type":"Button"}],"msgOnInstall":"Successfully updated LRU cache options.","msgOnUninstall":""}	{"max":500,"maxAge":86400000}	\N	\N	Free	\N	\N
 \.
 
 
 --
--- Name: nc_plugins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_plugins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_plugins_id_seq', 3, true);
+SELECT pg_catalog.setval('public.cv_plugins_id_seq', 3, true);
 
 
 --
--- Data for Name: nc_plugins_v2; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_plugins_v2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_plugins_v2 (id, title, description, active, rating, version, docs, status, status_details, logo, icon, tags, category, input_schema, input, creator, creator_website, price, created_at, updated_at) FROM stdin;
+COPY public.cv_plugins_v2 (id, title, description, active, rating, version, docs, status, status_details, logo, icon, tags, category, input_schema, input, creator, creator_website, price, created_at, updated_at) FROM stdin;
 nc_ue47dz5lnghqq4	Slack	Slack brings team communication and collaboration into one place so you can get more work done, whether you belong to a large enterprise or a small business. 	f	\N	0.0.1	\N	install	\N	plugins/slack.webp	\N	Chat	Chat	{"title":"Configure Slack","array":true,"items":[{"key":"channel","label":"Channel Name","placeholder":"Channel Name","type":"SingleLineText","required":true},{"key":"webhook_url","label":"Webhook URL","placeholder":"Webhook URL","type":"Password","required":true}],"actions":[{"label":"Test","placeholder":"Test","key":"test","actionType":"TEST","type":"Button"},{"label":"Save","placeholder":"Save","key":"save","actionType":"SUBMIT","type":"Button"}],"msgOnInstall":"Successfully installed and Slack is enabled for notification.","msgOnUninstall":""}	\N	\N	\N	\N	2022-06-13 07:00:02.577959+00	2022-06-13 07:00:02.577959+00
 nc_2enis5bzipn39y	Microsoft Teams	Microsoft Teams is for everyone · Instantly go from group chat to video call with the touch of a button.	f	\N	0.0.1	\N	install	\N	plugins/teams.ico	\N	Chat	Chat	{"title":"Configure Microsoft Teams","array":true,"items":[{"key":"channel","label":"Channel Name","placeholder":"Channel Name","type":"SingleLineText","required":true},{"key":"webhook_url","label":"Webhook URL","placeholder":"Webhook URL","type":"Password","required":true}],"actions":[{"label":"Test","placeholder":"Test","key":"test","actionType":"TEST","type":"Button"},{"label":"Save","placeholder":"Save","key":"save","actionType":"SUBMIT","type":"Button"}],"msgOnInstall":"Successfully installed and Microsoft Teams is enabled for notification.","msgOnUninstall":""}	\N	\N	\N	\N	2022-06-13 07:00:02.580437+00	2022-06-13 07:00:02.580437+00
 nc_wl4r0wn8ui6czq	Discord	Discord is the easiest way to talk over voice, video, and text. Talk, chat, hang out, and stay close with your friends and communities.	f	\N	0.0.1	\N	install	\N	plugins/discord.png	\N	Chat	Chat	{"title":"Configure Discord","array":true,"items":[{"key":"channel","label":"Channel Name","placeholder":"Channel Name","type":"SingleLineText","required":true},{"key":"webhook_url","label":"Webhook URL","type":"Password","placeholder":"Webhook URL","required":true}],"actions":[{"label":"Test","placeholder":"Test","key":"test","actionType":"TEST","type":"Button"},{"label":"Save","placeholder":"Save","key":"save","actionType":"SUBMIT","type":"Button"}],"msgOnInstall":"Successfully installed and Discord is enabled for notification.","msgOnUninstall":""}	\N	\N	\N	\N	2022-06-13 07:00:02.582583+00	2022-06-13 07:00:02.582583+00
@@ -3432,40 +3432,40 @@ SELECT pg_catalog.setval('public.nc_rpc_id_seq', 1, false);
 
 
 --
--- Data for Name: nc_shared_bases; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_shared_bases; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_shared_bases (id, project_id, db_alias, roles, shared_base_id, enabled, password, created_at, updated_at) FROM stdin;
+COPY public.cv_shared_bases (id, project_id, db_alias, roles, shared_base_id, enabled, password, created_at, updated_at) FROM stdin;
 \.
 
 
 --
--- Name: nc_shared_bases_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_shared_bases_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_shared_bases_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cv_shared_bases_id_seq', 1, false);
 
 
 --
--- Data for Name: nc_shared_views; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_shared_views; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_shared_views (id, project_id, db_alias, model_name, meta, query_params, view_id, show_all_fields, allow_copy, password, created_at, updated_at, view_type, view_name) FROM stdin;
+COPY public.cv_shared_views (id, project_id, db_alias, model_name, meta, query_params, view_id, show_all_fields, allow_copy, password, created_at, updated_at, view_type, view_name) FROM stdin;
 \.
 
 
 --
--- Name: nc_shared_views_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cv_shared_views_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.nc_shared_views_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cv_shared_views_id_seq', 1, false);
 
 
 --
--- Data for Name: nc_shared_views_v2; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cv_shared_views_v2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nc_shared_views_v2 (id, fk_view_id, meta, query_params, view_id, show_all_fields, allow_copy, password, deleted, "order", created_at, updated_at) FROM stdin;
+COPY public.cv_shared_views_v2 (id, fk_view_id, meta, query_params, view_id, show_all_fields, allow_copy, password, deleted, "order", created_at, updated_at) FROM stdin;
 \.
 
 
@@ -3485,8 +3485,8 @@ so_z0dmgqwd9vqdxm	ds_b5zy5nbvnbxowl	p_99s02mvqpc2j14	vw_yv75dsa7wwvj3u	cl_6h7ixf
 COPY public.nc_store (id, project_id, db_alias, key, value, type, env, tag, created_at, updated_at) FROM stdin;
 1	\N		NC_DEBUG	{"nc:app":false,"nc:api:rest":false,"nc:api:base":false,"nc:api:gql":false,"nc:api:grpc":false,"nc:migrator":false,"nc:datamapper":false}	\N	\N	\N	\N	\N
 2	\N		NC_PROJECT_COUNT	0	\N	\N	\N	\N	\N
-3			nc_auth_jwt_secret	ffde7080-2a87-46db-a37a-c63362ee65c9	\N	\N	\N	2022-06-13 07:00:02.423767+00	2022-06-13 07:00:02.423767+00
-4			nc_server_id	6f06d97c2c27dd051c8dbb7dac19e082d64b4c0ebe8cb0487c473ad81f5f573e	\N	\N	\N	2022-06-13 07:00:02.482361+00	2022-06-13 07:00:02.482361+00
+3			cv_auth_jwt_secret	ffde7080-2a87-46db-a37a-c63362ee65c9	\N	\N	\N	2022-06-13 07:00:02.423767+00	2022-06-13 07:00:02.423767+00
+4			cv_server_id	6f06d97c2c27dd051c8dbb7dac19e082d64b4c0ebe8cb0487c473ad81f5f573e	\N	\N	\N	2022-06-13 07:00:02.482361+00	2022-06-13 07:00:02.482361+00
 5			NC_CONFIG_MAIN	{"version":"0090000"}	\N	\N	\N	2022-06-13 07:00:02.484129+00	2022-06-13 07:00:02.484129+00
 \.
 
@@ -3576,9 +3576,9 @@ COPY public.xc_knex_migrations (id, name, batch, migration_time) FROM stdin;
 3	fkn	1	2022-06-13 07:00:02.167+00
 4	viewType	1	2022-06-13 07:00:02.169+00
 5	viewName	1	2022-06-13 07:00:02.17+00
-6	nc_006_alter_nc_shared_views	1	2022-06-13 07:00:02.173+00
-7	nc_007_alter_nc_shared_views_1	1	2022-06-13 07:00:02.175+00
-8	nc_008_add_nc_shared_bases	1	2022-06-13 07:00:02.18+00
+6	nc_006_alter_cv_shared_views	1	2022-06-13 07:00:02.173+00
+7	nc_007_alter_cv_shared_views_1	1	2022-06-13 07:00:02.175+00
+8	nc_008_add_cv_shared_bases	1	2022-06-13 07:00:02.18+00
 9	nc_009_add_model_order	1	2022-06-13 07:00:02.185+00
 10	nc_010_add_parent_title_column	1	2022-06-13 07:00:02.187+00
 11	nc_011_remove_old_ses_plugin	1	2022-06-13 07:00:02.189+00
@@ -3646,11 +3646,11 @@ SELECT pg_catalog.setval('public.xc_knex_migrationsv2_lock_index_seq', 1, true);
 
 
 --
--- Name: nc_acl nc_acl_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_acl cv_acl_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_acl
-    ADD CONSTRAINT nc_acl_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_acl
+    ADD CONSTRAINT cv_acl_pkey PRIMARY KEY (id);
 
 
 --
@@ -3854,27 +3854,27 @@ ALTER TABLE ONLY public.nc_hblt___nc_m2m__9oevq0x2z
 
 
 --
--- Name: nc_hook_logs_v2 nc_hook_logs_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_hook_logs_v2 cv_hook_logs_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_hook_logs_v2
-    ADD CONSTRAINT nc_hook_logs_v2_pkey PRIMARY KEY (id);
-
-
---
--- Name: nc_hooks nc_hooks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.nc_hooks
-    ADD CONSTRAINT nc_hooks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_hook_logs_v2
+    ADD CONSTRAINT cv_hook_logs_v2_pkey PRIMARY KEY (id);
 
 
 --
--- Name: nc_hooks_v2 nc_hooks_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_hooks cv_hooks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_hooks_v2
-    ADD CONSTRAINT nc_hooks_v2_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_hooks
+    ADD CONSTRAINT cv_hooks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cv_hooks_v2 cv_hooks_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cv_hooks_v2
+    ADD CONSTRAINT cv_hooks_v2_pkey PRIMARY KEY (id);
 
 
 --
@@ -3902,27 +3902,27 @@ ALTER TABLE ONLY public.nc_loaders
 
 
 --
--- Name: nc_migrations nc_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_migrations cv_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_migrations
-    ADD CONSTRAINT nc_migrations_pkey PRIMARY KEY (id);
-
-
---
--- Name: nc_models nc_models_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.nc_models
-    ADD CONSTRAINT nc_models_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_migrations
+    ADD CONSTRAINT cv_migrations_pkey PRIMARY KEY (id);
 
 
 --
--- Name: nc_models_v2 nc_models_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_models cv_models_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_models_v2
-    ADD CONSTRAINT nc_models_v2_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_models
+    ADD CONSTRAINT cv_models_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cv_models_v2 cv_models_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cv_models_v2
+    ADD CONSTRAINT cv_models_v2_pkey PRIMARY KEY (id);
 
 
 --
@@ -3934,19 +3934,19 @@ ALTER TABLE ONLY public.nc_orgs_v2
 
 
 --
--- Name: nc_plugins nc_plugins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_plugins cv_plugins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_plugins
-    ADD CONSTRAINT nc_plugins_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_plugins
+    ADD CONSTRAINT cv_plugins_pkey PRIMARY KEY (id);
 
 
 --
--- Name: nc_plugins_v2 nc_plugins_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_plugins_v2 cv_plugins_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_plugins_v2
-    ADD CONSTRAINT nc_plugins_v2_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_plugins_v2
+    ADD CONSTRAINT cv_plugins_v2_pkey PRIMARY KEY (id);
 
 
 --
@@ -4006,27 +4006,27 @@ ALTER TABLE ONLY public.nc_rpc
 
 
 --
--- Name: nc_shared_bases nc_shared_bases_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_shared_bases cv_shared_bases_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_shared_bases
-    ADD CONSTRAINT nc_shared_bases_pkey PRIMARY KEY (id);
-
-
---
--- Name: nc_shared_views nc_shared_views_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.nc_shared_views
-    ADD CONSTRAINT nc_shared_views_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_shared_bases
+    ADD CONSTRAINT cv_shared_bases_pkey PRIMARY KEY (id);
 
 
 --
--- Name: nc_shared_views_v2 nc_shared_views_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_shared_views cv_shared_views_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_shared_views_v2
-    ADD CONSTRAINT nc_shared_views_v2_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.cv_shared_views
+    ADD CONSTRAINT cv_shared_views_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cv_shared_views_v2 cv_shared_views_v2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cv_shared_views_v2
+    ADD CONSTRAINT cv_shared_views_v2_pkey PRIMARY KEY (id);
 
 
 --
@@ -4153,24 +4153,24 @@ CREATE INDEX nc_hblt___producer_nc_hblt___film_id_index ON public."nc_hblt___Pro
 
 
 --
--- Name: nc_models_db_alias_title_index; Type: INDEX; Schema: public; Owner: postgres
+-- Name: cv_models_db_alias_title_index; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX nc_models_db_alias_title_index ON public.nc_models USING btree (db_alias, title);
-
-
---
--- Name: nc_models_order_index; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX nc_models_order_index ON public.nc_models USING btree ("order");
+CREATE INDEX cv_models_db_alias_title_index ON public.cv_models USING btree (db_alias, title);
 
 
 --
--- Name: nc_models_view_order_index; Type: INDEX; Schema: public; Owner: postgres
+-- Name: cv_models_order_index; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX nc_models_view_order_index ON public.nc_models USING btree (view_order);
+CREATE INDEX cv_models_order_index ON public.cv_models USING btree ("order");
+
+
+--
+-- Name: cv_models_view_order_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cv_models_view_order_index ON public.cv_models USING btree (view_order);
 
 
 --
@@ -4228,7 +4228,7 @@ ALTER TABLE ONLY public.nc_audit_v2
 --
 
 ALTER TABLE ONLY public.nc_audit_v2
-    ADD CONSTRAINT nc_audit_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.nc_models_v2(id);
+    ADD CONSTRAINT nc_audit_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.cv_models_v2(id);
 
 
 --
@@ -4308,7 +4308,7 @@ ALTER TABLE ONLY public.nc_col_relations_v2
 --
 
 ALTER TABLE ONLY public.nc_col_relations_v2
-    ADD CONSTRAINT nc_col_relations_v2_fk_mm_model_id_foreign FOREIGN KEY (fk_mm_model_id) REFERENCES public.nc_models_v2(id);
+    ADD CONSTRAINT nc_col_relations_v2_fk_mm_model_id_foreign FOREIGN KEY (fk_mm_model_id) REFERENCES public.cv_models_v2(id);
 
 
 --
@@ -4332,7 +4332,7 @@ ALTER TABLE ONLY public.nc_col_relations_v2
 --
 
 ALTER TABLE ONLY public.nc_col_relations_v2
-    ADD CONSTRAINT nc_col_relations_v2_fk_related_model_id_foreign FOREIGN KEY (fk_related_model_id) REFERENCES public.nc_models_v2(id);
+    ADD CONSTRAINT nc_col_relations_v2_fk_related_model_id_foreign FOREIGN KEY (fk_related_model_id) REFERENCES public.cv_models_v2(id);
 
 
 --
@@ -4372,7 +4372,7 @@ ALTER TABLE ONLY public.nc_col_select_options_v2
 --
 
 ALTER TABLE ONLY public.nc_columns_v2
-    ADD CONSTRAINT nc_columns_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.nc_models_v2(id);
+    ADD CONSTRAINT nc_columns_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.cv_models_v2(id);
 
 
 --
@@ -4396,7 +4396,7 @@ ALTER TABLE ONLY public.nc_filter_exp_v2
 --
 
 ALTER TABLE ONLY public.nc_filter_exp_v2
-    ADD CONSTRAINT nc_filter_exp_v2_fk_hook_id_foreign FOREIGN KEY (fk_hook_id) REFERENCES public.nc_hooks_v2(id);
+    ADD CONSTRAINT nc_filter_exp_v2_fk_hook_id_foreign FOREIGN KEY (fk_hook_id) REFERENCES public.cv_hooks_v2(id);
 
 
 --
@@ -4520,11 +4520,11 @@ ALTER TABLE ONLY public."nc_hblt___Producer"
 
 
 --
--- Name: nc_hooks_v2 nc_hooks_v2_fk_model_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_hooks_v2 cv_hooks_v2_fk_model_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_hooks_v2
-    ADD CONSTRAINT nc_hooks_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.nc_models_v2(id);
+ALTER TABLE ONLY public.cv_hooks_v2
+    ADD CONSTRAINT cv_hooks_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.cv_models_v2(id);
 
 
 --
@@ -4552,19 +4552,19 @@ ALTER TABLE ONLY public.nc_kanban_view_v2
 
 
 --
--- Name: nc_models_v2 nc_models_v2_base_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_models_v2 cv_models_v2_base_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_models_v2
-    ADD CONSTRAINT nc_models_v2_base_id_foreign FOREIGN KEY (base_id) REFERENCES public.nc_bases_v2(id);
+ALTER TABLE ONLY public.cv_models_v2
+    ADD CONSTRAINT cv_models_v2_base_id_foreign FOREIGN KEY (base_id) REFERENCES public.nc_bases_v2(id);
 
 
 --
--- Name: nc_models_v2 nc_models_v2_project_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_models_v2 cv_models_v2_project_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_models_v2
-    ADD CONSTRAINT nc_models_v2_project_id_foreign FOREIGN KEY (project_id) REFERENCES public.nc_projects_v2(id);
+ALTER TABLE ONLY public.cv_models_v2
+    ADD CONSTRAINT cv_models_v2_project_id_foreign FOREIGN KEY (project_id) REFERENCES public.nc_projects_v2(id);
 
 
 --
@@ -4584,11 +4584,11 @@ ALTER TABLE ONLY public.nc_project_users_v2
 
 
 --
--- Name: nc_shared_views_v2 nc_shared_views_v2_fk_view_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cv_shared_views_v2 cv_shared_views_v2_fk_view_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.nc_shared_views_v2
-    ADD CONSTRAINT nc_shared_views_v2_fk_view_id_foreign FOREIGN KEY (fk_view_id) REFERENCES public.nc_views_v2(id);
+ALTER TABLE ONLY public.cv_shared_views_v2
+    ADD CONSTRAINT cv_shared_views_v2_fk_view_id_foreign FOREIGN KEY (fk_view_id) REFERENCES public.nc_views_v2(id);
 
 
 --
@@ -4652,7 +4652,7 @@ ALTER TABLE ONLY public.nc_teams_v2
 --
 
 ALTER TABLE ONLY public.nc_views_v2
-    ADD CONSTRAINT nc_views_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.nc_models_v2(id);
+    ADD CONSTRAINT nc_views_v2_fk_model_id_foreign FOREIGN KEY (fk_model_id) REFERENCES public.cv_models_v2(id);
 
 
 --

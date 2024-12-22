@@ -193,7 +193,7 @@ pnpm run watch:run
 ## Frontend lokal ausführen
 
 ```shell
-cd packages/nc-gui
+cd packages/cv-gui
 pnpm install
 pnpm run dev
 # localhost:3000/dashboard iM Browser aufrufen
@@ -201,7 +201,7 @@ pnpm run dev
 
 Änderungen am Code starten automatisch neu.
 
-> clairview/packages/clairview enthält nc-lib-gui, die entwickelte Version von nc-gui, die in der npm-Registry gehostet wird. Sie können localhost:8000/dashboard im Browser aufrufen, nachdem Sie das Backend lokal gestartet haben, wenn Sie nur das Backend ändern möchten.
+> clairview/packages/clairview enthält cv-lib-gui, die entwickelte Version von cv-gui, die in der npm-Registry gehostet wird. Sie können localhost:8000/dashboard im Browser aufrufen, nachdem Sie das Backend lokal gestartet haben, wenn Sie nur das Backend ändern möchten.
 
 # Beiträge
 

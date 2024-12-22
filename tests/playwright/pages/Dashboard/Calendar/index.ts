@@ -38,20 +38,20 @@ export class CalendarPage extends BasePage {
   }
 
   get() {
-    return this.dashboard.rootPage.getByTestId('nc-calendar-wrapper');
+    return this.dashboard.rootPage.getByTestId('cv-calendar-wrapper');
   }
 
   async verifySideBarClosed() {
-    const sideBar = this.get().getByTestId('nc-calendar-side-menu');
+    const sideBar = this.get().getByTestId('cv-calendar-side-menu');
     const classList = await sideBar.evaluate(el => [...el.classList]);
-    expect(classList).not.toContain('nc-calendar-side-menu-open');
+    expect(classList).not.toContain('cv-calendar-side-menu-open');
   }
 
   async verifySideBarOpen() {
-    const sideBar = this.get().getByTestId('nc-calendar-side-menu');
+    const sideBar = this.get().getByTestId('cv-calendar-side-menu');
 
     const classList = await sideBar.evaluate(el => [...el.classList]);
-    expect(classList).toContain('nc-calendar-side-menu-open');
+    expect(classList).toContain('cv-calendar-side-menu-open');
   }
 
   async waitLoading() {
@@ -59,7 +59,7 @@ export class CalendarPage extends BasePage {
   }
 
   async toggleSideBar() {
-    await this.rootPage.getByTestId('nc-calendar-side-bar-btn').click();
+    await this.rootPage.getByTestId('cv-calendar-side-bar-btn').click();
     await this.rootPage.waitForTimeout(500);
   }
 }

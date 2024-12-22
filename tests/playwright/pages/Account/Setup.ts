@@ -18,19 +18,19 @@ export class AccountSetupPage extends BasePage {
 
   async goto() {
     await this.rootPage.goto('/#/account/setup');
-    await this.rootPage.locator(`[data-test-id="nc-setup"]`).isVisible();
+    await this.rootPage.locator(`[data-test-id="cv-setup"]`).isVisible();
   }
 
   get() {
-    return this.accountPage.get().getByTestId('nc-setup');
+    return this.accountPage.get().getByTestId('cv-setup');
   }
 
   getCategoryCard(key: 'email' | 'storage' = 'email') {
-    return this.get().getByTestId(`nc-setup-${key}`);
+    return this.get().getByTestId(`cv-setup-${key}`);
   }
 
   async isConfigured(key: 'email' | 'storage' = 'email', isConfigured = true) {
-    return await expect(this.getCategoryCard(key).locator('.nc-configured')).toHaveCount(isConfigured ? 1 : 0);
+    return await expect(this.getCategoryCard(key).locator('.cv-configured')).toHaveCount(isConfigured ? 1 : 0);
   }
 
   async configure({
@@ -49,7 +49,7 @@ export class AccountSetupPage extends BasePage {
   }
 
   async confirmReset() {
-    return this.rootPage.locator('.nc-modal-plugin-reset-conform').getByTestId('nc-reset-confirm-btn').click();
+    return this.rootPage.locator('.cv-modal-plugin-reset-conform').getByTestId('cv-reset-confirm-btn').click();
   }
 
   async resetConfig({ plugin, key }: { plugin: string; key: string }) {

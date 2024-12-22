@@ -1,6 +1,6 @@
 import TwilioWhatsapp from './TwilioWhatsapp';
-import type { IWebhookNotificationAdapter } from '~/types/nc-plugin';
-import { XcWebhookNotificationPlugin } from '~/types/nc-plugin';
+import type { IWebhookNotificationAdapter } from '~/types/cv-plugin';
+import { XcWebhookNotificationPlugin } from '~/types/cv-plugin';
 
 class TwilioWhatsappPlugin extends XcWebhookNotificationPlugin {
   private static notificationAdapter: TwilioWhatsapp;

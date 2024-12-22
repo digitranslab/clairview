@@ -56,11 +56,11 @@ export class CellPageObject extends BasePage {
 
   get({ indexMap, index, columnHeader }: CellProps): Locator {
     if (this.parent instanceof SharedFormPage) {
-      return this.parent.get().locator(`[data-testid="nc-form-input-cell-${columnHeader}"]`).first();
+      return this.parent.get().locator(`[data-testid="cv-form-input-cell-${columnHeader}"]`).first();
     } else if (this.parent instanceof SurveyFormPage) {
       return this.parent
         .get()
-        .locator(`[data-testid="nc-survey-form__input-${columnHeader.replace(' ', '')}"]`)
+        .locator(`[data-testid="cv-survey-form__input-${columnHeader.replace(' ', '')}"]`)
         .first();
     } else if (this.parent instanceof GridPage) {
       return this.parent.get().locator(`td[data-testid="cell-${columnHeader}-${index}"]`).first();
@@ -106,7 +106,7 @@ export class CellPageObject extends BasePage {
   async inCellExpand({ index, columnHeader }: CellProps) {
     // await this.get({ index, columnHeader }).hover();
     await this.waitForResponse({
-      uiAction: () => this.get({ index, columnHeader }).locator('.nc-datatype-link').click(),
+      uiAction: () => this.get({ index, columnHeader }).locator('.cv-datatype-link').click(),
       requestUrlPathToMatch: '/api/v1/db/data/noco',
       httpMethodsToMatch: ['GET'],
     });
@@ -114,7 +114,7 @@ export class CellPageObject extends BasePage {
 
   async inCellAdd({ index, columnHeader }: CellProps) {
     await this.get({ index, columnHeader }).hover();
-    await this.get({ index, columnHeader }).locator('.nc-action-icon.nc-plus').click();
+    await this.get({ index, columnHeader }).locator('.cv-action-icon.cv-plus').click();
   }
 
   async verifyCellActiveSelected({ index, columnHeader }: CellProps) {
@@ -202,7 +202,7 @@ export class CellPageObject extends BasePage {
           const cell = await this.get({
             index,
             columnHeader,
-          }).locator(`[data-testid="nc-geo-data-lat-long-set"]`);
+          }).locator(`[data-testid="cv-geo-data-lat-long-set"]`);
           return await cell.textContent(); //.getAttribute('title');
         })
         .toEqual(expectedValue);
@@ -219,7 +219,7 @@ export class CellPageObject extends BasePage {
           const cell = await this.get({
             index,
             columnHeader,
-          }).locator('.nc-date-picker');
+          }).locator('.cv-date-picker');
           return await cell.getAttribute('title');
         })
         .toEqual(expectedValue);
@@ -312,7 +312,7 @@ export class CellPageObject extends BasePage {
     options?: { singular?: string; plural?: string };
   }) {
     const cell = this.get({ index, columnHeader });
-    const linkText = cell.locator('.nc-datatype-link');
+    const linkText = cell.locator('.cv-datatype-link');
 
     await cell.scrollIntoViewIfNeeded();
 
@@ -360,14 +360,14 @@ export class CellPageObject extends BasePage {
         });
 
         // wait for child list to open
-        await this.rootPage.waitForSelector('.nc-modal-child-list:visible');
+        await this.rootPage.waitForSelector('.cv-modal-child-list:visible');
 
         // verify child list count & contents
         await expect.poll(() => this.rootPage.locator('.ant-card:visible').count()).toBe(count);
 
         // close child list
-        // await this.rootPage.locator('.nc-modal-child-list').locator('.nc-close-btn').last().click();
-        await this.rootPage.locator('.nc-modal-child-list').getByTestId('nc-link-count-info').click();
+        // await this.rootPage.locator('.cv-modal-child-list').locator('.cv-close-btn').last().click();
+        await this.rootPage.locator('.cv-modal-child-list').getByTestId('cv-link-count-info').click();
         await this.rootPage.keyboard.press('Escape');
       }
     }
@@ -375,29 +375,29 @@ export class CellPageObject extends BasePage {
 
   async unlinkVirtualCell({ index, columnHeader }: CellProps) {
     const cell = this.get({ index, columnHeader });
-    const isLink = await cell.locator('.nc-datatype-link').count();
+    const isLink = await cell.locator('.cv-datatype-link').count();
 
     // Count will be 0 for BT columns
     if (!isLink) {
       await cell.click();
-      await cell.locator('.nc-icon.unlink-icon').click();
+      await cell.locator('.cv-icon.unlink-icon').click();
       // await cell.click();
     }
 
     // For HM/MM columns
     else {
-      await cell.locator('.nc-datatype-link').click();
+      await cell.locator('.cv-datatype-link').click();
       await this.rootPage
-        .locator(`[data-testid="nc-child-list-item"]`)
+        .locator(`[data-testid="cv-child-list-item"]`)
         .last()
         .waitFor({ state: 'visible', timeout: 3000 });
 
       await this.waitForResponse({
         uiAction: () =>
           this.rootPage
-            .locator(`[data-testid="nc-child-list-item"]`)
+            .locator(`[data-testid="cv-child-list-item"]`)
             .last()
-            .locator('button.nc-list-item-link-unlink-btn')
+            .locator('button.cv-list-item-link-unlink-btn')
             .click({ force: true, timeout: 3000 }),
         requestUrlPathToMatch: '/api/v1/db/data/noco',
         httpMethodsToMatch: ['GET'],
@@ -422,13 +422,13 @@ export class CellPageObject extends BasePage {
     await cell.press('Escape');
 
     await cell.click({ button: 'right', clickCount: 1 });
-    await expect(this.rootPage.locator(`.nc-dropdown-grid-context-menu:visible`)).toHaveCount(1);
+    await expect(this.rootPage.locator(`.cv-dropdown-grid-context-menu:visible`)).toHaveCount(1);
 
     // virtual cell
     const vCell = this.get({ index: 0, columnHeader: 'Cities' });
     await vCell.hover();
     // in-cell add
-    await expect(vCell.locator('.nc-action-icon.nc-plus:visible')).toHaveCount(isEditAccess ? 1 : 0);
+    await expect(vCell.locator('.cv-action-icon.cv-plus:visible')).toHaveCount(isEditAccess ? 1 : 0);
 
     // virtual cell link text
     const linkText = await getTextExcludeIconText(vCell);

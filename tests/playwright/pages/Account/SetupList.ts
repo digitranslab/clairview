@@ -14,19 +14,19 @@ export class AccountSetupListPage extends BasePage {
   }
 
   get() {
-    return this.setupPage.get().locator(`[data-testid="nc-setup-list"]`);
+    return this.setupPage.get().locator(`[data-testid="cv-setup-list"]`);
   }
 
   getPluginItem(plugin: string) {
-    return this.get().locator(`[data-testid="nc-setup-list-item-${plugin}"]`);
+    return this.get().locator(`[data-testid="cv-setup-list-item-${plugin}"]`);
   }
 
   async isConfigured(plugin: string) {
-    return await this.getPluginItem(plugin).locator('.nc-configured').isVisible();
+    return await this.getPluginItem(plugin).locator('.cv-configured').isVisible();
   }
 
   async reset(plugin: string) {
-    await this.getPluginItem(plugin).locator('.nc-setup-plugin-menu').click();
-    await this.rootPage.locator('.ant-dropdown').getByTestId('nc-config-reset').click();
+    await this.getPluginItem(plugin).locator('.cv-setup-plugin-menu').click();
+    await this.rootPage.locator('.ant-dropdown').getByTestId('cv-config-reset').click();
   }
 }

@@ -1,6 +1,6 @@
 import { XcActionType, XcType } from 'clairview-sdk';
 import SpacesPlugin from './SpacesPlugin';
-import type { XcPluginConfig } from '~/types/nc-plugin';
+import type { XcPluginConfig } from '~/types/cv-plugin';
 
 const config: XcPluginConfig = {
   builder: SpacesPlugin,

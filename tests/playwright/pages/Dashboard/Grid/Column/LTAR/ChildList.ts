@@ -11,7 +11,7 @@ export class ChildList extends BasePage {
   }
 
   get() {
-    return this.dashboard.get().locator(`.nc-modal-child-list`);
+    return this.dashboard.get().locator(`.cv-modal-child-list`);
   }
 
   async verify({ cardTitle, linkField }: { cardTitle: string[]; linkField: string }) {
@@ -22,7 +22,7 @@ export class ChildList extends BasePage {
 
     // child list body validation (card count, card title)
     const cardCount = cardTitle.length;
-    await this.get().locator('.nc-dropdown-link-record-header').waitFor();
+    await this.get().locator('.cv-dropdown-link-record-header').waitFor();
     {
       let isOk = false;
       let count = 0;
@@ -30,7 +30,7 @@ export class ChildList extends BasePage {
 
       while (!isOk && count < 5) {
         try {
-          childList = this.get().getByTestId('nc-child-list-item');
+          childList = this.get().getByTestId('cv-child-list-item');
           const childCards = await childList.count();
           if (childCards === cardCount) {
             isOk = true;
@@ -45,22 +45,22 @@ export class ChildList extends BasePage {
       expect(childList).toBeDefined();
 
       for (let i = 0; i < cardCount; i++) {
-        await childList.nth(i).locator('.nc-display-value').waitFor({ state: 'visible' });
-        await childList.nth(i).locator('.nc-display-value').scrollIntoViewIfNeeded();
+        await childList.nth(i).locator('.cv-display-value').waitFor({ state: 'visible' });
+        await childList.nth(i).locator('.cv-display-value').scrollIntoViewIfNeeded();
         await this.rootPage.waitForTimeout(100);
-        expect(await childList.nth(i).locator('.nc-display-value').textContent()).toContain(cardTitle[i]);
+        expect(await childList.nth(i).locator('.cv-display-value').textContent()).toContain(cardTitle[i]);
       }
     }
   }
 
   async close() {
-    // await this.get().locator(`.nc-close-btn`).click();
+    // await this.get().locator(`.cv-close-btn`).click();
     await this.rootPage.keyboard.press('Escape');
     await this.get().waitFor({ state: 'hidden' });
   }
 
   async openLinkRecord({ linkTableTitle }: { linkTableTitle: string }) {
-    const openActions = () => this.get().getByTestId('nc-child-list-button-link-to').click();
+    const openActions = () => this.get().getByTestId('cv-child-list-button-link-to').click();
     await this.waitForResponse({
       requestUrlPathToMatch: '/exclude',
       httpMethodsToMatch: ['GET'],

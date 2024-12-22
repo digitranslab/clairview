@@ -12,11 +12,11 @@ export class ToolbarViewMenuPage extends BasePage {
   constructor(toolbar: ToolbarPage) {
     super(toolbar.rootPage);
     this.toolbar = toolbar;
-    this.viewsMenuBtn = this.rootPage.locator('.nc-view-context-btn');
+    this.viewsMenuBtn = this.rootPage.locator('.cv-view-context-btn');
   }
 
   get() {
-    return this.rootPage.locator(`.ant-dropdown.nc-dropdown-actions-menu`);
+    return this.rootPage.locator(`.ant-dropdown.cv-dropdown-actions-menu`);
   }
 
   getLockTypeSubMenu() {
@@ -106,8 +106,8 @@ export class ToolbarViewMenuPage extends BasePage {
         await this.rootPage.locator(`.ant-dropdown-menu-title-content:has-text("${subMenu}")`).last().click();
 
         if (['Collaborative', 'Locked'].includes(subMenu)) {
-          await this.rootPage.locator(`.nc-lock-view-modal-wrapper`).waitFor({ state: 'visible' });
-          await this.rootPage.locator(`.nc-lock-view-modal-wrapper`).getByTestId('nc-lock-or-unlock-btn').click();
+          await this.rootPage.locator(`.cv-lock-view-modal-wrapper`).waitFor({ state: 'visible' });
+          await this.rootPage.locator(`.cv-lock-view-modal-wrapper`).getByTestId('cv-lock-or-unlock-btn').click();
         }
       }
 

@@ -11,10 +11,10 @@ export class ProjectsPage extends BasePage {
 
   constructor(rootPage: Page) {
     super(rootPage);
-    this.buttonEditProject = this.get().locator('.nc-action-btn.nc-edit-base');
-    this.buttonDeleteProject = this.get().locator('.nc-action-btn.nc-delete-base');
-    this.buttonMoreActions = this.get().locator('.nc-import-menu');
-    this.buttonNewProject = this.get().locator('.nc-new-base-menu');
+    this.buttonEditProject = this.get().locator('.cv-action-btn.cv-edit-base');
+    this.buttonDeleteProject = this.get().locator('.cv-action-btn.cv-delete-base');
+    this.buttonMoreActions = this.get().locator('.cv-import-menu');
+    this.buttonNewProject = this.get().locator('.cv-new-base-menu');
     this.buttonColorSelector = this.get().locator('div.color-selector');
   }
 
@@ -32,10 +32,10 @@ export class ProjectsPage extends BasePage {
     if (!withoutPrefix) name = this.prefixTitle(name);
 
     // Click "New Base" button
-    await this.get().locator('.nc-new-base-menu').click();
+    await this.get().locator('.cv-new-base-menu').click();
 
-    await this.rootPage.locator(`.nc-metadb-base-name`).waitFor();
-    await this.rootPage.locator(`input.nc-metadb-base-name`).fill(name);
+    await this.rootPage.locator(`.cv-metadb-base-name`).waitFor();
+    await this.rootPage.locator(`input.cv-metadb-base-name`).fill(name);
 
     const createProjectSubmitAction = () => this.rootPage.locator(`button:has-text("Create")`).click();
     await this.waitForResponse({
@@ -45,7 +45,7 @@ export class ProjectsPage extends BasePage {
     });
 
     // wait for dashboard to render
-    await this.rootPage.locator('.nc-container').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-container').waitFor({ state: 'visible' });
   }
 
   // duplicate base
@@ -96,7 +96,7 @@ export class ProjectsPage extends BasePage {
   }
 
   async checkProjectCreateButton({ exists = true }) {
-    await expect(this.rootPage.locator('.nc-new-base-menu:visible')).toHaveCount(exists ? 1 : 0);
+    await expect(this.rootPage.locator('.cv-new-base-menu:visible')).toHaveCount(exists ? 1 : 0);
   }
 
   async reloadProjects() {
@@ -202,14 +202,14 @@ export class ProjectsPage extends BasePage {
     const projRow = base.locator(`tr`, {
       has: base.locator(`td.ant-table-cell:has-text("${title}")`),
     });
-    await projRow.locator('.nc-action-btn').nth(0).click();
+    await projRow.locator('.cv-action-btn').nth(0).click();
 
     // there is a flicker; add delay to avoid flakiness
     await this.rootPage.waitForTimeout(1000);
 
-    await base.locator('input.nc-metadb-base-name').fill(newTitle);
+    await base.locator('input.cv-metadb-base-name').fill(newTitle);
     // press enter to save
-    const submitAction = () => base.locator('input.nc-metadb-base-name').press('Enter');
+    const submitAction = () => base.locator('input.cv-metadb-base-name').press('Enter');
     await this.waitForResponse({
       uiAction: submitAction,
       requestUrlPathToMatch: '/api/v1/db/meta/projects/',
@@ -218,17 +218,17 @@ export class ProjectsPage extends BasePage {
   }
 
   async openLanguageMenu() {
-    await this.rootPage.locator('.nc-menu-translate').click();
+    await this.rootPage.locator('.cv-menu-translate').click();
   }
 
   async selectLanguage({ index }: { index: number }) {
-    const modal = this.rootPage.locator('.nc-dropdown-menu-translate');
+    const modal = this.rootPage.locator('.cv-dropdown-menu-translate');
     await modal.locator(`.ant-dropdown-menu-item`).nth(index).click();
   }
 
   async verifyLanguage(param: { json: any }) {
-    const title = this.rootPage.locator(`.nc-base-page-title`);
-    const menu = this.rootPage.locator(`.nc-new-base-menu`);
+    const title = this.rootPage.locator(`.cv-base-page-title`);
+    const menu = this.rootPage.locator(`.cv-new-base-menu`);
     await expect(title).toHaveText(param.json.title.myProject);
     await expect(menu).toHaveText(param.json.title.newProj);
     await this.rootPage.locator(`[placeholder="${param.json.activity.searchProject}"]`).waitFor();
@@ -236,15 +236,15 @@ export class ProjectsPage extends BasePage {
 
   async openPasswordChangeModal() {
     // open change password portal
-    await this.rootPage.locator('.nc-menu-accounts').click();
+    await this.rootPage.locator('.cv-menu-accounts').click();
     await this.rootPage
-      .locator('.nc-dropdown-user-accounts-menu')
-      .getByTestId('nc-menu-accounts__user-settings')
+      .locator('.cv-dropdown-user-accounts-menu')
+      .getByTestId('cv-menu-accounts__user-settings')
       .click();
   }
 
   async waitForRender() {
-    await this.rootPage.locator('.nc-base-page-title:has-text("My Projects")').waitFor();
+    await this.rootPage.locator('.cv-base-page-title:has-text("My Projects")').waitFor();
   }
 
   async validateRoleAccess(param: { role: string }) {

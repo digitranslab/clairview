@@ -12,8 +12,8 @@ export class AccountUsersPage extends BasePage {
   constructor(accountPage: AccountPage) {
     super(accountPage.rootPage);
     this.accountPage = accountPage;
-    this.inviteUserBtn = this.get().locator(`[data-testid="nc-super-user-invite"]`);
-    this.inviteUserModal = accountPage.rootPage.locator(`.nc-modal-invite-user`);
+    this.inviteUserBtn = this.get().locator(`[data-testid="cv-super-user-invite"]`);
+    this.inviteUserModal = accountPage.rootPage.locator(`.cv-modal-invite-user`);
     this.changePasswordPage = new ChangePasswordPage(this.rootPage);
   }
 
@@ -35,7 +35,7 @@ export class AccountUsersPage extends BasePage {
   }
 
   get() {
-    return this.accountPage.get().locator(`[data-testid="nc-super-user-list"]`);
+    return this.accountPage.get().locator(`[data-testid="cv-super-user-list"]`);
   }
 
   async invite({ email, role }: { email: string; role: string }) {
@@ -43,9 +43,9 @@ export class AccountUsersPage extends BasePage {
 
     await this.inviteUserBtn.click();
     await this.inviteUserModal.locator(`input[placeholder="E-mail"]`).fill(email);
-    await this.inviteUserModal.locator(`.nc-user-roles`).click();
-    const userRoleModal = this.rootPage.locator(`.nc-dropdown-user-role`);
-    await userRoleModal.locator(`.nc-role-option:has-text("${role}")`).click();
+    await this.inviteUserModal.locator(`.cv-user-roles`).click();
+    const userRoleModal = this.rootPage.locator(`.cv-dropdown-user-role`);
+    await userRoleModal.locator(`.cv-role-option:has-text("${role}")`).click();
     const inviteAction = () => this.inviteUserModal.locator(`button:has-text("Invite")`).click();
     await this.waitForResponse({
       uiAction: inviteAction,
@@ -76,7 +76,7 @@ export class AccountUsersPage extends BasePage {
     // ensure page is loaded
     email = this.prefixEmail(email);
 
-    const userRow = this.get().locator(`.nc-table-row:has-text("${email}")`).first();
+    const userRow = this.get().locator(`.cv-table-row:has-text("${email}")`).first();
 
     await userRow.waitFor({ state: 'visible' });
 
@@ -85,10 +85,10 @@ export class AccountUsersPage extends BasePage {
 
   async updateRole({ email, role }: { email: string; role: string }) {
     const userRow = await this.getUserRow({ email });
-    await userRow.locator('.nc-user-roles').click();
-    await this.rootPage.locator(`.nc-users-list-role-option:visible:has-text("${role}")`).waitFor();
-    await this.rootPage.locator(`.nc-users-list-role-option:visible:has-text("${role}")`).last().click();
-    await this.rootPage.locator(`.nc-users-list-role-option`).last().waitFor({ state: 'hidden' });
+    await userRow.locator('.cv-user-roles').click();
+    await this.rootPage.locator(`.cv-users-list-role-option:visible:has-text("${role}")`).waitFor();
+    await this.rootPage.locator(`.cv-users-list-role-option:visible:has-text("${role}")`).last().click();
+    await this.rootPage.locator(`.cv-users-list-role-option`).last().waitFor({ state: 'hidden' });
   }
 
   async inviteMore() {
@@ -102,9 +102,9 @@ export class AccountUsersPage extends BasePage {
 
   async deleteUser({ email }: { email: string }) {
     await this.openRowActionMenu({ email });
-    await this.rootPage.locator('.nc-menu-item:visible:has-text("Remove user")').click();
+    await this.rootPage.locator('.cv-menu-item:visible:has-text("Remove user")').click();
     await this.rootPage.locator('.ant-modal.active button:has-text("Delete User")').click();
     await this.verifyToast({ message: 'User deleted successfully' });
-    await this.get().locator(`.nc-table-row:has-text("${email}")`).first().waitFor({ state: 'hidden' });
+    await this.get().locator(`.cv-table-row:has-text("${email}")`).first().waitFor({ state: 'hidden' });
   }
 }

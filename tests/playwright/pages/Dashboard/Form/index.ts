@@ -40,61 +40,61 @@ export class FormPage extends BasePage {
 
     this.addOrRemoveAllButton = dashboard
       .get()
-      .locator('[data-testid="nc-form-show-all-fields"]')
-      .locator('.nc-switch');
-    this.submitButton = dashboard.get().locator('[data-testid="nc-form-submit"]');
+      .locator('[data-testid="cv-form-show-all-fields"]')
+      .locator('.cv-switch');
+    this.submitButton = dashboard.get().locator('[data-testid="cv-form-submit"]');
 
-    this.showAnotherFormRadioButton = dashboard.get().locator('[data-testid="nc-form-checkbox-submit-another-form"]');
+    this.showAnotherFormRadioButton = dashboard.get().locator('[data-testid="cv-form-checkbox-submit-another-form"]');
     this.showAnotherFormAfter5SecRadioButton = dashboard
       .get()
-      .locator('[data-testid="nc-form-checkbox-show-blank-form"]');
-    this.emailMeRadioButton = dashboard.get().locator('[data-testid="nc-form-checkbox-send-email"]');
-    this.formHeading = dashboard.get().locator('[data-testid="nc-form-heading"]');
-    this.formSubHeading = dashboard.get().locator('[data-testid="nc-form-sub-heading"] .tiptap.ProseMirror');
-    this.afterSubmitMsg = dashboard.get().locator('[data-testid="nc-form-after-submit-msg"] .tiptap.ProseMirror');
+      .locator('[data-testid="cv-form-checkbox-show-blank-form"]');
+    this.emailMeRadioButton = dashboard.get().locator('[data-testid="cv-form-checkbox-send-email"]');
+    this.formHeading = dashboard.get().locator('[data-testid="cv-form-heading"]');
+    this.formSubHeading = dashboard.get().locator('[data-testid="cv-form-sub-heading"] .tiptap.ProseMirror');
+    this.afterSubmitMsg = dashboard.get().locator('[data-testid="cv-form-after-submit-msg"] .tiptap.ProseMirror');
 
-    this.formFields = dashboard.get().locator('.nc-form-fields-list');
+    this.formFields = dashboard.get().locator('.cv-form-fields-list');
 
     // validation
-    this.fieldPanel = dashboard.get().locator('.nc-form-field-right-panel');
-    this.customValidationBtn = this.fieldPanel.locator('.nc-custom-validation-btn');
-    this.customValidationDropdown = this.rootPage.locator('.nc-custom-validator-dropdown');
+    this.fieldPanel = dashboard.get().locator('.cv-form-field-right-panel');
+    this.customValidationBtn = this.fieldPanel.locator('.cv-custom-validation-btn');
+    this.customValidationDropdown = this.rootPage.locator('.cv-custom-validator-dropdown');
   }
 
   get() {
-    return this.dashboard.get().locator('[data-testid="nc-form-wrapper"]');
+    return this.dashboard.get().locator('[data-testid="cv-form-wrapper"]');
   }
 
   getFormAfterSubmit() {
-    return this.dashboard.get().locator('[data-testid="nc-form-wrapper-submit"]');
+    return this.dashboard.get().locator('[data-testid="cv-form-wrapper-submit"]');
   }
 
   getFormFields() {
-    return this.get().locator('[data-testid="nc-form-fields"]');
+    return this.get().locator('[data-testid="cv-form-fields"]');
   }
 
   getFormFieldsRequired() {
-    return this.get().locator('[data-testid="nc-form-input-required"]');
+    return this.get().locator('[data-testid="cv-form-input-required"]');
   }
 
   getFormFieldsInputLabel() {
-    return this.get().locator('textarea[data-testid="nc-form-input-label"]:visible');
+    return this.get().locator('textarea[data-testid="cv-form-input-label"]:visible');
   }
 
   getFormFieldsInputHelpText() {
-    return this.get().locator('[data-testid="nc-form-input-help-text"] .tiptap.ProseMirror:visible');
+    return this.get().locator('[data-testid="cv-form-input-help-text"] .tiptap.ProseMirror:visible');
   }
 
   async verifyFormFieldLabel({ index, label }: { index: number; label: string }) {
-    await expect(this.getFormFields().nth(index).locator('[data-testid="nc-form-input-label"]')).toContainText(label);
+    await expect(this.getFormFields().nth(index).locator('[data-testid="cv-form-input-label"]')).toContainText(label);
   }
 
   async verifyFormFieldHelpText({ index, helpText }: { index: number; helpText: string }) {
-    await expect(this.getFormFields().nth(index).locator('[data-testid="nc-form-help-text"]')).toContainText(helpText);
+    await expect(this.getFormFields().nth(index).locator('[data-testid="cv-form-help-text"]')).toContainText(helpText);
   }
 
   async verifyFieldsIsEditable({ index }: { index: number }) {
-    await expect(this.getFormFields().nth(index)).toHaveClass(/nc-editable/);
+    await expect(this.getFormFields().nth(index)).toHaveClass(/cv-editable/);
   }
 
   async verifyAfterSubmitMsg({ msg }: { msg: string }) {
@@ -102,7 +102,7 @@ export class FormPage extends BasePage {
   }
 
   async verifyFormViewFieldsOrder({ fields }: { fields: string[] }) {
-    const fieldLabels = this.get().locator('[data-testid="nc-form-input-label"]');
+    const fieldLabels = this.get().locator('[data-testid="cv-form-input-label"]');
     await expect(fieldLabels).toHaveCount(fields.length);
     for (let i = 0; i < fields.length; i++) {
       await expect(fieldLabels.nth(i)).toContainText(fields[i]);
@@ -113,10 +113,10 @@ export class FormPage extends BasePage {
     // TODO: Otherwise form input boxes are not visible sometimes
     await this.rootPage.waitForTimeout(650);
 
-    await expect(this.get().locator(`.nc-form-drag-${sourceField}`)).toBeVisible();
-    await expect(this.get().locator(`.nc-form-drag-${destinationField}`)).toBeVisible();
-    const src = this.get().locator(`.nc-form-drag-${sourceField.replace(' ', '')}`);
-    const dst = this.get().locator(`.nc-form-drag-${destinationField.replace(' ', '')}`);
+    await expect(this.get().locator(`.cv-form-drag-${sourceField}`)).toBeVisible();
+    await expect(this.get().locator(`.cv-form-drag-${destinationField}`)).toBeVisible();
+    const src = this.get().locator(`.cv-form-drag-${sourceField.replace(' ', '')}`);
+    const dst = this.get().locator(`.cv-form-drag-${destinationField.replace(' ', '')}`);
     await src.dragTo(dst);
   }
 
@@ -125,12 +125,12 @@ export class FormPage extends BasePage {
     await this.rootPage.waitForTimeout(650);
 
     if (mode === 'dragDrop') {
-      const src = this.get().locator(`.nc-form-drag-${field.replace(' ', '')}`);
-      const dst = this.get().locator(`[data-testid="nc-drag-n-drop-to-hide"]`);
+      const src = this.get().locator(`.cv-form-drag-${field.replace(' ', '')}`);
+      const dst = this.get().locator(`[data-testid="cv-drag-n-drop-to-hide"]`);
       await src.dragTo(dst);
     } else if (mode === 'hideField') {
       // in form-v2, hide field will be using right sidebar
-      await this.formFields.locator(`[data-testid="nc-form-field-item-${field}"]`).locator('.nc-switch').click();
+      await this.formFields.locator(`[data-testid="cv-form-field-item-${field}"]`).locator('.cv-switch').click();
     }
   }
 
@@ -139,14 +139,14 @@ export class FormPage extends BasePage {
     await this.rootPage.waitForTimeout(650);
 
     if (mode === 'dragDrop') {
-      const src = this.get().locator(`[data-testid="nc-form-hidden-column-${field}"] > div.ant-card-body`);
-      const dst = this.get().locator(`[data-testid="nc-form-input-Country"]`);
+      const src = this.get().locator(`[data-testid="cv-form-hidden-column-${field}"] > div.ant-card-body`);
+      const dst = this.get().locator(`[data-testid="cv-form-input-Country"]`);
       await src.waitFor({ state: 'visible' });
       await dst.waitFor({ state: 'visible' });
       await src.dragTo(dst, { trial: true });
       await src.dragTo(dst);
     } else if (mode === 'clickField') {
-      await this.formFields.locator(`[data-testid="nc-form-field-item-${field}"]`).locator('.nc-switch').click();
+      await this.formFields.locator(`[data-testid="cv-form-field-item-${field}"]`).locator('.cv-switch').click();
     }
   }
 
@@ -194,20 +194,20 @@ export class FormPage extends BasePage {
   async fillForm(param: { field: string; value: string; type?: UITypes }[]) {
     for (let i = 0; i < param.length; i++) {
       await this.get()
-        .locator(`[data-testid="nc-form-input-${param[i].field.replace(' ', '')}"]`)
+        .locator(`[data-testid="cv-form-input-${param[i].field.replace(' ', '')}"]`)
         .click();
 
       switch (param[i].type) {
         case UITypes.LongText: {
           await this.get()
-            .locator(`[data-testid="nc-form-input-${param[i].field.replace(' ', '')}"] >> textarea`)
+            .locator(`[data-testid="cv-form-input-${param[i].field.replace(' ', '')}"] >> textarea`)
             .fill(param[i].value);
 
           break;
         }
         default: {
           await this.get()
-            .locator(`[data-testid="nc-form-input-${param[i].field.replace(' ', '')}"] >> input`)
+            .locator(`[data-testid="cv-form-input-${param[i].field.replace(' ', '')}"] >> input`)
             .fill(param[i].value);
 
           if ([UITypes.Date, UITypes.Time, UITypes.Year, UITypes.DateTime].includes(param[i].type)) {
@@ -224,8 +224,8 @@ export class FormPage extends BasePage {
 
   getVisibleField({ title }: { title: string }) {
     return this.get()
-      .locator(`[data-testid="nc-form-fields"][data-title="${title}"]`)
-      .locator('[data-testid="nc-form-input-label"]');
+      .locator(`[data-testid="cv-form-fields"][data-title="${title}"]`)
+      .locator('[data-testid="cv-form-input-label"]');
   }
 
   async selectVisibleField({ title }: { title: string }) {
@@ -286,8 +286,8 @@ export class FormPage extends BasePage {
     await expect(fieldLabel).toHaveText(expectText);
 
     const fieldHelpText = this.get()
-      .locator(`.nc-form-drag-${field.replace(' ', '')}`)
-      .locator('div[data-testid="nc-form-input-help-text-label"] .tiptap.ProseMirror');
+      .locator(`.cv-form-drag-${field.replace(' ', '')}`)
+      .locator('div[data-testid="cv-form-input-help-text-label"] .tiptap.ProseMirror');
     await expect(fieldHelpText).toHaveText(helpText);
   }
 
@@ -296,7 +296,7 @@ export class FormPage extends BasePage {
   }
 
   async verifyStatePostSubmit(param: { message?: string; submitAnotherForm?: boolean; showBlankForm?: boolean }) {
-    await this.rootPage.locator('.nc-form-success-msg').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-form-success-msg').waitFor({ state: 'visible' });
 
     if (undefined !== param.message) {
       await expect(this.getFormAfterSubmit()).toContainText(param.message);
@@ -332,17 +332,17 @@ export class FormPage extends BasePage {
   async verifyAfterSubmitMenuState(param: { showBlankForm?: boolean; submitAnotherForm?: boolean; emailMe?: boolean }) {
     if (true === param.showBlankForm) {
       await expect(
-        this.get().locator('[data-testid="nc-form-checkbox-show-blank-form"][aria-checked="true"]')
+        this.get().locator('[data-testid="cv-form-checkbox-show-blank-form"][aria-checked="true"]')
       ).toBeVisible();
     }
     if (true === param.submitAnotherForm) {
       await expect(
-        this.get().locator('[data-testid="nc-form-checkbox-submit-another-form"][aria-checked="true"]')
+        this.get().locator('[data-testid="cv-form-checkbox-submit-another-form"][aria-checked="true"]')
       ).toBeVisible();
     }
     if (true === param.emailMe) {
       await expect(
-        this.get().locator('[data-testid="nc-form-checkbox-send-email"][aria-checked="true"]')
+        this.get().locator('[data-testid="cv-form-checkbox-send-email"][aria-checked="true"]')
       ).toBeVisible();
     }
   }
@@ -356,22 +356,22 @@ export class FormPage extends BasePage {
     currValItem: Locator;
     index: number;
   }) {
-    await currValItem.locator('.nc-custom-validation-type-selector .ant-select-selector').click();
+    await currValItem.locator('.cv-custom-validation-type-selector .ant-select-selector').click();
 
-    const typeSelectorDropdown = this.rootPage.locator(`.nc-custom-validation-type-dropdown-${index}`);
+    const typeSelectorDropdown = this.rootPage.locator(`.cv-custom-validation-type-dropdown-${index}`);
     await typeSelectorDropdown.waitFor();
 
-    const option = typeSelectorDropdown.getByTestId(`nc-custom-validation-type-option-${type}`);
+    const option = typeSelectorDropdown.getByTestId(`cv-custom-validation-type-option-${type}`);
     await option.scrollIntoViewIfNeeded();
 
     return {
-      option: this.rootPage.getByTestId(`nc-custom-validation-type-option-${type}`),
+      option: this.rootPage.getByTestId(`cv-custom-validation-type-option-${type}`),
       select: async () => {
         await option.click();
         await typeSelectorDropdown.waitFor({ state: 'hidden' });
       },
       closeSelector: async () =>
-        await currValItem.locator('.nc-custom-validation-type-selector .ant-select-selector').click(),
+        await currValItem.locator('.cv-custom-validation-type-selector .ant-select-selector').click(),
       verify: async ({ isDisabled = false }: { isDisabled: boolean }) => {
         if (isDisabled) {
           await expect(option).toHaveClass(/ant-select-item-option-disabled/);
@@ -399,9 +399,9 @@ export class FormPage extends BasePage {
     const dropdown = this.customValidationDropdown;
     await dropdown.waitFor({ state: 'visible' });
 
-    await dropdown.locator('.nc-custom-validation-add-btn').click();
+    await dropdown.locator('.cv-custom-validation-add-btn').click();
 
-    const currValItem = this.customValidationDropdown.getByTestId(`nc-custom-validation-item-${index}`);
+    const currValItem = this.customValidationDropdown.getByTestId(`cv-custom-validation-item-${index}`);
 
     await currValItem.waitFor({ state: 'visible' });
 
@@ -415,7 +415,7 @@ export class FormPage extends BasePage {
     await valValueInput.fill(value);
 
     if (errorMsg !== undefined) {
-      const valErrorMsgInput = currValItem.locator('.nc-custom-validation-error-message-input');
+      const valErrorMsgInput = currValItem.locator('.cv-custom-validation-error-message-input');
       await valErrorMsgInput.click();
       await valErrorMsgInput.fill(errorMsg);
     }
@@ -442,7 +442,7 @@ export class FormPage extends BasePage {
     const dropdown = this.customValidationDropdown;
     await dropdown.waitFor({ state: 'visible' });
 
-    const currValItem = this.customValidationDropdown.getByTestId(`nc-custom-validation-item-${index}`);
+    const currValItem = this.customValidationDropdown.getByTestId(`cv-custom-validation-item-${index}`);
 
     await currValItem.waitFor({ state: 'visible' });
 
@@ -460,7 +460,7 @@ export class FormPage extends BasePage {
     }
 
     if (errorMsg !== undefined) {
-      const valErrorMsgInput = currValItem.locator('.nc-custom-validation-error-message-input');
+      const valErrorMsgInput = currValItem.locator('.cv-custom-validation-error-message-input');
       await valErrorMsgInput.click();
       await valErrorMsgInput.fill(errorMsg);
     }
@@ -487,7 +487,7 @@ export class FormPage extends BasePage {
     const dropdown = this.customValidationDropdown;
     await dropdown.waitFor({ state: 'visible' });
 
-    const currValItem = this.customValidationDropdown.getByTestId(`nc-custom-validation-item-${index}`);
+    const currValItem = this.customValidationDropdown.getByTestId(`cv-custom-validation-item-${index}`);
     await currValItem.waitFor({ state: 'visible' });
 
     const { verify } = await this.getCustomValidationTypeOption({
@@ -508,7 +508,7 @@ export class FormPage extends BasePage {
     const dropdown = this.customValidationDropdown;
     await dropdown.waitFor({ state: 'visible' });
 
-    const currValItem = this.customValidationDropdown.getByTestId(`nc-custom-validation-item-${index}`);
+    const currValItem = this.customValidationDropdown.getByTestId(`cv-custom-validation-item-${index}`);
     await currValItem.waitFor({ state: 'visible' });
 
     //  value
@@ -519,7 +519,7 @@ export class FormPage extends BasePage {
 
     if (hasError) {
       const valValueErr = currValItem.locator(
-        '.nc-custom-validation-input-wrapper .nc-custom-validation-item-error-icon'
+        '.cv-custom-validation-input-wrapper .cv-custom-validation-item-error-icon'
       );
 
       await expect(valValueErr).toBeVisible();
@@ -537,10 +537,10 @@ export class FormPage extends BasePage {
     const dropdown = this.customValidationDropdown;
     await dropdown.waitFor({ state: 'visible' });
 
-    const currValItem = this.customValidationDropdown.getByTestId(`nc-custom-validation-item-${index}`);
+    const currValItem = this.customValidationDropdown.getByTestId(`cv-custom-validation-item-${index}`);
     await currValItem.waitFor({ state: 'visible' });
 
-    await currValItem.locator('.nc-custom-validation-delete-item').click();
+    await currValItem.locator('.cv-custom-validation-delete-item').click();
 
     await currValItem.waitFor({ state: 'hidden' });
 
@@ -551,7 +551,7 @@ export class FormPage extends BasePage {
 
   async verifyCustomValidationCount({ count }: { count: number }) {
     await this.customValidationBtn.waitFor({ state: 'visible' });
-    const countStr = await this.customValidationBtn.locator('.nc-custom-validation-count').textContent();
+    const countStr = await this.customValidationBtn.locator('.cv-custom-validation-count').textContent();
 
     expect(parseInt(countStr) || 0).toEqual(count);
   }
@@ -561,7 +561,7 @@ export class FormPage extends BasePage {
   }: {
     type: UITypes.Email | UITypes.PhoneNumber | UITypes.URL;
   }) {
-    const validateBtn = this.get().getByTestId(`nc-form-field-validate-${type}`);
+    const validateBtn = this.get().getByTestId(`cv-form-field-validate-${type}`);
 
     return {
       locator: validateBtn,
@@ -603,7 +603,7 @@ export class FormPage extends BasePage {
   }
 
   async getFormFieldsValidateWorkEmailConfig() {
-    const validateWorkEmailBtn = this.get().getByTestId('nc-form-field-allow-only-work-email');
+    const validateWorkEmailBtn = this.get().getByTestId('cv-form-field-allow-only-work-email');
 
     return {
       locator: validateWorkEmailBtn,
@@ -664,7 +664,7 @@ export class FormPage extends BasePage {
 
   async getFormFieldErrors({ title }: { title: string }) {
     // ant-form-item-explain
-    const field = this.get().locator(`[data-testid="nc-form-fields"][data-title="${title}"]`);
+    const field = this.get().locator(`[data-testid="cv-form-fields"][data-title="${title}"]`);
     await field.scrollIntoViewIfNeeded();
     const fieldErrorEl = field.locator('.ant-form-item-explain');
 
@@ -689,7 +689,7 @@ export class FormPage extends BasePage {
   }
 
   async addLimitToRangeMinOrMax({ type, isMinValue, value }: { type: UITypes; isMinValue: boolean; value: string }) {
-    const fieldLocator = this.get().getByTestId(`nc-limit-to-range-${isMinValue ? 'min' : 'max'}-${type}`);
+    const fieldLocator = this.get().getByTestId(`cv-limit-to-range-${isMinValue ? 'min' : 'max'}-${type}`);
 
     switch (type) {
       default: {
@@ -709,7 +709,7 @@ export class FormPage extends BasePage {
   }
 
   async getFormFieldsValidateLimitToRange({ type }: { type: UITypes }) {
-    const validateBtn = this.get().getByTestId(`nc-limit-to-range-${type}`);
+    const validateBtn = this.get().getByTestId(`cv-limit-to-range-${type}`);
 
     return {
       locator: validateBtn,
@@ -720,7 +720,7 @@ export class FormPage extends BasePage {
 
         if (enable && !isEnabled) {
           await validateBtn.click();
-          await this.get().locator('.nc-limit-to-range-wrapper').first().waitFor({ state: 'visible' });
+          await this.get().locator('.cv-limit-to-range-wrapper').first().waitFor({ state: 'visible' });
 
           if (min !== undefined) {
             await this.addLimitToRangeMinOrMax({ type, isMinValue: true, value: min });
@@ -780,8 +780,8 @@ export class FormPage extends BasePage {
   }
 
   async getFormFieldsValidateAttFileType() {
-    const validateBtn = this.get().getByTestId('nc-att-limit-file-type');
-    const validationWrapper = this.get().locator('.nc-att-limit-file-type-wrapper');
+    const validateBtn = this.get().getByTestId('cv-att-limit-file-type');
+    const validationWrapper = this.get().locator('.cv-att-limit-file-type-wrapper');
     await validateBtn.scrollIntoViewIfNeeded();
 
     return {
@@ -839,8 +839,8 @@ export class FormPage extends BasePage {
     };
   }
   async getFormFieldsValidateAttFileCount() {
-    const validateBtn = this.get().getByTestId('nc-att-limit-file-count');
-    const validationWrapper = this.get().locator('.nc-att-limit-file-count-wrapper');
+    const validateBtn = this.get().getByTestId('cv-att-limit-file-count');
+    const validationWrapper = this.get().locator('.cv-att-limit-file-count-wrapper');
     await validateBtn.scrollIntoViewIfNeeded();
 
     return {
@@ -898,8 +898,8 @@ export class FormPage extends BasePage {
     };
   }
   async getFormFieldsValidateAttFileSize() {
-    const validateBtn = this.get().getByTestId('nc-att-limit-file-size');
-    const validationWrapper = this.get().locator('.nc-att-limit-file-size-wrapper');
+    const validateBtn = this.get().getByTestId('cv-att-limit-file-size');
+    const validationWrapper = this.get().locator('.cv-att-limit-file-size-wrapper');
     await validateBtn.scrollIntoViewIfNeeded();
 
     return {
@@ -930,10 +930,10 @@ export class FormPage extends BasePage {
         }
 
         if (enable && fillValue !== undefined) {
-          await validationWrapper.locator('.nc-validation-input-wrapper input').first().waitFor({ state: 'visible' });
+          await validationWrapper.locator('.cv-validation-input-wrapper input').first().waitFor({ state: 'visible' });
 
           await validationWrapper.locator('.ant-select-selector').click();
-          const dropdown = this.rootPage.locator('.nc-att-limit-file-size-unit-selector-dropdown');
+          const dropdown = this.rootPage.locator('.cv-att-limit-file-size-unit-selector-dropdown');
           await dropdown.waitFor({ state: 'visible' });
           const option = dropdown.locator('.ant-select-item-option').getByText(unit);
           await option.scrollIntoViewIfNeeded();
@@ -942,7 +942,7 @@ export class FormPage extends BasePage {
 
           await this.waitForResponse({
             uiAction: async () => {
-              await validationWrapper.locator('.nc-validation-input-wrapper input').fill(fillValue);
+              await validationWrapper.locator('.cv-validation-input-wrapper input').fill(fillValue);
             },
             requestUrlPathToMatch: '/api/v1/db/meta/form-columns',
             httpMethodsToMatch: ['PATCH'],
@@ -975,13 +975,13 @@ export class FormPage extends BasePage {
   }
 
   async verifyFieldConfigError({ title, hasError }: { title: string; hasError: boolean }) {
-    const field = this.get().locator(`[data-testid="nc-form-fields"][data-title="${title}"]`);
+    const field = this.get().locator(`[data-testid="cv-form-fields"][data-title="${title}"]`);
     await field.scrollIntoViewIfNeeded();
 
     if (hasError) {
-      await expect(field.locator('.nc-field-config-error')).toBeVisible();
+      await expect(field.locator('.cv-field-config-error')).toBeVisible();
     } else {
-      await expect(field.locator('.nc-field-config-error')).not.toBeVisible();
+      await expect(field.locator('.cv-field-config-error')).not.toBeVisible();
     }
   }
 }

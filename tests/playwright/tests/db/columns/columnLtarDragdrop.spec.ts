@@ -77,9 +77,9 @@ test.describe('Links', () => {
     // drag drop for LTAR column creation
     //
     await src.dragTo(dst);
-    const columnAddModal = dashboard.rootPage.locator(`.nc-dropdown-grid-add-column`);
+    const columnAddModal = dashboard.rootPage.locator(`.cv-dropdown-grid-add-column`);
     {
-      const columnType = await getTextExcludeIconText(columnAddModal.locator(`.nc-column-type-input`));
+      const columnType = await getTextExcludeIconText(columnAddModal.locator(`.cv-column-type-input`));
       const linkTable = await getTextExcludeIconText(columnAddModal.locator(`.ant-form-item-control-input`).nth(3));
       expect(columnType).toContain('Links');
       expect(linkTable).toContain('Table1');
@@ -95,8 +95,8 @@ test.describe('Links', () => {
     //
     await src.dragTo(dst);
     {
-      // const columnAddModal = await dashboard.rootPage.locator(`.nc-dropdown-grid-add-column`);
-      const columnType = await getTextExcludeIconText(columnAddModal.locator(`.nc-column-type-input`));
+      // const columnAddModal = await dashboard.rootPage.locator(`.cv-dropdown-grid-add-column`);
+      const columnType = await getTextExcludeIconText(columnAddModal.locator(`.cv-column-type-input`));
       const linkField = await getTextExcludeIconText(columnAddModal.locator(`.ant-form-item-control-input`).nth(2));
       const childColumn = await getTextExcludeIconText(columnAddModal.locator(`.ant-form-item-control-input`).nth(3));
 

@@ -44,7 +44,7 @@ test.describe('Source Restrictions', () => {
 
     // open table and verify that it is readonly
     await dashboard.treeView.openTable({ title: 'Actor' });
-    await expect(dashboard.grid.get().locator('.nc-grid-add-new-cell')).toHaveCount(0);
+    await expect(dashboard.grid.get().locator('.cv-grid-add-new-cell')).toHaveCount(0);
 
     await dashboard.grid.get().getByTestId(`cell-FirstName-0`).click({
       button: 'right',
@@ -73,9 +73,9 @@ test.describe('Source Restrictions', () => {
       .get()
       .locator(`th[data-title="LastName"]`)
       .first()
-      .locator('.nc-ui-dt-dropdown')
+      .locator('.cv-ui-dt-dropdown')
       .scrollIntoViewIfNeeded();
-    await dashboard.grid.get().locator(`th[data-title="LastName"]`).first().locator('.nc-ui-dt-dropdown').click();
+    await dashboard.grid.get().locator(`th[data-title="LastName"]`).first().locator('.cv-ui-dt-dropdown').click();
     for (const item of ['Edit', 'Delete', 'Duplicate']) {
       await expect(dashboard.rootPage.locator(`li[role="menuitem"]:has-text("${item}"):visible`).first()).toBeVisible();
       await expect(dashboard.rootPage.locator(`li[role="menuitem"]:has-text("${item}"):visible`).first()).toHaveClass(
@@ -113,10 +113,10 @@ test.describe('Source Restrictions', () => {
       .get()
       .locator(`th[data-title="Rating"]`)
       .first()
-      .locator('.nc-ui-dt-dropdown')
+      .locator('.cv-ui-dt-dropdown')
       .scrollIntoViewIfNeeded();
 
-    await dashboard.grid.get().locator(`th[data-title="Rating"]`).first().locator('.nc-ui-dt-dropdown').click();
+    await dashboard.grid.get().locator(`th[data-title="Rating"]`).first().locator('.cv-ui-dt-dropdown').click();
     for (const item of ['Delete', 'Duplicate']) {
       await expect(dashboard.rootPage.locator(`li[role="menuitem"]:has-text("${item}"):visible`).last()).toBeVisible();
       await expect(dashboard.rootPage.locator(`li[role="menuitem"]:has-text("${item}"):visible`).last()).toHaveClass(
@@ -129,12 +129,12 @@ test.describe('Source Restrictions', () => {
     await dashboard.rootPage.locator(`li[role="menuitem"]:has-text("Edit"):visible`).last().click();
     await dashboard.rootPage.waitForTimeout(300);
     await expect(
-      dashboard.rootPage.locator(`.nc-dropdown-edit-column .ant-form-item-label:has-text("Icon")`).last()
+      dashboard.rootPage.locator(`.cv-dropdown-edit-column .ant-form-item-label:has-text("Icon")`).last()
     ).toBeVisible();
 
-    await dashboard.rootPage.locator(`.nc-dropdown-edit-column`).getByTestId('nc-dropdown-rating-max').click();
+    await dashboard.rootPage.locator(`.cv-dropdown-edit-column`).getByTestId('cv-dropdown-rating-max').click();
 
-    await dashboard.rootPage.locator(`.nc-dropdown-rating-max-option:has-text("9")`).click();
+    await dashboard.rootPage.locator(`.cv-dropdown-rating-max-option:has-text("9")`).click();
 
     await dashboard.grid.column.save({ isUpdated: true });
 

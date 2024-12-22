@@ -6,8 +6,8 @@ on:
   pull_request:
     paths:
       - "packages/clairview-sdk/**"
-      - "packages/nc-gui/**"
-      - "packages/nc-lib-gui/**"
+      - "packages/cv-gui/**"
+      - "packages/cv-lib-gui/**"
       - "packages/clairview/**"
 
 jobs:

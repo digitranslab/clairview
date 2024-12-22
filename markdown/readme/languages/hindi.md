@@ -1,7 +1,7 @@
 <h1 align="center" style="border-bottom: none">
     <div>
         <a style="color:#36f" href="https://www.clairview.com">
-            <img src="/packages/nc-gui/assets/img/icons/512x512.png" width="80" alt="ClairView लोगो" />
+            <img src="/packages/cv-gui/assets/img/icons/512x512.png" width="80" alt="ClairView लोगो" />
             <br>
             ClairView
         </a>

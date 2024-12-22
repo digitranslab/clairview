@@ -22,17 +22,17 @@ export class LoginPage extends BasePage {
   async fillEmail({ email, withoutPrefix }: { email: string; withoutPrefix?: boolean }) {
     if (!withoutPrefix) email = this.prefixEmail(email);
 
-    await this.get().locator(`[data-testid="nc-form-signin__email"]`).waitFor();
-    await this.get().locator(`[data-testid="nc-form-signin__email"]`).fill(email);
+    await this.get().locator(`[data-testid="cv-form-signin__email"]`).waitFor();
+    await this.get().locator(`[data-testid="cv-form-signin__email"]`).fill(email);
   }
 
   async fillPassword(password: string) {
-    await this.get().locator(`[data-testid="nc-form-signin__password"]`).fill(password);
+    await this.get().locator(`[data-testid="cv-form-signin__password"]`).fill(password);
   }
 
   async submit() {
-    await this.get().locator(`[data-testid="nc-form-signin__submit"]`).click();
-    await this.rootPage.locator('.nc-treeview-container').waitFor({ timeout: 10000 });
+    await this.get().locator(`[data-testid="cv-form-signin__submit"]`).click();
+    await this.rootPage.locator('.cv-treeview-container').waitFor({ timeout: 10000 });
   }
 
   async signIn({

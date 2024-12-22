@@ -93,16 +93,16 @@ jobs:
         run: |
 
           pnpm bootstrap &&
-          cd packages/nc-gui &&
+          cd packages/cv-gui &&
           pnpm run generate
           
           # copy build to clairview
-          rsync -rvzh ./dist/ ../clairview/docker/nc-gui/
+          rsync -rvzh ./dist/ ../clairview/docker/cv-gui/
 
 
       - name: build clairview
         run: |
-          # build clairview ( pack clairview-sdk and nc-gui )
+          # build clairview ( pack clairview-sdk and cv-gui )
           cd packages/clairview &&
           EE=true pnpm exec rspack --config rspack.timely.config.js &&
           # remove bundled libraries (clairview-sdk, knex-snowflake)

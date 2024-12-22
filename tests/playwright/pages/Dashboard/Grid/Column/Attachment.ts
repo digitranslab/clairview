@@ -28,24 +28,24 @@ export class AttachmentColumnPageObject extends BasePage {
     await this.column.openEdit({ title: columnTitle });
     await this.column.editMenuShowMore();
 
-    // text box : nc-attachment-max-count
-    // text box : nc-attachment-max-size
+    // text box : cv-attachment-max-count
+    // text box : cv-attachment-max-size
     // checkbox : ant-tree-checkbox
     //     Checkbox order: Application, Audio, Image, Video, Misc
 
     if (fileCount) {
-      const inputMaxCount = this.column.get().locator(`.nc-attachment-max-count`);
+      const inputMaxCount = this.column.get().locator(`.cv-attachment-max-count`);
       await inputMaxCount.locator(`input`).fill(fileCount.toString());
     }
 
     if (fileSize) {
-      const inputMaxSize = this.column.get().locator(`.nc-attachment-max-size`);
+      const inputMaxSize = this.column.get().locator(`.cv-attachment-max-size`);
       await inputMaxSize.locator(`input`).fill(fileSize.toString());
     }
 
     if (fileTypesExcludeList) {
-      // click on nc-allow-all-mime-type-checkbox
-      const allowAllMimeCheckbox = this.column.get().locator(`.nc-allow-all-mime-type-checkbox`);
+      // click on cv-allow-all-mime-type-checkbox
+      const allowAllMimeCheckbox = this.column.get().locator(`.cv-allow-all-mime-type-checkbox`);
       await allowAllMimeCheckbox.click();
 
       const treeList = this.column.get().locator(`.ant-tree-list`);

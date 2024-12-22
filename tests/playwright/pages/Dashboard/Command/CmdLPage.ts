@@ -39,10 +39,10 @@ export class CmdL extends BasePage {
   }
 
   async getActiveViewTitle() {
-    return await this.dashboardPage.get().locator('.nc-active-view-title').innerText();
+    return await this.dashboardPage.get().locator('.cv-active-view-title').innerText();
   }
 
   async getActiveTableTitle() {
-    return await this.dashboardPage.get().locator('.nc-active-table-title').innerText();
+    return await this.dashboardPage.get().locator('.cv-active-table-title').innerText();
   }
 }

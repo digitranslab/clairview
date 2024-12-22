@@ -12,15 +12,15 @@ export class ToolbarSortPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`[data-testid="nc-sorts-menu"]`);
+    return this.rootPage.locator(`[data-testid="cv-sorts-menu"]`);
   }
 
   async verify({ index, column, direction }: { index: number; column: string; direction: string }) {
-    const fieldLocator = this.get().locator('.nc-sort-field-select').nth(index);
+    const fieldLocator = this.get().locator('.cv-sort-field-select').nth(index);
     const fieldText = await getTextExcludeIconText(fieldLocator);
     expect(fieldText).toBe(column);
 
-    await expect(this.get().locator('.nc-sort-dir-select >> span.ant-select-selection-item').nth(index)).toHaveText(
+    await expect(this.get().locator('.cv-sort-dir-select >> span.ant-select-selection-item').nth(index)).toHaveText(
       direction
     );
   }
@@ -37,30 +37,30 @@ export class ToolbarSortPage extends BasePage {
     locallySaved: boolean;
   }) {
     await this.toolbar.clickSort();
-    const count = await this.rootPage.locator('.nc-sort-field-select').count();
+    const count = await this.rootPage.locator('.cv-sort-field-select').count();
     const col = await this.rootPage
-      .locator('.nc-sort-field-select')
+      .locator('.cv-sort-field-select')
       .nth(count - index)
       .textContent();
     if (col !== title) {
       await this.rootPage
-        .locator('.nc-sort-field-select')
+        .locator('.cv-sort-field-select')
         .nth(count - index)
         .click();
       await this.rootPage
-        .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+        .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
         .locator(`div[label="${title}"]`)
         .last()
         .click();
     }
 
     await this.rootPage
-      .locator('.nc-sort-dir-select')
+      .locator('.cv-sort-dir-select')
       .nth(count - index)
       .click();
     const selectSortDirection = () =>
       this.rootPage
-        .locator('.nc-dropdown-sort-dir')
+        .locator('.cv-dropdown-sort-dir')
         .nth(count - index)
         .locator('.ant-select-item')
         .nth(ascending ? 0 : 1)
@@ -83,13 +83,13 @@ export class ToolbarSortPage extends BasePage {
     // Check if create sort modal is open or sort list is open
     let isSortListOpen = false;
     for (let i = 0; i < 3; i++) {
-      const sortList = this.rootPage.locator('.nc-filter-list');
+      const sortList = this.rootPage.locator('.cv-filter-list');
       if (await sortList.isVisible()) {
         isSortListOpen = true;
         break;
       }
 
-      const searchInput = this.rootPage.locator('.nc-sort-create-modal');
+      const searchInput = this.rootPage.locator('.cv-sort-create-modal');
       if (await searchInput.isVisible()) {
         isSortListOpen = false;
         break;
@@ -103,15 +103,15 @@ export class ToolbarSortPage extends BasePage {
     }
 
     await this.rootPage
-      .locator('.nc-sort-create-modal')
-      .locator('.nc-sort-column-search-item', { hasText: title })
+      .locator('.cv-sort-create-modal')
+      .locator('.cv-sort-column-search-item', { hasText: title })
       .scrollIntoViewIfNeeded();
 
     // select column
     const selectColumn = async () =>
       await this.rootPage
-        .locator('.nc-sort-create-modal')
-        .locator('.nc-sort-column-search-item', { hasText: title })
+        .locator('.cv-sort-create-modal')
+        .locator('.cv-sort-column-search-item', { hasText: title })
         .click({
           force: true,
         });
@@ -123,11 +123,11 @@ export class ToolbarSortPage extends BasePage {
     });
 
     // read content of the dropdown
-    // const col = await this.rootPage.locator('.nc-sort-field-select').last().textContent();
+    // const col = await this.rootPage.locator('.cv-sort-field-select').last().textContent();
     // if (col !== title) {
-    //   await this.rootPage.locator('.nc-sort-field-select').last().click();
+    //   await this.rootPage.locator('.cv-sort-field-select').last().click();
     //   await this.rootPage
-    //     .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+    //     .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
     //     .locator(`div[label="${title}"]`)
     //     .last()
     //     .click();
@@ -136,7 +136,7 @@ export class ToolbarSortPage extends BasePage {
     // network request will be triggered only after dir-select is clicked
     //
     // const selectColumn = this.rootPage
-    //   .locator('div.ant-select-dropdown.nc-dropdown-toolbar-field-list')
+    //   .locator('div.ant-select-dropdown.cv-dropdown-toolbar-field-list')
     //   .locator(`div[label="${columnTitle}"]`)
     //   .last()
     //   .click();
@@ -147,10 +147,10 @@ export class ToolbarSortPage extends BasePage {
     // });
     // await this.toolbar.parent.dashboard.waitForLoaderToDisappear();
 
-    await this.rootPage.locator('.nc-sort-dir-select').last().click();
+    await this.rootPage.locator('.cv-sort-dir-select').last().click();
     const selectSortDirection = () =>
       this.rootPage
-        .locator('.nc-dropdown-sort-dir')
+        .locator('.cv-dropdown-sort-dir')
         .last()
         .locator('.ant-select-item')
         .nth(ascending ? 0 : 1)
@@ -172,13 +172,13 @@ export class ToolbarSortPage extends BasePage {
     // open sort menu
     await this.toolbar.clickSort();
 
-    await this.get().locator('.nc-sort-item-remove-btn').last().click();
+    await this.get().locator('.cv-sort-item-remove-btn').last().click();
 
     // close sort menu
     await this.toolbar.clickSort();
   }
 
   click({ title }: { title: string }) {
-    return this.get().locator(`[data-testid="nc-fields-menu-${title}"]`).locator('input[type="checkbox"]').click();
+    return this.get().locator(`[data-testid="cv-fields-menu-${title}"]`).locator('input[type="checkbox"]').click();
   }
 }

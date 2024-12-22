@@ -15,13 +15,13 @@ export class FootbarPage extends BasePage {
   constructor(parent: GridPage | GalleryPage | FormPage | KanbanPage | MapPage) {
     super(parent.rootPage);
     this.parent = parent;
-    this.leftSidebarToggle = this.get().locator(`div.nc-sidebar-left-toggle-icon`);
-    this.rightSidebarToggle = this.get().locator(`div.nc-sidebar-right-toggle-icon`);
-    this.btn_addNewRow = this.rootPage.getByTestId('nc-pagination-add-record');
+    this.leftSidebarToggle = this.get().locator(`div.cv-sidebar-left-toggle-icon`);
+    this.rightSidebarToggle = this.get().locator(`div.cv-sidebar-right-toggle-icon`);
+    this.btn_addNewRow = this.rootPage.getByTestId('cv-pagination-add-record');
   }
 
   get() {
-    return this.rootPage.locator(`div.nc-grid-pagination-wrapper`);
+    return this.rootPage.locator(`div.cv-grid-pagination-wrapper`);
   }
 
   async clickAddRecord() {
@@ -38,10 +38,10 @@ export class FootbarPage extends BasePage {
   }
 
   async clickAddRecordFromForm() {
-    await this.rootPage.locator('.nc-add-record-more-info').click();
+    await this.rootPage.locator('.cv-add-record-more-info').click();
 
     await this.rootPage.locator('.ant-dropdown-content:visible').waitFor();
-    await this.rootPage.locator('.ant-dropdown-content:visible').locator('.nc-new-record-with-form').click();
+    await this.rootPage.locator('.ant-dropdown-content:visible').locator('.cv-new-record-with-form').click();
   }
 
   async verifyLockMode() {

@@ -21,30 +21,30 @@ import Column from '~/models/Column';
 import { GridViewColumn } from '~/models';
 
 export const IGNORE_TABLES = [
-  'nc_models',
+  'cv_models',
   'nc_roles',
   'nc_routes',
   'nc_loaders',
   'nc_resolvers',
-  'nc_hooks',
+  'cv_hooks',
   'nc_store',
   '_evolutions',
   'nc_evolutions',
   'xc_users',
   'nc_rpc',
-  'nc_acl',
+  'cv_acl',
   'nc_cron',
   'nc_disabled_models_for_role',
   'nc_audit',
   'xc_knex_migrations',
   'xc_knex_migrations_lock',
-  'nc_plugins',
-  'nc_migrations',
+  'cv_plugins',
+  'cv_migrations',
   'nc_api_tokens',
   'nc_projects',
   'nc_projects_users',
   'nc_relations',
-  'nc_shared_views',
+  'cv_shared_views',
 ];
 
 async function isMMRelationExist(
@@ -348,7 +348,7 @@ export async function populateMeta(
 
       // await Model.insert(base.id, base.id, meta);
 
-      /* create nc_models and its rows if it doesn't exists  */
+      /* create cv_models and its rows if it doesn't exists  */
       models2[table.table_name] = await Model.insert(
         context,
         base.id,
@@ -490,7 +490,7 @@ export async function populateMeta(
 
       mapDefaultDisplayValue(columns);
 
-      /* create nc_models and its rows if it doesn't exists  */
+      /* create cv_models and its rows if it doesn't exists  */
       models2[table.table_name] = await Model.insert(
         context,
         base.id,

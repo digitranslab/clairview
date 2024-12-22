@@ -12,7 +12,7 @@ export class SidebarTableNodeObject extends BasePage {
   }
 
   get({ tableTitle }: { tableTitle: string }) {
-    return this.sidebar.get().getByTestId(`nc-tbl-side-node-${tableTitle}`);
+    return this.sidebar.get().getByTestId(`cv-tbl-side-node-${tableTitle}`);
   }
 
   async click({ tableTitle }: { tableTitle: string }) {
@@ -29,7 +29,7 @@ export class SidebarTableNodeObject extends BasePage {
     await this.get({
       tableTitle,
     })
-      .getByTestId(`nc-sidebar-table-context-menu`)
+      .getByTestId(`cv-sidebar-table-context-menu`)
       .click();
   }
 

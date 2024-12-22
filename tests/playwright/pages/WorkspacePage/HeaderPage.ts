@@ -3,18 +3,18 @@ import { WorkspacePage } from './';
 import { expect } from '@playwright/test';
 
 /*
-  nc-header-content
-      [data-testid="nc-dash-nav-workspaces"]
-      [data-testid="nc-dash-nav-explore"]
-      [data-testid="nc-dash-nav-help"]
-      [data-testid="nc-dash-nav-community"]
-  data-testid="nc-quick-action-wrapper"
+  cv-header-content
+      [data-testid="cv-dash-nav-workspaces"]
+      [data-testid="cv-dash-nav-explore"]
+      [data-testid="cv-dash-nav-help"]
+      [data-testid="cv-dash-nav-community"]
+  data-testid="cv-quick-action-wrapper"
   input["placeholder="Quick Actions"]
-  [data-testid="nc-notification-bell-icon"]
-  [data-testid="nc-ws-account-menu-dropdown"]
+  [data-testid="cv-notification-bell-icon"]
+  [data-testid="cv-ws-account-menu-dropdown"]
       |> .ant-dropdown-menu-vertical
-          |> [data-testid="nc-menu-accounts__user-settings"]
-          |> [data-testid="nc-menu-accounts__sign-out"]
+          |> [data-testid="cv-menu-accounts__user-settings"]
+          |> [data-testid="cv-menu-accounts__sign-out"]
  */
 
 export class HeaderPage extends BasePage {
@@ -26,7 +26,7 @@ export class HeaderPage extends BasePage {
   }
 
   get() {
-    return this.workspace.get().locator('.nc-header-content');
+    return this.workspace.get().locator('.cv-header-content');
   }
 
   async waitFor({ state }) {
@@ -38,16 +38,16 @@ export class HeaderPage extends BasePage {
     // await this.get().locator('img[src="/_nuxt/assets/img/brand/clairview-full-color.png"]').waitFor({ state: 'visible' });
 
     // menu items in the center (disabled for now)
-    // await this.get().locator('[data-testid="nc-dash-nav-workspaces"]').waitFor({ state: 'visible' });
-    // await this.get().locator('[data-testid="nc-dash-nav-explore"]').waitFor({ state: 'visible' });
-    // await this.get().locator('[data-testid="nc-dash-nav-help"]').waitFor({ state: 'visible' });
-    // await this.get().locator('[data-testid="nc-dash-nav-community"]').waitFor({ state: 'visible' });
+    // await this.get().locator('[data-testid="cv-dash-nav-workspaces"]').waitFor({ state: 'visible' });
+    // await this.get().locator('[data-testid="cv-dash-nav-explore"]').waitFor({ state: 'visible' });
+    // await this.get().locator('[data-testid="cv-dash-nav-help"]').waitFor({ state: 'visible' });
+    // await this.get().locator('[data-testid="cv-dash-nav-community"]').waitFor({ state: 'visible' });
 
     // quick action, notifications & account menu on the right
-    // await this.get().locator('[data-testid="nc-quick-action-wrapper"]').waitFor({ state: 'visible' });
+    // await this.get().locator('[data-testid="cv-quick-action-wrapper"]').waitFor({ state: 'visible' });
     // await this.get().locator('input[placeholder="Quick Actions"]').waitFor({ state: 'visible' });
-    await this.get().locator('[data-testid="nc-notification-bell-icon"]').waitFor({ state: 'visible' });
-    await this.get().locator('[data-testid="nc-ws-account-menu-dropdown"]').waitFor({ state: 'visible' });
+    await this.get().locator('[data-testid="cv-notification-bell-icon"]').waitFor({ state: 'visible' });
+    await this.get().locator('[data-testid="cv-ws-account-menu-dropdown"]').waitFor({ state: 'visible' });
   }
 
   // Custom routines
@@ -55,7 +55,7 @@ export class HeaderPage extends BasePage {
 
   // Menu : Workspaces, Explore, Help, Community
   async openMenu(param: { title: string }) {
-    this.get().locator(`[data-testid="nc-dash-nav-${param.title.toLowerCase()}"]`);
+    this.get().locator(`[data-testid="cv-dash-nav-${param.title.toLowerCase()}"]`);
   }
 
   async navigateUsingCmdK({
@@ -88,10 +88,10 @@ export class HeaderPage extends BasePage {
   }
 
   async accountMenuOpen({ title }: { title: 'user-settings' | 'sign-out' }) {
-    await this.get().locator('[data-testid="nc-ws-account-menu-dropdown"]').click();
+    await this.get().locator('[data-testid="cv-ws-account-menu-dropdown"]').click();
     await this.rootPage
       .locator('.ant-dropdown-menu-vertical')
-      .locator(`[data-testid="nc-menu-accounts__${title}"]`)
+      .locator(`[data-testid="cv-menu-accounts__${title}"]`)
       .click();
     if (title === 'sign-out') await this.rootPage.waitForURL(/signin/);
     else await this.rootPage.waitForURL(/users/);

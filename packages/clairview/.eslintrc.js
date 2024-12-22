@@ -24,7 +24,7 @@ module.exports = {
     'build',
     'coverage',
     'dist',
-    'nc',
+    'cv',
     '.eslintrc.js',
   ],
   globals: {

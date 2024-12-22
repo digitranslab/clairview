@@ -30,14 +30,14 @@ export class UserOptionCellPageObject extends BasePage {
     // check if cell active
     if (
       !(await selectCell.getAttribute('class')).includes('active') &&
-      (await selectCell.locator('.nc-selected-option').count()) === 0
+      (await selectCell.locator('.cv-selected-option').count()) === 0
     ) {
       await selectCell.click();
     }
 
     await selectCell.click();
 
-    await this.rootPage.locator('.nc-dropdown-user-select-cell').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-dropdown-user-select-cell').waitFor({ state: 'visible' });
 
     if (index === -1) {
       const selectOption = this.rootPage.getByTestId(`select-option-${columnHeader}-undefined`).getByText(option);
@@ -54,7 +54,7 @@ export class UserOptionCellPageObject extends BasePage {
       await this.rootPage.keyboard.press('Escape');
     }
 
-    await this.rootPage.locator('.nc-dropdown-user-select-cell').waitFor({ state: 'hidden' });
+    await this.rootPage.locator('.cv-dropdown-user-select-cell').waitFor({ state: 'hidden' });
   }
 
   async clear({ index, columnHeader, multiSelect }: { index: number; columnHeader: string; multiSelect?: boolean }) {
@@ -81,7 +81,7 @@ export class UserOptionCellPageObject extends BasePage {
 
     // Press `Escape` to close the dropdown
     await this.rootPage.keyboard.press('Escape');
-    await this.rootPage.locator('.nc-dropdown-user-select-cell').waitFor({ state: 'hidden' });
+    await this.rootPage.locator('.cv-dropdown-user-select-cell').waitFor({ state: 'hidden' });
   }
 
   async verify({
@@ -137,7 +137,7 @@ export class UserOptionCellPageObject extends BasePage {
       counter++;
     }
     await this.rootPage.keyboard.press('Escape');
-    await this.rootPage.locator(`.nc-dropdown-user-select-cell`).nth(index).waitFor({ state: 'hidden' });
+    await this.rootPage.locator(`.cv-dropdown-user-select-cell`).nth(index).waitFor({ state: 'hidden' });
   }
 
   async verifySelectedOptions({
@@ -154,7 +154,7 @@ export class UserOptionCellPageObject extends BasePage {
 
     let counter = 0;
     for (const option of options) {
-      await expect(selectCell.locator(`.nc-selected-option`).nth(counter)).toContainText(option);
+      await expect(selectCell.locator(`.cv-selected-option`).nth(counter)).toContainText(option);
       counter++;
     }
   }

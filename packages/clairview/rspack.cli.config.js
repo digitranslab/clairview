@@ -73,7 +73,7 @@ module.exports = {
   mode: 'production',
   output: {
     filename: 'cli.js',
-    path: resolve(__dirname, '..', 'nc-secret-mgr', 'src/clairview'),
+    path: resolve(__dirname, '..', 'cv-secret-mgr', 'src/clairview'),
     library: 'libs',
     libraryTarget: 'umd',
     globalObject: "typeof self !== 'undefined' ? self : this",

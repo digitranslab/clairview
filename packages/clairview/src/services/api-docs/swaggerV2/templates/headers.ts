@@ -1,5 +1,5 @@
 export const csvExportResponseHeader = {
-  'nc-export-offset': {
+  'cv-export-offset': {
     schema: {
       type: 'integer',
     },

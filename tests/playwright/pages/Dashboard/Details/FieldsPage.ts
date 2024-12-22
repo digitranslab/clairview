@@ -19,26 +19,26 @@ export class FieldsPage extends BasePage {
   constructor(details: DetailsPage) {
     super(details.rootPage);
     this.detailsPage = details;
-    this.searchFieldInput = this.get().getByTestId('nc-field-search-input');
-    this.addNewFieldButton = this.get().getByTestId('nc-field-add-new');
-    this.resetFieldChangesButton = this.get().getByTestId('nc-field-reset');
-    this.saveChangesButton = this.get().getByTestId('nc-field-save-changes');
+    this.searchFieldInput = this.get().getByTestId('cv-field-search-input');
+    this.addNewFieldButton = this.get().getByTestId('cv-field-add-new');
+    this.resetFieldChangesButton = this.get().getByTestId('cv-field-reset');
+    this.saveChangesButton = this.get().getByTestId('cv-field-save-changes');
     this.addOrEditColumn = this.get().getByTestId('add-or-edit-column');
-    this.fieldListWrapper = this.get().getByTestId('nc-field-list-wrapper');
+    this.fieldListWrapper = this.get().getByTestId('cv-field-list-wrapper');
   }
 
   get() {
-    return this.detailsPage.get().locator('.nc-fields-wrapper');
+    return this.detailsPage.get().locator('.cv-fields-wrapper');
   }
 
   async fillSearch({ title }: { title: string }) {
-    const searchInput = this.get().getByTestId('nc-field-search-input');
+    const searchInput = this.get().getByTestId('cv-field-search-input');
     await searchInput.click();
     await searchInput.fill(title);
   }
 
   async clearSearch() {
-    await this.get().getByTestId('nc-field-clear-search').click();
+    await this.get().getByTestId('cv-field-clear-search').click();
   }
 
   async clickNewField() {
@@ -46,11 +46,11 @@ export class FieldsPage extends BasePage {
   }
 
   async clickRestoreField({ title }: { title: string }) {
-    await this.getField({ title }).getByTestId('nc-field-restore-changes').click();
+    await this.getField({ title }).getByTestId('cv-field-restore-changes').click();
   }
 
   defaultValueBtn() {
-    const showDefautlValueBtn = this.addOrEditColumn.getByTestId('nc-show-default-value-btn');
+    const showDefautlValueBtn = this.addOrEditColumn.getByTestId('cv-show-default-value-btn');
 
     return {
       locator: showDefautlValueBtn,
@@ -63,7 +63,7 @@ export class FieldsPage extends BasePage {
           await showDefautlValueBtn.click({ force: true });
 
           await showDefautlValueBtn.waitFor({ state: 'hidden' });
-          await this.addOrEditColumn.locator('.nc-default-value-wrapper').waitFor({ state: 'visible' });
+          await this.addOrEditColumn.locator('.cv-default-value-wrapper').waitFor({ state: 'visible' });
         }
       },
     };
@@ -140,26 +140,26 @@ export class FieldsPage extends BasePage {
         }
         break;
       case 'Date':
-        await this.addOrEditColumn.locator('.nc-date-select').click();
-        await this.rootPage.locator('.nc-date-select').pressSequentially(dateFormat);
+        await this.addOrEditColumn.locator('.cv-date-select').click();
+        await this.rootPage.locator('.cv-date-select').pressSequentially(dateFormat);
         await this.rootPage.locator('.ant-select-item').locator(`text="${dateFormat}"`).click();
         break;
       case 'DateTime':
         // Date Format
-        await this.addOrEditColumn.locator('.nc-date-select').click();
+        await this.addOrEditColumn.locator('.cv-date-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${dateFormat}"`).click();
         // Time Format
-        await this.addOrEditColumn.locator('.nc-time-select').click();
+        await this.addOrEditColumn.locator('.cv-time-select').click();
         await this.rootPage.locator('.ant-select-item').locator(`text="${timeFormat}"`).click();
         break;
       case 'Formula':
-        await this.addOrEditColumn.locator('.nc-formula-input').fill(formula);
+        await this.addOrEditColumn.locator('.cv-formula-input').fill(formula);
         break;
       case 'QrCode':
         await this.addOrEditColumn.locator('.ant-select-single').nth(1).click();
         await this.rootPage
           .locator(`.ant-select-item`)
-          .locator(`[data-testid="nc-qr-${qrCodeValueColumnTitle}"]`)
+          .locator(`[data-testid="cv-qr-${qrCodeValueColumnTitle}"]`)
           .click();
         break;
       case 'Barcode':
@@ -194,28 +194,28 @@ export class FieldsPage extends BasePage {
           .click();
         await this.addOrEditColumn.locator('.ant-select-single').nth(2).click();
         await this.rootPage
-          .locator(`.nc-dropdown-relation-column >> .ant-select-item`, {
+          .locator(`.cv-dropdown-relation-column >> .ant-select-item`, {
             hasText: childColumn,
           })
           .click();
         await this.addOrEditColumn.locator('.ant-select-single').nth(3).click();
         await this.rootPage
-          .locator(`.nc-dropdown-rollup-function >> .ant-select-item`, {
+          .locator(`.cv-dropdown-rollup-function >> .ant-select-item`, {
             hasText: rollupType,
           })
           .nth(0)
           .click();
         break;
       case 'Links':
-        await this.addOrEditColumn.locator('.nc-ltar-relation-type').getByTestId(relationType).click();
+        await this.addOrEditColumn.locator('.cv-ltar-relation-type').getByTestId(relationType).click();
         // await this.addOrEditColumn
-        //   .locator('.nc-ltar-relation-type >> .ant-radio')
+        //   .locator('.cv-ltar-relation-type >> .ant-radio')
         //   .nth(relationType === 'Has Many' ? 1 : 0)
         //   .click();
         await this.addOrEditColumn.locator('.ant-select-single').nth(1).click();
-        await this.rootPage.locator(`.nc-ltar-child-table >> input[type="search"]`).first().fill(childTable);
+        await this.rootPage.locator(`.cv-ltar-child-table >> input[type="search"]`).first().fill(childTable);
         await this.rootPage
-          .locator(`.nc-dropdown-ltar-child-table >> .ant-select-item`, {
+          .locator(`.cv-dropdown-ltar-child-table >> .ant-select-item`, {
             hasText: childTable,
           })
           .nth(0)
@@ -246,24 +246,24 @@ export class FieldsPage extends BasePage {
   }
 
   async fillTitle({ title }: { title: string }) {
-    const fieldTitleInput = this.addOrEditColumn.locator('.nc-fields-input');
+    const fieldTitleInput = this.addOrEditColumn.locator('.cv-fields-input');
     await fieldTitleInput.click();
     await fieldTitleInput.fill(title);
   }
 
   async selectType({ type }: { type: string }) {
-    if (await this.addOrEditColumn.getByTestId('nc-column-uitypes-options-list-wrapper').isVisible()) {
-      const searchInput = this.addOrEditColumn.locator('.nc-column-type-search-input >> input');
+    if (await this.addOrEditColumn.getByTestId('cv-column-uitypes-options-list-wrapper').isVisible()) {
+      const searchInput = this.addOrEditColumn.locator('.cv-column-type-search-input >> input');
 
       await searchInput.waitFor({ state: 'visible' });
 
       await searchInput.click();
       await searchInput.fill(type);
 
-      await this.addOrEditColumn.locator('.nc-column-list-wrapper').getByTestId(type).waitFor();
-      await this.addOrEditColumn.locator('.nc-column-list-wrapper').getByTestId(type).click();
+      await this.addOrEditColumn.locator('.cv-column-list-wrapper').getByTestId(type).waitFor();
+      await this.addOrEditColumn.locator('.cv-column-list-wrapper').getByTestId(type).click();
 
-      await this.addOrEditColumn.locator('.nc-column-type-input').waitFor();
+      await this.addOrEditColumn.locator('.cv-column-type-input').waitFor();
     } else {
       await this.addOrEditColumn.locator('.ant-select-selector > .ant-select-selection-item').click();
 
@@ -289,11 +289,11 @@ export class FieldsPage extends BasePage {
   }
 
   getField({ title }: { title: string }) {
-    return this.fieldListWrapper.getByTestId(`nc-field-item-${title}`);
+    return this.fieldListWrapper.getByTestId(`cv-field-item-${title}`);
   }
 
   async getFieldVisibilityCheckbox({ title }: { title: string }) {
-    return this.getField({ title }).getByTestId('nc-field-visibility-checkbox');
+    return this.getField({ title }).getByTestId('cv-field-visibility-checkbox');
   }
 
   async selectFieldAction({
@@ -309,18 +309,18 @@ export class FieldsPage extends BasePage {
     await field.scrollIntoViewIfNeeded();
 
     await field.hover();
-    // await field.getByTestId('nc-field-item-action-button').waitFor({ state: 'visible' });
-    await field.getByTestId('nc-field-item-action-button').click();
+    // await field.getByTestId('cv-field-item-action-button').waitFor({ state: 'visible' });
+    await field.getByTestId('cv-field-item-action-button').click();
 
     const fieldActionDropdown = isDisplayValueField
-      ? this.rootPage.locator('.nc-field-item-action-dropdown-display-column')
-      : this.rootPage.locator('.nc-field-item-action-dropdown');
+      ? this.rootPage.locator('.cv-field-item-action-dropdown-display-column')
+      : this.rootPage.locator('.cv-field-item-action-dropdown');
 
     await fieldActionDropdown.waitFor({ state: 'visible' });
-    await fieldActionDropdown.getByTestId(`nc-field-item-action-${action}`).click();
+    await fieldActionDropdown.getByTestId(`cv-field-item-action-${action}`).click();
 
     if (action === 'copy-id') {
-      await field.getByTestId('nc-field-item-action-button').click({
+      await field.getByTestId('cv-field-item-action-button').click({
         force: true,
       });
     }
@@ -334,7 +334,7 @@ export class FieldsPage extends BasePage {
     const count = await locator.count();
     for (let i = 0; i < count; i++) {
       await locator.nth(i).scrollIntoViewIfNeeded();
-      const text = await locator.nth(i).getByTestId('nc-field-title').textContent();
+      const text = await locator.nth(i).getByTestId('cv-field-title').textContent();
       fieldsText.push(text);
     }
     return fieldsText;
@@ -345,16 +345,16 @@ export class FieldsPage extends BasePage {
     await field.scrollIntoViewIfNeeded();
 
     await field.hover();
-    await field.getByTestId('nc-field-item-action-button').waitFor({ state: 'visible' });
-    await field.getByTestId('nc-field-item-action-button').click();
+    await field.getByTestId('cv-field-item-action-button').waitFor({ state: 'visible' });
+    await field.getByTestId('cv-field-item-action-button').click();
 
     const fieldActionDropdown = isDisplayValueField
-      ? this.rootPage.locator('.nc-field-item-action-dropdown-display-column')
-      : this.rootPage.locator('.nc-field-item-action-dropdown');
+      ? this.rootPage.locator('.cv-field-item-action-dropdown-display-column')
+      : this.rootPage.locator('.cv-field-item-action-dropdown');
 
     await fieldActionDropdown.waitFor({ state: 'visible' });
-    const fieldId = await fieldActionDropdown.getByTestId('nc-field-item-id').textContent();
-    await field.getByTestId('nc-field-item-action-button').click();
+    const fieldId = await fieldActionDropdown.getByTestId('cv-field-item-id').textContent();
+    await field.getByTestId('cv-field-item-action-button').click();
     await fieldActionDropdown.waitFor({ state: 'hidden' });
 
     return fieldId.split(':')[1]?.trim() || '';

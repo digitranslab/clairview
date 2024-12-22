@@ -19,7 +19,7 @@ const evt = new Emit();
 
 const log = new Debug('KnexMigrator');
 
-const NC_MIGRATION = 'nc_migrations';
+const NC_MIGRATION = 'cv_migrations';
 /**
  * Class to create an instance of KnexMigrator
  *

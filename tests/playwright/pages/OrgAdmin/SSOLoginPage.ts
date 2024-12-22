@@ -23,15 +23,15 @@ export class CloudSSOLoginPage extends BasePage {
 
   async signIn({ email }: { email: string }) {
     const signIn = this.get();
-    await signIn.locator('[data-testid="nc-form-org-sso-signin__email"]').waitFor();
+    await signIn.locator('[data-testid="cv-form-org-sso-signin__email"]').waitFor();
 
-    await signIn.locator('[data-testid="nc-form-org-sso-signin__email"]').fill(email);
+    await signIn.locator('[data-testid="cv-form-org-sso-signin__email"]').fill(email);
 
     await Promise.all([
       this.rootPage.waitForNavigation({ url: /localhost:3000/ }),
-      signIn.getByTestId('nc-form-signin__submit').click(),
+      signIn.getByTestId('cv-form-signin__submit').click(),
     ]);
 
-    await this.rootPage.locator(`[data-testid="nc-sidebar-userinfo"]:has-text("${email.split('@')[0]}")`);
+    await this.rootPage.locator(`[data-testid="cv-sidebar-userinfo"]:has-text("${email.split('@')[0]}")`);
   }
 }

@@ -60,24 +60,24 @@ export class ToolbarPage extends BasePage {
     this.calendarViewMode = new ToolbarCalendarViewModePage(this);
     this.calendarRange = new ToolbarCalendarRangePage(this);
 
-    this.btn_fields = this.get().locator(`button.nc-fields-menu-btn`);
-    this.btn_sort = this.get().locator(`button.nc-sort-menu-btn`);
-    this.btn_filter = this.get().locator(`button.nc-filter-menu-btn`);
-    this.btn_rowHeight = this.get().locator(`button.nc-height-menu-btn`);
-    this.btn_groupBy = this.get().locator(`button.nc-group-by-menu-btn`);
-    this.btn_calendarSettings = this.get().getByTestId('nc-calendar-range-btn');
+    this.btn_fields = this.get().locator(`button.cv-fields-menu-btn`);
+    this.btn_sort = this.get().locator(`button.cv-sort-menu-btn`);
+    this.btn_filter = this.get().locator(`button.cv-filter-menu-btn`);
+    this.btn_rowHeight = this.get().locator(`button.cv-height-menu-btn`);
+    this.btn_groupBy = this.get().locator(`button.cv-group-by-menu-btn`);
+    this.btn_calendarSettings = this.get().getByTestId('cv-calendar-range-btn');
 
-    this.today_btn = this.get().getByTestId('nc-calendar-today-btn');
+    this.today_btn = this.get().getByTestId('cv-calendar-today-btn');
   }
 
   get() {
-    return this.rootPage.locator(`.nc-table-toolbar`);
+    return this.rootPage.locator(`.cv-table-toolbar`);
   }
 
   async clickActions() {
     const menuOpen = await this.actions.get().isVisible();
 
-    await this.rootPage.locator(`div.nc-view-context-btn`).click();
+    await this.rootPage.locator(`div.cv-view-context-btn`).click();
 
     // Wait for the menu to close
     if (menuOpen) await this.fields.get().waitFor({ state: 'hidden' });
@@ -95,13 +95,13 @@ export class ToolbarPage extends BasePage {
   }
 
   async getActiveDate() {
-    return this.get().getByTestId('nc-calendar-active-date').textContent();
+    return this.get().getByTestId('cv-calendar-active-date').textContent();
   }
 
   async clickFields() {
     const menuOpen = await this.fields.get().isVisible();
 
-    await this.get().locator(`button.nc-fields-menu-btn`).click();
+    await this.get().locator(`button.cv-fields-menu-btn`).click();
 
     // Wait for the menu to close
     if (menuOpen) await this.fields.get().waitFor({ state: 'hidden' });
@@ -109,45 +109,45 @@ export class ToolbarPage extends BasePage {
   }
 
   async clickFindRowByScanButton() {
-    await this.get().locator(`button.nc-btn-find-row-by-scan`).click();
+    await this.get().locator(`button.cv-btn-find-row-by-scan`).click();
   }
 
   async clickSort() {
     const menuOpen = await this.sort.get().isVisible();
 
-    await this.get().locator(`button.nc-sort-menu-btn`).click();
+    await this.get().locator(`button.cv-sort-menu-btn`).click();
 
     // Wait for the menu to close
     if (menuOpen) await this.sort.get().waitFor({ state: 'hidden' });
   }
 
   async verifyFieldsButtonIsVisibleWithTextAndIcon() {
-    await expect(this.get().locator(`button.nc-fields-menu-btn`)).toBeVisible();
+    await expect(this.get().locator(`button.cv-fields-menu-btn`)).toBeVisible();
 
     // menu text
-    const fieldLocator = this.get().locator(`button.nc-fields-menu-btn`);
+    const fieldLocator = this.get().locator(`button.cv-fields-menu-btn`);
     const fieldText = await getTextExcludeIconText(fieldLocator);
     expect(fieldText).toBe('Fields');
 
     // icons count within fields menu button
-    expect(await this.get().locator(`button.nc-fields-menu-btn`).locator(`.material-symbols`).count()).toBe(2);
+    expect(await this.get().locator(`button.cv-fields-menu-btn`).locator(`.material-symbols`).count()).toBe(2);
   }
 
   async verifyFieldsButtonIsVisibleWithoutTextButIcon() {
-    await expect(this.get().locator(`button.nc-fields-menu-btn`)).toBeVisible();
+    await expect(this.get().locator(`button.cv-fields-menu-btn`)).toBeVisible();
 
     // menu text
-    const fieldLocator = this.get().locator(`button.nc-fields-menu-btn`);
+    const fieldLocator = this.get().locator(`button.cv-fields-menu-btn`);
     const fieldText = await getTextExcludeIconText(fieldLocator);
     expect(fieldText).not.toBe('Fields');
 
     // icons count within fields menu button
-    expect(await this.get().locator(`button.nc-fields-menu-btn`).locator(`.material-symbols`).count()).toBe(2);
+    expect(await this.get().locator(`button.cv-fields-menu-btn`).locator(`.material-symbols`).count()).toBe(2);
   }
 
   async clickGroupBy() {
     const menuOpen = await this.groupBy.get().isVisible();
-    await this.get().locator(`button.nc-group-by-menu-btn`).click();
+    await this.get().locator(`button.cv-group-by-menu-btn`).click();
 
     // Wait for the menu to close
     if (menuOpen) {
@@ -156,7 +156,7 @@ export class ToolbarPage extends BasePage {
   }
 
   async verifyActiveCalendarView({ view }: { view: string }) {
-    const activeView = this.get().getByTestId('nc-active-calendar-view');
+    const activeView = this.get().getByTestId('cv-active-calendar-view');
 
     await expect(activeView).toContainText(view);
   }
@@ -168,7 +168,7 @@ export class ToolbarPage extends BasePage {
   }: { networkValidation?: boolean } = {}) {
     const menuOpen = await this.filter.get().isVisible();
 
-    const clickFilterAction = () => this.get().locator(`button.nc-filter-menu-btn`).click();
+    const clickFilterAction = () => this.get().locator(`button.cv-filter-menu-btn`).click();
     // Wait for the menu to close
     if (menuOpen) {
       await clickFilterAction();
@@ -188,16 +188,16 @@ export class ToolbarPage extends BasePage {
   }
 
   async clickStackByField() {
-    await this.get().locator(`.nc-toolbar-btn.nc-kanban-stacked-by-menu-btn`).click();
+    await this.get().locator(`.cv-toolbar-btn.cv-kanban-stacked-by-menu-btn`).click();
   }
 
   async clickAddNewRow() {
-    await this.get().locator(`.nc-toolbar-btn.nc-add-new-row-btn`).click();
+    await this.get().locator(`.cv-toolbar-btn.cv-add-new-row-btn`).click();
   }
 
   async clickRowHeight() {
-    // ant-btn nc-height-menu-btn nc-toolbar-btn
-    await this.get().locator(`.nc-toolbar-btn.nc-height-menu-btn`).click();
+    // ant-btn cv-height-menu-btn cv-toolbar-btn
+    await this.get().locator(`.cv-toolbar-btn.cv-height-menu-btn`).click();
   }
 
   async clickToday() {
@@ -205,18 +205,18 @@ export class ToolbarPage extends BasePage {
   }
 
   async verifyStackByButton({ title }: { title: string }) {
-    await this.get().locator(`.nc-toolbar-btn.nc-kanban-stacked-by-menu-btn`).waitFor({ state: 'visible' });
+    await this.get().locator(`.cv-toolbar-btn.cv-kanban-stacked-by-menu-btn`).waitFor({ state: 'visible' });
     await expect(
-      this.get().locator(`.nc-toolbar-btn.nc-kanban-stacked-by-menu-btn:has-text("${title}")`)
+      this.get().locator(`.cv-toolbar-btn.cv-kanban-stacked-by-menu-btn:has-text("${title}")`)
     ).toBeVisible();
   }
 
   async verifyDownloadDisabled() {
-    await this.get().locator(`.nc-toolbar-btn.nc-actions-menu-btn`).waitFor({ state: 'hidden' });
+    await this.get().locator(`.cv-toolbar-btn.cv-actions-menu-btn`).waitFor({ state: 'hidden' });
   }
 
   async clickAddEditStack() {
-    await this.get().locator(`.nc-kanban-stacked-by-menu-btn`).click();
+    await this.get().locator(`.cv-kanban-stacked-by-menu-btn`).click();
   }
 
   async validateViewsMenu(param: { role: string; mode?: string }) {
@@ -226,7 +226,7 @@ export class ToolbarPage extends BasePage {
       commenter: ['Download CSV', 'Download Excel'],
       viewer: ['Download CSV', 'Download Excel'],
     };
-    const vMenu = this.rootPage.locator('.nc-dropdown-actions-menu:visible');
+    const vMenu = this.rootPage.locator('.cv-dropdown-actions-menu:visible');
     for (const item of menuItems[param.role.toLowerCase()]) {
       await expect(vMenu).toContainText(item);
     }
@@ -252,23 +252,23 @@ export class ToolbarPage extends BasePage {
     return [
       {
         locator: this.btn_fields,
-        dropdownLocator: this.rootPage.locator('.nc-dropdown.nc-dropdown-fields-menu'),
+        dropdownLocator: this.rootPage.locator('.cv-dropdown.cv-dropdown-fields-menu'),
       },
       {
         locator: this.btn_filter,
-        dropdownLocator: this.rootPage.locator('.nc-dropdown.nc-dropdown-filter-menu'),
+        dropdownLocator: this.rootPage.locator('.cv-dropdown.cv-dropdown-filter-menu'),
       },
       {
         locator: this.btn_sort,
-        dropdownLocator: this.rootPage.locator('.nc-dropdown.nc-dropdown-sort-menu'),
+        dropdownLocator: this.rootPage.locator('.cv-dropdown.cv-dropdown-sort-menu'),
       },
       {
         locator: this.btn_groupBy,
-        dropdownLocator: this.rootPage.locator('.nc-dropdown.nc-dropdown-group-by-menu'),
+        dropdownLocator: this.rootPage.locator('.cv-dropdown.cv-dropdown-group-by-menu'),
       },
       {
         locator: this.btn_rowHeight,
-        dropdownLocator: this.rootPage.locator('.ant-dropdown.nc-dropdown-height-menu'),
+        dropdownLocator: this.rootPage.locator('.ant-dropdown.cv-dropdown-height-menu'),
       },
     ];
   }
@@ -279,7 +279,7 @@ export class ToolbarPage extends BasePage {
 
       await menu.dropdownLocator.waitFor({ state: 'visible' });
 
-      const lockedViewFooter = menu.dropdownLocator.locator('.nc-locked-view-footer');
+      const lockedViewFooter = menu.dropdownLocator.locator('.cv-locked-view-footer');
 
       await expect(lockedViewFooter).toBeVisible();
     }
@@ -291,7 +291,7 @@ export class ToolbarPage extends BasePage {
 
       await menu.dropdownLocator.waitFor({ state: 'visible' });
 
-      const lockedViewFooter = menu.dropdownLocator.locator('.nc-locked-view-footer');
+      const lockedViewFooter = menu.dropdownLocator.locator('.cv-locked-view-footer');
 
       await expect(lockedViewFooter).toBeVisible();
     }
@@ -303,7 +303,7 @@ export class ToolbarPage extends BasePage {
 
       await menu.dropdownLocator.waitFor({ state: 'visible' });
 
-      const lockedViewFooter = menu.dropdownLocator.locator('.nc-locked-view-footer');
+      const lockedViewFooter = menu.dropdownLocator.locator('.cv-locked-view-footer');
 
       await expect(lockedViewFooter).toBeHidden();
     }

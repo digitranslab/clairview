@@ -2,7 +2,7 @@ import fs from 'fs';
 import process from 'process';
 import { knex } from 'knex';
 import SqlMgrv2 from '../../src/db/sql-mgr/v2/SqlMgrv2';
-import { jdbcToXcUrl, xcUrlToDbConfig } from '../../src/utils/nc-config';
+import { jdbcToXcUrl, xcUrlToDbConfig } from '../../src/utils/cv-config';
 import deepClone from '../../src/helpers/deepClone';
 import type { Knex } from 'knex';
 import type { DbConfig } from '../../src/interface/config';

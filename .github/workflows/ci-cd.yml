@@ -4,7 +4,7 @@ on:
   push:
     branches: [develop, main]
     paths:
-      - "packages/nc-gui/**"
+      - "packages/cv-gui/**"
       - "packages/clairview/**"
       - ".github/workflows/ci-cd.yml"
       - "tests/playwright/**"
@@ -12,7 +12,7 @@ on:
     types: [opened, reopened, synchronize, ready_for_review, labeled]
     branches: [develop]
     paths:
-      - "packages/nc-gui/**"
+      - "packages/cv-gui/**"
       - "packages/clairview/**"
       - ".github/workflows/ci-cd.yml"
       - ".github/workflows/playwright-test-workflow.yml"

@@ -10,20 +10,20 @@ export class CalendarMonthPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.getByTestId('nc-calendar-month-view');
+    return this.rootPage.getByTestId('cv-calendar-month-view');
   }
 
   getRecordContainer() {
-    return this.get().getByTestId('nc-calendar-month-record-container');
+    return this.get().getByTestId('cv-calendar-month-record-container');
   }
 
   async dragAndDrop({ record, to }: { record: string; to: { rowIndex: number; columnIndex: number } }) {
     const recordContainer = this.getRecordContainer();
-    const recordCard = recordContainer.getByTestId(`nc-calendar-month-record-${record}`);
+    const recordCard = recordContainer.getByTestId(`cv-calendar-month-record-${record}`);
     const toDay = this.get()
-      .getByTestId('nc-calendar-month-week')
+      .getByTestId('cv-calendar-month-week')
       .nth(to.rowIndex)
-      .getByTestId('nc-calendar-month-day')
+      .getByTestId('cv-calendar-month-day')
       .nth(to.columnIndex);
     const cord = await toDay.boundingBox();
 
@@ -37,9 +37,9 @@ export class CalendarMonthPage extends BasePage {
   }
 
   async selectDate({ rowIndex, columnIndex }: { rowIndex: number; columnIndex: number }) {
-    const week = this.get().getByTestId('nc-calendar-month-week');
+    const week = this.get().getByTestId('cv-calendar-month-week');
 
-    const day = week.nth(rowIndex).getByTestId('nc-calendar-month-day').nth(columnIndex);
+    const day = week.nth(rowIndex).getByTestId('cv-calendar-month-day').nth(columnIndex);
     await day.click({
       force: true,
       position: {

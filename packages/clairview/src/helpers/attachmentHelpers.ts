@@ -3,7 +3,7 @@ import fs from 'fs';
 import mime from 'mime/lite';
 import slash from 'slash';
 import { PublicAttachmentScope } from 'clairview-sdk';
-import { getToolDir } from '~/utils/nc-config';
+import { getToolDir } from '~/utils/cv-config';
 import { NcError } from '~/helpers/catchError';
 
 const previewableMimeTypes = ['image', 'pdf', 'video', 'audio'];

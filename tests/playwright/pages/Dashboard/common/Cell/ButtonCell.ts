@@ -19,7 +19,7 @@ export class ButtonCellPageObject extends BasePage {
 
   async triggerWebhook({ index, columnHeader }: { index: number; columnHeader: string }) {
     await this.waitForResponse({
-      uiAction: () => this.get({ index, columnHeader }).getByTestId('nc-button-cell').click(),
+      uiAction: () => this.get({ index, columnHeader }).getByTestId('cv-button-cell').click(),
       httpMethodsToMatch: ['POST'],
       requestUrlPathToMatch: /\/hooks/,
       responseStatusCodeToMatch: 201,

@@ -11,11 +11,11 @@ export class CalendarDayDatePage extends BasePage {
   }
 
   get() {
-    return this.rootPage.getByTestId('nc-calendar-day-view');
+    return this.rootPage.getByTestId('cv-calendar-day-view');
   }
 
   async verifyRecord(data: { records: string[] }) {
-    const records = await this.get().getByTestId('nc-calendar-day-record-card');
+    const records = await this.get().getByTestId('cv-calendar-day-record-card');
 
     await expect(records).toHaveCount(data.records.length);
 

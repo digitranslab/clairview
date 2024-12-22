@@ -3,9 +3,9 @@
 # highlevel steps involved
 # 1. Stop and remove existing container and image
 # 2. Install dependencies
-# 3. Build nc-gui
-#   3a. static build of nc-gui
-#   3b. copy nc-gui build to clairview dir
+# 3. Build cv-gui
+#   3a. static build of cv-gui
+#   3b. copy cv-gui build to clairview dir
 # 4. Build clairview
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -30,20 +30,20 @@ function install_dependencies() {
 }
 
 function build_gui() {
-    # build nc-gui
+    # build cv-gui
     export NODE_OPTIONS="--max_old_space_size=16384"
-    # generate static build of nc-gui
-    cd ${SCRIPT_DIR}/packages/nc-gui
+    # generate static build of cv-gui
+    cd ${SCRIPT_DIR}/packages/cv-gui
     pnpm run generate || ERROR="gui build failed"
 }
 
 function copy_gui_artifacts() {
-     # copy nc-gui build to clairview dir
-    rsync -rvzh --delete ./dist/ ${SCRIPT_DIR}/packages/clairview/docker/nc-gui/ || ERROR="copy_gui_artifacts failed"
+     # copy cv-gui build to clairview dir
+    rsync -rvzh --delete ./dist/ ${SCRIPT_DIR}/packages/clairview/docker/cv-gui/ || ERROR="copy_gui_artifacts failed"
 }
 
 function package_clairview() {
-    # build clairview ( pack clairview-sdk and nc-gui )
+    # build clairview ( pack clairview-sdk and cv-gui )
     cd ${SCRIPT_DIR}/packages/clairview
     EE=true ${SCRIPT_DIR}/node_modules/@rspack/cli/bin/rspack.js --config ${SCRIPT_DIR}/packages/clairview/rspack.config.js || ERROR="package_clairview failed"
 }
@@ -72,13 +72,13 @@ remove_image
 echo "Info: Installing dependencies" | tee -a ${LOG_FILE}
 install_dependencies 1>> ${LOG_FILE} 2>> ${LOG_FILE}
 
-echo "Info: Building nc-gui" | tee -a ${LOG_FILE}
+echo "Info: Building cv-gui" | tee -a ${LOG_FILE}
 build_gui 1>> ${LOG_FILE} 2>> ${LOG_FILE}
 
-echo "Info: Copy nc-gui build to clairview dir" | tee -a ${LOG_FILE}
+echo "Info: Copy cv-gui build to clairview dir" | tee -a ${LOG_FILE}
 copy_gui_artifacts 1>> ${LOG_FILE} 2>> ${LOG_FILE}
 
-echo "Info: Build clairview, package clairview-sdk and nc-gui" | tee -a ${LOG_FILE}
+echo "Info: Build clairview, package clairview-sdk and cv-gui" | tee -a ${LOG_FILE}
 package_clairview 1>> ${LOG_FILE} 2>> ${LOG_FILE}
 
 if [[ ${ERROR} == "" ]]; then

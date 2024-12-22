@@ -25,7 +25,7 @@ export const getNcParentFromAtId = function getNcParentFromAtId(aId) {
   return mapTbl[aId]?.ncParent;
 };
 
-// get nc-title from airtable ID
+// get cv-title from airtable ID
 export const getNcNameFromAtId = function getNcNameFromAtId(aId) {
   return mapTbl[aId]?.ncName;
 };

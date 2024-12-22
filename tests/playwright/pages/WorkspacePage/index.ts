@@ -8,11 +8,11 @@ import { CollaborationPage } from './CollaborationPage';
 /*
   Workspace page
   --------------
-  nc-app
-    nc-header-content
-    nc-root
-      nc-left-sidebar
-      nc-workspace-settings
+  cv-app
+    cv-header-content
+    cv-root
+      cv-left-sidebar
+      cv-workspace-settings
 
 */
 
@@ -31,7 +31,7 @@ export class WorkspacePage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('[id="nc-app"]');
+    return this.rootPage.locator('[id="cv-app"]');
   }
 
   async waitFor({ state }) {
@@ -109,7 +109,7 @@ export class WorkspacePage extends BasePage {
     expect(await this.leftSideBar.createWorkspace.count()).toBe(param.exists ? 1 : 0);
     await this.leftSideBar
       .get()
-      .locator('[data-testid="nc-create-workspace"]')
+      .locator('[data-testid="cv-create-workspace"]')
       .waitFor({ state: param.exists ? 'visible' : 'hidden' });
   }
 

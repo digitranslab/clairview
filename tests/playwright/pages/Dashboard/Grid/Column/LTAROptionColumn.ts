@@ -20,7 +20,7 @@ export class LTAROptionColumnPageObject extends BasePage {
   // add multiple options at once after column creation is completed
   //
   async addFilters(filters: Parameters<typeof LTARFilterPage.prototype.add>[0][]) {
-    await this.get().getByTestId('nc-limit-record-filters').click();
+    await this.get().getByTestId('cv-limit-record-filters').click();
 
     for (let i = 0; i < filters.length; i++) {
       await this.filter.add(filters[i]);
@@ -48,11 +48,11 @@ export class LTAROptionColumnPageObject extends BasePage {
   }
 
   async selectView({ ltarView }: { ltarView: string }) {
-    await this.get().getByTestId('nc-limit-record-view').click();
+    await this.get().getByTestId('cv-limit-record-view').click();
 
-    await this.rootPage.locator(`.nc-ltar-child-view >> input[type="search"]`).fill(ltarView);
+    await this.rootPage.locator(`.cv-ltar-child-view >> input[type="search"]`).fill(ltarView);
     await this.rootPage
-      .locator(`.nc-dropdown-ltar-child-view >> .ant-select-item`, {
+      .locator(`.cv-dropdown-ltar-child-view >> .ant-select-item`, {
         hasText: ltarView,
       })
       .nth(0)

@@ -16,7 +16,7 @@ export class GalleryPage extends BasePage {
   }
 
   get() {
-    return this.dashboard.get().locator('[data-testid="nc-gallery-wrapper"]');
+    return this.dashboard.get().locator('[data-testid="cv-gallery-wrapper"]');
   }
 
   card(index: number) {

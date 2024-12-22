@@ -71,15 +71,15 @@ export class TiptapPage extends BasePage {
 
     await this.rootPage.keyboard.press('/');
 
-    await this.rootPage.locator('.nc-docs-command-list').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-docs-command-list').waitFor({ state: 'visible' });
   }
 
   async clickTextFormatButton(type: TextFormatType) {
-    await this.rootPage.getByTestId(`nc-docs-editor-${type}-button`).click();
+    await this.rootPage.getByTestId(`cv-docs-editor-${type}-button`).click();
   }
 
   async verifyTextFormatButtonActive({ type, active }: { type: TextFormatType; active: boolean }) {
-    await expect(this.rootPage.getByTestId(`nc-docs-editor-${type}-button`)).toHaveAttribute(
+    await expect(this.rootPage.getByTestId(`cv-docs-editor-${type}-button`)).toHaveAttribute(
       'aria-active',
       active.toString()
     );
@@ -102,23 +102,23 @@ export class TiptapPage extends BasePage {
     if (type === 'Image') {
       await this.attachFile({
         filePath: [filePath],
-        filePickUIAction: this.rootPage.getByTestId(`nc-docs-command-list-item-${type}`).click(),
+        filePickUIAction: this.rootPage.getByTestId(`cv-docs-command-list-item-${type}`).click(),
       });
 
       return;
     }
-    await this.rootPage.getByTestId(`nc-docs-command-list-item-${type}`).click();
+    await this.rootPage.getByTestId(`cv-docs-command-list-item-${type}`).click();
 
     if (type === 'Embed iframe') {
-      await this.rootPage.getByTestId('nc-docs-command-list-link-input').type(link);
-      await this.rootPage.getByTestId('nc-docs-command-list-link-input').press('Enter');
+      await this.rootPage.getByTestId('cv-docs-command-list-link-input').type(link);
+      await this.rootPage.getByTestId('cv-docs-command-list-link-input').press('Enter');
     }
 
-    if (!noVerify) await this.rootPage.locator('.nc-docs-command-list').waitFor({ state: 'hidden' });
+    if (!noVerify) await this.rootPage.locator('.cv-docs-command-list').waitFor({ state: 'hidden' });
   }
 
   async verifyErrorCommandMenu({ error }: { error: string }) {
-    await expect(this.rootPage.getByTestId('nc-docs-command-list-link-input-error')).toHaveText(error);
+    await expect(this.rootPage.getByTestId('cv-docs-command-list-link-input-error')).toHaveText(error);
   }
 
   async verifyHeaderNode({ index, type, content }: { index: number; type: TipTapNodes; content?: string }) {
@@ -127,7 +127,7 @@ export class TiptapPage extends BasePage {
     await expect(
       this.get()
         .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
-        .getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`)
+        .getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`)
         .locator(`h${level}`)
     ).toBeVisible();
 
@@ -135,28 +135,28 @@ export class TiptapPage extends BasePage {
       await expect(
         this.get()
           .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
-          .getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`)
+          .getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`)
           .locator(`h${level}`)
       ).toHaveText(content);
     } else {
       await expect(
         this.get()
           .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
-          .getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`)
+          .getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`)
           .locator(`h${level}`)
       ).toHaveAttribute('data-placeholder', `Heading ${level}`);
     }
   }
 
   async clickBackButtonLinkCommandMenu() {
-    await this._click(this.rootPage.getByTestId('nc-docs-command-list-link-back-btn'));
+    await this._click(this.rootPage.getByTestId('cv-docs-command-list-link-back-btn'));
   }
 
   async verifyCommandMenuOpened({ isVisible }: { isVisible: boolean }) {
     if (isVisible) {
-      await this.rootPage.locator('.nc-docs-command-list').waitFor({ state: 'visible' });
+      await this.rootPage.locator('.cv-docs-command-list').waitFor({ state: 'visible' });
     } else {
-      await this.rootPage.locator('.nc-docs-command-list').waitFor({ state: 'hidden' });
+      await this.rootPage.locator('.cv-docs-command-list').waitFor({ state: 'hidden' });
     }
   }
 
@@ -365,15 +365,15 @@ export class TiptapPage extends BasePage {
 
     if (isUploading) {
       await expect(
-        node.getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator(tiptapNodeToDomType[type])
+        node.getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator(tiptapNodeToDomType[type])
       ).toHaveAttribute('isuploading', 'true');
       await expect(
-        node.getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator('.image-uploading-wrapper')
+        node.getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator('.image-uploading-wrapper')
       ).toContainText('Uploading...');
     }
 
     await expect(
-      node.getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator(tiptapNodeToDomType[type])
+      node.getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator(tiptapNodeToDomType[type])
     ).toBeVisible();
 
     if (content) {
@@ -383,7 +383,7 @@ export class TiptapPage extends BasePage {
     if (type) {
       await expect(node.locator('.node-view-drag-content')).toHaveAttribute(
         'data-testid',
-        `nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`
+        `cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`
       );
     }
 
@@ -399,7 +399,7 @@ export class TiptapPage extends BasePage {
 
     if (placeholder) {
       await expect(
-        node.getByTestId(`nc-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator(tiptapNodeToDomType[type])
+        node.getByTestId(`cv-docs-tiptap-wrapper-${tiptapNodeLabels[type]}`).locator(tiptapNodeToDomType[type])
       ).toHaveAttribute('data-placeholder', placeholder);
     }
   }
@@ -498,14 +498,14 @@ export class TiptapPage extends BasePage {
       .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
       .locator(`.node-view-drag-content`)
       .locator(`tr:nth-child(${rowIndex + 1})`)
-      .getByTestId('nc-docs-table-row-drag-handle-wrapper');
+      .getByTestId('cv-docs-table-row-drag-handle-wrapper');
     await this._click(rowDragHandle);
 
     const insertRowLocator = this.get()
       .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
       .locator(`.node-view-drag-content`)
       .locator(`tr:nth-child(${rowIndex + 1})`)
-      .getByTestId(kind === 'above' ? 'nc-docs-table-row-insert-above' : 'nc-docs-table-row-insert-below');
+      .getByTestId(kind === 'above' ? 'cv-docs-table-row-insert-above' : 'cv-docs-table-row-insert-below');
     await this._click(insertRowLocator);
   }
 
@@ -541,7 +541,7 @@ export class TiptapPage extends BasePage {
       .locator(`.node-view-drag-content`)
       .locator(`tr:nth-child(1)`)
       .locator(`td:nth-child(${columnIndex + 1})`)
-      .getByTestId('nc-docs-table-column-drag-handle-wrapper')
+      .getByTestId('cv-docs-table-column-drag-handle-wrapper')
       .click({
         force: true,
       });
@@ -550,7 +550,7 @@ export class TiptapPage extends BasePage {
       .locator(`.node-view-drag-content`)
       .locator(`tr:nth-child(1)`)
       .locator(`td:nth-child(${columnIndex + 1})`)
-      .getByTestId(kind === 'left' ? 'nc-docs-table-column-insert-left' : 'nc-docs-table-column-insert-right')
+      .getByTestId(kind === 'left' ? 'cv-docs-table-column-insert-left' : 'cv-docs-table-column-insert-right')
       .click({
         force: true,
       });
@@ -569,7 +569,7 @@ export class TiptapPage extends BasePage {
         .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
         .locator(`.node-view-drag-content`)
         .locator(`tr:nth-child(${rowIndex + 1})`)
-        .getByTestId('nc-docs-table-row-drag-handle-wrapper')
+        .getByTestId('cv-docs-table-row-drag-handle-wrapper')
     );
 
     await this._click(
@@ -577,7 +577,7 @@ export class TiptapPage extends BasePage {
         .locator(`.draggable-block-wrapper:nth-child(${index + 1})`)
         .locator(`.node-view-drag-content`)
         .locator(`tr:nth-child(${rowIndex + 1})`)
-        .getByTestId('nc-docs-table-row-delete')
+        .getByTestId('cv-docs-table-row-delete')
     );
   }
 
@@ -596,7 +596,7 @@ export class TiptapPage extends BasePage {
         .locator(`.node-view-drag-content`)
         .locator(`tr:nth-child(1)`)
         .locator(`td:nth-child(${columnIndex + 1})`)
-        .getByTestId('nc-docs-table-column-drag-handle-wrapper')
+        .getByTestId('cv-docs-table-column-drag-handle-wrapper')
     );
 
     await this._click(
@@ -605,7 +605,7 @@ export class TiptapPage extends BasePage {
         .locator(`.node-view-drag-content`)
         .locator(`tr:nth-child(1)`)
         .locator(`td:nth-child(${columnIndex + 1})`)
-        .getByTestId('nc-docs-table-column-delete')
+        .getByTestId('cv-docs-table-column-delete')
     );
   }
 
@@ -693,26 +693,26 @@ export class TiptapPage extends BasePage {
 
   async verifyLinkOptionVisible({ visible }: { visible: boolean }) {
     if (visible) {
-      await expect(this.rootPage.getByTestId('nc-docs-link-options')).toBeVisible();
+      await expect(this.rootPage.getByTestId('cv-docs-link-options')).toBeVisible();
     } else {
-      await expect(this.rootPage.getByTestId('nc-docs-link-options')).toBeHidden();
+      await expect(this.rootPage.getByTestId('cv-docs-link-options')).toBeHidden();
     }
   }
 
   async verifyLinkOptionSearchResults({ titles, selectedTitle }: { titles?: string[]; selectedTitle?: string }) {
     if (titles) {
       for (const title of titles) {
-        await expect(this.rootPage.getByTestId(`nc-docs-link-option-searched-page-${title}`)).toContainText(title);
+        await expect(this.rootPage.getByTestId(`cv-docs-link-option-searched-page-${title}`)).toContainText(title);
       }
 
       const count = titles.length;
-      await expect(this.rootPage.getByTestId('nc-docs-link-option-searched-pages').locator('.page-item')).toHaveCount(
+      await expect(this.rootPage.getByTestId('cv-docs-link-option-searched-pages').locator('.page-item')).toHaveCount(
         count
       );
     }
 
     if (selectedTitle) {
-      await expect(this.rootPage.getByTestId(`nc-docs-link-option-searched-page-${selectedTitle}`)).toHaveClass(
+      await expect(this.rootPage.getByTestId(`cv-docs-link-option-searched-page-${selectedTitle}`)).toHaveClass(
         /selected/
       );
     }
@@ -730,7 +730,7 @@ export class TiptapPage extends BasePage {
   }
 
   async clickLinkDeleteButton() {
-    await this.rootPage.getByTestId('nc-docs-link-options-open-delete').click();
+    await this.rootPage.getByTestId('cv-docs-link-options-open-delete').click();
   }
 
   async clearContent() {

@@ -44,7 +44,7 @@ export class SignupPage extends BasePage {
     await signUp.locator(`input[placeholder="Enter your password"]`).fill(password);
     await signUp.locator(`button:has-text("SIGN UP")`).click();
     if (expectedError) {
-      await expect(signUp.getByTestId('nc-signup-error')).toHaveText(expectedError);
+      await expect(signUp.getByTestId('cv-signup-error')).toHaveText(expectedError);
     } else {
       await this.rootPage.waitForLoadState('networkidle');
     }

@@ -1,6 +1,6 @@
 import { XcActionType, XcType } from 'clairview-sdk';
 import TeamsPlugin from './TeamsPlugin';
-import type { XcPluginConfig } from '~/types/nc-plugin';
+import type { XcPluginConfig } from '~/types/cv-plugin';
 
 const config: XcPluginConfig = {
   builder: TeamsPlugin,

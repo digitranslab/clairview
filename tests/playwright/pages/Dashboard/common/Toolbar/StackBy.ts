@@ -10,11 +10,11 @@ export class ToolbarStackbyPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator(`.nc-dropdown-kanban-stacked-by-menu`);
+    return this.rootPage.locator(`.cv-dropdown-kanban-stacked-by-menu`);
   }
 
   async click({ title }: { title: string }) {
-    await this.get().locator(`.nc-kanban-grouping-field-select`).click();
+    await this.get().locator(`.cv-kanban-grouping-field-select`).click();
     await this.rootPage.locator('.ant-select-dropdown:visible').locator(`div[title="${title}"]`).click();
   }
 }

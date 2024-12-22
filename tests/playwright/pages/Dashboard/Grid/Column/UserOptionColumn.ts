@@ -48,10 +48,10 @@ export class UserOptionColumnPageObject extends BasePage {
     // Clear previous default value
     await this.clearDefaultValue();
 
-    const selector = this.column.get().locator('.nc-user-select >> .ant-select-selector');
+    const selector = this.column.get().locator('.cv-user-select >> .ant-select-selector');
     await selector.click();
 
-    await this.rootPage.locator('.nc-dropdown-user-select-cell').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-dropdown-user-select-cell').waitFor({ state: 'visible' });
 
     if (multiSelect) {
       const optionsToSelect = Array.isArray(option) ? option : [option];
@@ -66,7 +66,7 @@ export class UserOptionColumnPageObject extends BasePage {
       await this.selectOption({ option });
     }
 
-    await this.rootPage.locator('.nc-dropdown-user-select-cell').waitFor({ state: 'hidden' });
+    await this.rootPage.locator('.cv-dropdown-user-select-cell').waitFor({ state: 'hidden' });
 
     await this.column.save({ isUpdated: true });
   }
@@ -80,7 +80,7 @@ export class UserOptionColumnPageObject extends BasePage {
   }
 
   async clearDefaultValue(): Promise<void> {
-    await this.get().locator('.nc-default-value-wrapper > svg.nc-icon').click();
+    await this.get().locator('.cv-default-value-wrapper > svg.cv-icon').click();
   }
 
   async verifyDefaultValueOptionCount({
@@ -92,12 +92,12 @@ export class UserOptionColumnPageObject extends BasePage {
   }): Promise<void> {
     await this.column.openEdit({ title: columnTitle });
 
-    await this.column.get().locator('.nc-default-value-wrapper > .relative > .nc-cell-user').click();
+    await this.column.get().locator('.cv-default-value-wrapper > .relative > .cv-cell-user').click();
 
-    await this.rootPage.locator('.nc-dropdown-user-select-cell').waitFor({ state: 'visible' });
+    await this.rootPage.locator('.cv-dropdown-user-select-cell').waitFor({ state: 'visible' });
 
     expect(await this.rootPage.getByTestId(`select-option-${columnTitle}-undefined`).count()).toEqual(totalCount);
-    await this.column.get().locator('.nc-cell-user').click();
+    await this.column.get().locator('.cv-cell-user').click();
 
     // Press `Cancel` to close edit modal
     await this.column.get().locator('button:has-text("Cancel")').click();
@@ -107,11 +107,11 @@ export class UserOptionColumnPageObject extends BasePage {
   async verifySelectedOptions({ options, columnHeader }: { columnHeader: string; options: string[] }) {
     await this.column.openEdit({ title: columnHeader });
 
-    const defaultValueSelector = this.get().locator('.nc-user-select >> .ant-select-selector');
+    const defaultValueSelector = this.get().locator('.cv-user-select >> .ant-select-selector');
 
     let counter = 0;
     for (const option of options) {
-      await expect(defaultValueSelector.locator(`.nc-selected-option`).nth(counter)).toContainText(option);
+      await expect(defaultValueSelector.locator(`.cv-selected-option`).nth(counter)).toContainText(option);
       counter++;
     }
 

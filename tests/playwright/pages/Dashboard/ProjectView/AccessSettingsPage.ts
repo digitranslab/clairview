@@ -10,7 +10,7 @@ export class AccessSettingsPage extends BasePage {
   }
 
   get() {
-    return this.rootPage.locator('.nc-access-settings-view');
+    return this.rootPage.locator('.cv-access-settings-view');
   }
 
   async setRole(email: string, role: string, networkValidation = true) {
@@ -22,13 +22,13 @@ export class AccessSettingsPage extends BasePage {
       const userEmail = (await user.locator('.users-email-grid').innerText()).split('\n').pop();
 
       if (userEmail === email) {
-        const roleDropdown = user.locator('.nc-roles-selector');
+        const roleDropdown = user.locator('.cv-roles-selector');
 
-        const selectedRole = await user.locator('.nc-roles-selector').innerText();
+        const selectedRole = await user.locator('.cv-roles-selector').innerText();
 
         await roleDropdown.click();
-        const menu = this.rootPage.locator('.nc-role-select-dropdown:visible');
-        const clickClbk = () => menu.locator(`.nc-role-select-${role.toLowerCase()}:visible`).last().click();
+        const menu = this.rootPage.locator('.cv-role-select-dropdown:visible');
+        const clickClbk = () => menu.locator(`.cv-role-select-${role.toLowerCase()}:visible`).last().click();
 
         if (networkValidation && !selectedRole.includes(role)) {
           await this.waitForResponse({

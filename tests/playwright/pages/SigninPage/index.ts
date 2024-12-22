@@ -44,7 +44,7 @@ export class SigninPage extends BasePage {
     await signUp.locator(`input[placeholder="Enter your password"]`).fill(password);
     await signUp.locator(`button:has-text("SIGN IN")`).click();
     if (expectedError) {
-      await expect(signUp.getByTestId('nc-signin-error')).toHaveText(expectedError);
+      await expect(signUp.getByTestId('cv-signin-error')).toHaveText(expectedError);
     } else {
       await this.projectsPage.waitToBeRendered();
     }

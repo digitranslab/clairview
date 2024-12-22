@@ -201,7 +201,7 @@ pnpm run watch:run
 ## 本地运行前端
 
 ```shell
-cd packages/nc-gui
+cd packages/cv-gui
 pnpm install
 pnpm run dev
 # 在浏览器中打开 localhost:3000/dashboard
@@ -209,7 +209,7 @@ pnpm run dev
 
 修改代码后会自动重新启动。
 
-> clairview/packages/clairview 包括 nc-lib-gui，它是 pnpm 源中托管的 nc-gui 的预构建版本。如果您只想修改后端，则可以在本地启动后端后在浏览器中访问 localhost:8000/dashboard
+> clairview/packages/clairview 包括 cv-lib-gui，它是 pnpm 源中托管的 cv-gui 的预构建版本。如果您只想修改后端，则可以在本地启动后端后在浏览器中访问 localhost:8000/dashboard
 
 # 贡献
 

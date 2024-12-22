@@ -33,12 +33,12 @@ export class AccountPage extends BasePage {
   }
 
   async openAppMenu() {
-    await this.rootPage.locator('.nc-menu-accounts').click();
+    await this.rootPage.locator('.cv-menu-accounts').click();
   }
 
   async signOut() {
     await this.openAppMenu();
-    await this.rootPage.locator('div.nc-account-dropdown-item:has-text("Sign Out"):visible').click();
-    await this.rootPage.locator('[data-testid="nc-form-signin"]:visible').waitFor();
+    await this.rootPage.locator('div.cv-account-dropdown-item:has-text("Sign Out"):visible').click();
+    await this.rootPage.locator('[data-testid="cv-form-signin"]:visible').waitFor();
   }
 }

@@ -2,7 +2,7 @@ import path from 'path';
 import { Readable } from 'stream';
 import { Logger } from '@nestjs/common';
 import slash from 'slash';
-import type { IStorageAdapterV2 } from '~/types/nc-plugin';
+import type { IStorageAdapterV2 } from '~/types/cv-plugin';
 import type { Job } from 'bull';
 import type { AttachmentResType, PublicAttachmentScope } from 'clairview-sdk';
 import type { ThumbnailGeneratorJobData } from '~/interface/Jobs';

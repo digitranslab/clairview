@@ -11,7 +11,7 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Upload } from '@aws-sdk/lib-storage';
 import type { PutObjectRequest, S3 as S3Client } from '@aws-sdk/client-s3';
-import type { IStorageAdapterV2, XcFile } from '~/types/nc-plugin';
+import type { IStorageAdapterV2, XcFile } from '~/types/cv-plugin';
 import { generateTempFilePath, waitForStreamClose } from '~/utils/pluginUtils';
 
 interface GenericObjectStorageInput {
@@ -50,7 +50,7 @@ export default class GenericS3 implements IStorageAdapterV2 {
       const tempFile = generateTempFilePath();
       const createStream = fs.createWriteStream(tempFile);
       await waitForStreamClose(createStream);
-      await this.fileCreate('nc-test-file.txt', {
+      await this.fileCreate('cv-test-file.txt', {
         path: tempFile,
         mimetype: 'text/plain',
         originalname: 'temp.txt',

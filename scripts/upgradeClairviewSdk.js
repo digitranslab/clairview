@@ -38,10 +38,10 @@ const replacePackageVersion = (filePath) => {
 }
 
 const bumbVersionAndSave = () => {
-    // upgrade clairview-sdk version in clairview & nc-gui
+    // upgrade clairview-sdk version in clairview & cv-gui
     return Promise.all([
         replacePackageVersion(path.join(__dirname, '..', 'packages', 'clairview', 'package.json')),
-        replacePackageVersion(path.join(__dirname, '..', 'packages', 'nc-gui', 'package.json')),
+        replacePackageVersion(path.join(__dirname, '..', 'packages', 'cv-gui', 'package.json')),
     ])
 }
 
@@ -66,10 +66,10 @@ const dfs = function(dir) {
 
 const searchAndReplace = (target) => {
     let list = [
-        ...dfs(path.resolve(path.join(__dirname, '..', 'packages', 'nc-gui'))),
+        ...dfs(path.resolve(path.join(__dirname, '..', 'packages', 'cv-gui'))),
         ...dfs(path.resolve(path.join(__dirname, '..', 'packages', 'clairview'))),
         ...dfs(path.resolve(path.join(__dirname, '..', 'tests', 'playwright'))),
-        path.join(__dirname, '..', 'packages', 'nc-gui', 'package.json'),
+        path.join(__dirname, '..', 'packages', 'cv-gui', 'package.json'),
         path.join(__dirname, '..', 'packages', 'clairview', 'package.json'),
         path.join(__dirname, '..', 'tests', 'playwright', 'package.json'),
     ]

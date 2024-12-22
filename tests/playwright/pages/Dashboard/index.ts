@@ -66,9 +66,9 @@ export class DashboardPage extends BasePage {
   constructor(rootPage: Page, base: any) {
     super(rootPage);
     this.base = base;
-    this.tablesSideBar = rootPage.locator('.nc-treeview-container');
-    this.workspaceMenuLink = rootPage.getByTestId('nc-base-menu');
-    this.tabBar = rootPage.locator('.nc-tab-bar');
+    this.tablesSideBar = rootPage.locator('.cv-treeview-container');
+    this.workspaceMenuLink = rootPage.getByTestId('cv-base-menu');
+    this.tabBar = rootPage.locator('.cv-tab-bar');
     this.treeView = new TreeViewPage(this, base);
     this.grid = new GridPage(this);
     this.gallery = new GalleryPage(this);
@@ -106,7 +106,7 @@ export class DashboardPage extends BasePage {
   }
 
   getProjectMenuLink({ title }: { title: string }) {
-    return this.rootPage.locator(`div.nc-base-menu-item:has-text("${title}")`);
+    return this.rootPage.locator(`div.cv-base-menu-item:has-text("${title}")`);
   }
 
   async clickOnBaseMenuLink() {
@@ -116,7 +116,7 @@ export class DashboardPage extends BasePage {
     await baseMenuLocator.scrollIntoViewIfNeeded();
     await baseMenuLocator.hover();
 
-    await baseMenuLocator.locator('[data-testid="nc-sidebar-context-menu"]').first().click();
+    await baseMenuLocator.locator('[data-testid="cv-sidebar-context-menu"]').first().click();
   }
 
   async verifyTeamAndSettingsLinkIsVisible() {
@@ -135,12 +135,12 @@ export class DashboardPage extends BasePage {
 
   async gotoSettings() {
     await this.clickOnBaseMenuLink();
-    await this.rootPage.locator('.ant-dropdown').locator(`.nc-menu-item:has-text("Settings")`).click();
+    await this.rootPage.locator('.ant-dropdown').locator(`.cv-menu-item:has-text("Settings")`).click();
   }
 
   async gotoProjectSubMenu({ title }: { title: string }) {
     await this.clickOnBaseMenuLink();
-    await this.rootPage.locator(`div.nc-base-menu-item:has-text("${title}")`).click();
+    await this.rootPage.locator(`div.cv-base-menu-item:has-text("${title}")`).click();
   }
 
   async verifyInTabBar({ title }: { title: string }) {
@@ -161,7 +161,7 @@ export class DashboardPage extends BasePage {
 
     if (emoji) {
       await expect(
-        this.tabBar.locator(`.ant-tabs-tab-active:has-text("${title}")`).getByTestId(`nc-tab-icon-emojione:${emoji}`)
+        this.tabBar.locator(`.ant-tabs-tab-active:has-text("${title}")`).getByTestId(`cv-tab-icon-emojione:${emoji}`)
       ).toBeVisible();
     }
   }
@@ -185,7 +185,7 @@ export class DashboardPage extends BasePage {
 
   async toggleMobileMode() {
     await this.clickOnBaseMenuLink();
-    const projMenu = this.rootPage.locator('.nc-dropdown-base-menu');
+    const projMenu = this.rootPage.locator('.cv-dropdown-base-menu');
     await projMenu.locator('[data-menu-id="mobile-mode"]:visible').click();
     await this.clickOnBaseMenuLink();
   }
@@ -194,17 +194,17 @@ export class DashboardPage extends BasePage {
     await this.sidebar.userMenu.click();
 
     await this.rootPage.waitForTimeout(1000);
-    await this.rootPage.getByTestId('nc-sidebar-user-logout').waitFor({ state: 'visible' });
+    await this.rootPage.getByTestId('cv-sidebar-user-logout').waitFor({ state: 'visible' });
     await this.sidebar.userMenu.clickLogout();
     await this.rootPage.waitForTimeout(1000);
 
-    await this.rootPage.locator('[data-testid="nc-form-signin"]:visible').waitFor();
+    await this.rootPage.locator('[data-testid="cv-form-signin"]:visible').waitFor();
     await new Promise(resolve => setTimeout(resolve, 150));
   }
 
   async validateProjectMenu(param: { role: string; mode?: string }) {
-    await this.rootPage.locator('[data-testid="nc-base-menu"]').click();
-    const pMenu = this.rootPage.locator(`.nc-dropdown-base-menu:visible`);
+    await this.rootPage.locator('[data-testid="cv-base-menu"]').click();
+    const pMenu = this.rootPage.locator(`.cv-dropdown-base-menu:visible`);
 
     // menu items
     let menuItems = {
@@ -237,12 +237,12 @@ export class DashboardPage extends BasePage {
     for (const item of menuItems[param.role]) {
       await expect(pMenu).toContainText(item);
     }
-    await this.rootPage.locator('[data-testid="nc-base-menu"]').click();
+    await this.rootPage.locator('[data-testid="cv-base-menu"]').click();
   }
 
   // Wait for the loader i.e the loader than appears when rows are being fetched, saved etc on the top right of dashboard
   async waitForLoaderToDisappear() {
-    await this.rootPage.locator('[data-testid="nc-loading"]').waitFor({ state: 'hidden' });
+    await this.rootPage.locator('[data-testid="cv-loading"]').waitFor({ state: 'hidden' });
   }
 
   async closeAllTabs() {
@@ -310,7 +310,7 @@ export class DashboardPage extends BasePage {
     // wait active tab animation to finish
     await expect
       .poll(async () => {
-        return await this.tabBar.getByTestId(`nc-root-tabs-${title}`).evaluate(el => {
+        return await this.tabBar.getByTestId(`cv-root-tabs-${title}`).evaluate(el => {
           return window.getComputedStyle(el).getPropertyValue('color');
         });
       })

@@ -32,7 +32,7 @@ export class SelectOptionCellPageObject extends BasePage {
     // check if cell active
     if (
       !(await selectCell.getAttribute('class')).includes('active') &&
-      (await selectCell.locator('.nc-selected-option').count()) === 0
+      (await selectCell.locator('.cv-selected-option').count()) === 0
     ) {
       if (!ignoreDblClick) await selectCell.click();
     }
@@ -54,9 +54,9 @@ export class SelectOptionCellPageObject extends BasePage {
     }
 
     if (multiSelect) {
-      await this.rootPage.locator('.nc-dropdown-multi-select-cell').waitFor({ state: 'visible' });
+      await this.rootPage.locator('.cv-dropdown-multi-select-cell').waitFor({ state: 'visible' });
     } else {
-      await this.rootPage.locator('.nc-dropdown-single-select-cell').waitFor({ state: 'visible' });
+      await this.rootPage.locator('.cv-dropdown-single-select-cell').waitFor({ state: 'visible' });
     }
 
     if (index === -1) {
@@ -72,9 +72,9 @@ export class SelectOptionCellPageObject extends BasePage {
     if (multiSelect) {
       // Press `Escape` to close the dropdown
       await this.rootPage.keyboard.press('Escape');
-      await this.rootPage.locator('.nc-dropdown-multi-select-cell').waitFor({ state: 'hidden' });
+      await this.rootPage.locator('.cv-dropdown-multi-select-cell').waitFor({ state: 'hidden' });
     } else {
-      await this.rootPage.locator('.nc-dropdown-single-select-cell').waitFor({ state: 'hidden' });
+      await this.rootPage.locator('.cv-dropdown-single-select-cell').waitFor({ state: 'hidden' });
     }
   }
 
@@ -102,7 +102,7 @@ export class SelectOptionCellPageObject extends BasePage {
 
     // Press `Escape` to close the dropdown
     await this.rootPage.keyboard.press('Escape');
-    await this.rootPage.locator(`.nc-dropdown-single-select-cell`).waitFor({ state: 'hidden' });
+    await this.rootPage.locator(`.cv-dropdown-single-select-cell`).waitFor({ state: 'hidden' });
   }
 
   async verify({
@@ -173,7 +173,7 @@ export class SelectOptionCellPageObject extends BasePage {
       counter++;
     }
     await this.rootPage.keyboard.press('Escape');
-    await this.rootPage.locator(`.nc-dropdown-single-select-cell`).nth(index).waitFor({ state: 'hidden' });
+    await this.rootPage.locator(`.cv-dropdown-single-select-cell`).nth(index).waitFor({ state: 'hidden' });
   }
 
   async addNewOption({
@@ -224,7 +224,7 @@ export class SelectOptionCellPageObject extends BasePage {
 
     let counter = 0;
     for (const option of options) {
-      await expect(selectCell.locator(`.nc-selected-option`).nth(counter)).toHaveText(option);
+      await expect(selectCell.locator(`.cv-selected-option`).nth(counter)).toHaveText(option);
       counter++;
     }
   }
