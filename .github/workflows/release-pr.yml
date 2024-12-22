@@ -61,8 +61,8 @@ jobs:
       targetEnv: 'DEV'
       isDaily: 'N'
     secrets:
-      DOCKERHUB_USERNAME: "${{ secrets.DOCKERHUB_USERNAME }}"
-      DOCKERHUB_TOKEN: "${{ secrets.DOCKERHUB_TOKEN }}"
+      DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
 
   # Build executables and publish to GitHub
   # release-executables:
@@ -72,7 +72,7 @@ jobs:
   #   with:
   #     tag: ${{ needs.set-tag.outputs.current_version }}-${{ needs.set-tag.outputs.target_tag }}
   #   secrets:
-  #     NC_GITHUB_TOKEN: "${{ secrets.NC_GITHUB_TOKEN }}"
+  #     DIGITRANS_GITHUB_TOKEN: "${{ secrets.DIGITRANS_GITHUB_TOKEN }}"
 
   # Add a comment for PR docker build
   leave-comment:

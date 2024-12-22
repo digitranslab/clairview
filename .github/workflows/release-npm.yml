@@ -26,7 +26,7 @@ on:
         required: true
         type: string
     secrets:
-      NPM_TOKEN:
+      NPM_ACCESS_TOKEN:
         required: true
 #       GITHUB_TOKEN:
 #         required: true
@@ -74,7 +74,7 @@ jobs:
           echo "$(date)" &&
           targetEnv=${{ github.event.inputs.targetEnv || inputs.targetEnv }} node scripts/upgradeNcGui.js && cd packages/clairview && pnpm run obfuscate:build:publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
       - name: Create Pull Request
         if: ${{ github.event.inputs.targetEnv == 'PROD' || inputs.targetEnv == 'PROD' }}
         id: cpr
