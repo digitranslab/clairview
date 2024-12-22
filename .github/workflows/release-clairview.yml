@@ -52,17 +52,18 @@ jobs:
           echo TARGET_TAG: ${{ steps.process-input.outputs.target_tag }}
           echo PREV_TAG: ${{ steps.process-input.outputs.prev_tag }}
 
-  # Merge develop to master
-  pr-to-master:
-    needs: process-input
-    uses: ./.github/workflows/pr-to-master.yml
-    with:
-      tag: ${{ needs.process-input.outputs.target_tag }}
-      targetEnv: ${{ github.event.inputs.targetEnv || 'PROD' }}
+#  # Merge develop to master
+#  pr-to-master:
+#    needs: process-input
+#    uses: ./.github/workflows/pr-to-master.yml
+#    with:
+#      tag: ${{ needs.process-input.outputs.target_tag }}
+#      targetEnv: ${{ github.event.inputs.targetEnv || 'PROD' }}
 
   # Build, install, publish frontend and backend to npm
   release-npm:
-    needs: [pr-to-master, process-input]
+    needs: [process-input]
+#    needs: [pr-to-master, process-input]
     uses: ./.github/workflows/release-npm.yml
     with:
       tag: ${{ needs.process-input.outputs.target_tag }}
